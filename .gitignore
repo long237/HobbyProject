@@ -1,3 +1,4 @@
-
+*.idea
+venv/
 HaskellCode/.vscode/tasks.json
 Notes/
