@@ -1,3 +1,27 @@
+create schema Hobby;
+
+SET Global innodb_file_per_table=ON;
+-- SET GLOBAL innodb_file_format='Barracuda';
+
+SET GLOBAL innodb_default_row_format='dynamic';
+
+SET GLOBAL innodb_compression_algorithm='zlib';
+
+-- Check for system settings
+SHOW VARIABLES LIKE 'innodb_compression_algorithm';
+SHOW VARIABLES LIKE 'innodb_default_row_format';
+SHOW VARIABLES LIKE '%innodb%';
+
+CREATE TABLE Persons (
+    PersonID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+);
+
+CREATE DATABASE testDB;
+
 -- Hobby DDL
 -- Log level table
 create table LogLevel
@@ -31,3 +55,49 @@ create table Log
     constraint Log_pk primary key (logID)
 
 );
+
+create table Archive
+(
+    LtimeStamp datetime                           null,
+    logID      int                                not null,
+    LvName     varchar(50)                        not null,
+    catName    varchar(50)                        not null,
+    userOP     varchar(50)                        not null,
+    logMessage varchar(255)                       not null,
+
+    constraint Archive_pk primary key (logID)
+)
+    ENGINE=InnoDB
+    PAGE_COMPRESSED=1
+    PAGE_COMPRESSION_LEVEL=9;
+
+drop table archive;
+
+-- Dummy data for testing purposes
+-- Log categories data
+INSERT into logcategories(catName, catComment) values
+    ('View', 'view layer'),
+    ('Business', 'business layer'),
+    ('Server', 'server layer'),
+    ('Data', 'data layer');
+
+-- Log level data
+INSERT into loglevel(lvname, lvcomment) values
+    ('Info', 'some sys flow'),
+    ('Debug', 'info for fixing bugs'),
+    ('Warning', 'track system failure'),
+    ('Error', 'some sys errors');
+
+-- Log table data
+INSERT into log(lvname, catname, userop, logmessage) values
+    ('Info', 'View', 'create some projects', 'new account created'),
+    ('Info', 'Business', 'create some projects', 'new projects made'),
+    ('Info', 'View', 'log out', 'log out successful'),
+    ('Info', 'Business', 'log in', 'log in successfully'),
+    ('Info', 'View', 'search for projects', 'result return');
+
+select * from logcategories;
+select * from log;
+
+
+
