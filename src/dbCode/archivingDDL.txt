@@ -1,0 +1,33 @@
+-- Hobby DDL
+-- Log level table
+create table LogLevel
+(
+    LvName    varchar(50)  not null,
+    LvComment varchar(500) not null,
+    constraint LogLevel_pk
+        primary key (LvName)
+);
+
+-- Log categories table
+create table LogCategories
+(
+    catName varchar(50) not null,
+    catComment varchar(255) not null,
+    constraint LogCategories_pk primary key (catName)
+);
+
+-- DDL for log table
+create table Log
+(
+    LtimeStamp datetime default CURRENT_TIMESTAMP null,
+    logID      int auto_increment                 not null,
+    LvName     varchar(50)                        not null,
+    catName    varchar(50)                        not null,
+    userOP     varchar(50)                        not null,
+    logMessage varchar(255)                       not null,
+
+    constraint LogLvName_fk foreign key (LvName) references loglevel (LvName),
+    constraint LogCatName_fk foreign key (catName) references logcategories (catName),
+    constraint Log_pk primary key (logID)
+
+);
