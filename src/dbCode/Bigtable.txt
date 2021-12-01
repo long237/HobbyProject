@@ -22,6 +22,20 @@ ALTER TABLE key_block_size_8 key_block_size=8 row_format=compressed;
 INSERT INTO key_block_size_8 SELECT * FROM big_table;
 commit;
 
+-- Create a new table that is the same but compressed 16KB block size
+CREATE TABLE key_block_size_16 LIKE big_table;
+ALTER TABLE key_block_size_16 key_block_size=16 row_format=compressed;
+-- Insert 3 millions row into the table to compressed
+INSERT INTO key_block_size_16 SELECT * FROM big_table;
+commit;
+
+-- Create a new table that is the same but compressed 4KB block size
+CREATE TABLE key_block_size_4 LIKE big_table;
+ALTER TABLE key_block_size_4 key_block_size=4 row_format=compressed;
+-- Insert 3 millions row into the table to compressed
+INSERT INTO key_block_size_4 SELECT * FROM big_table;
+commit;
+
 drop table key_block_size_4;
 
 SELECT * FROM information_schema.INNODB_CMP;
