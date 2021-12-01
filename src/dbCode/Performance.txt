@@ -1,0 +1,7 @@
+Number of Records: 3,318,784 
+Uncompressed size: 683.00 MB
+Block Size	Time			Space(MB)
+2KB		3m 47s 207ms 		181.63
+4KB		2m 42s	961ms		159.50
+8KB		57s 572ms		342.50
+16KB		
