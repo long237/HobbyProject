@@ -44,3 +44,7 @@ SELECT * FROM information_schema.INNODB_CMPMEM;
 
 select count(*) as count_row from big_table;
 select count(*) as count_row from key_block_size_8;
+
+-- For the console
+-- SELECT * FROM information_schema.INNODB_CMPMEM\G
+-- SELECT * FROM information_schema.INNODB_CMP\G
