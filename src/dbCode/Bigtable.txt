@@ -1,0 +1,32 @@
+-- Create an uncompressed table with a million or two rows. (3 millions row)
+CREATE TABLE big_table AS SELECT * FROM information_schema.columns;
+INSERT INTO big_table SELECT * FROM big_table;
+INSERT INTO big_table SELECT * FROM big_table;
+INSERT INTO big_table SELECT * FROM big_table;
+INSERT INTO big_table SELECT * FROM big_table;
+INSERT INTO big_table SELECT * FROM big_table;
+INSERT INTO big_table SELECT * FROM big_table;
+INSERT INTO big_table SELECT * FROM big_table;
+INSERT INTO big_table SELECT * FROM big_table;
+INSERT INTO big_table SELECT * FROM big_table;
+INSERT INTO big_table SELECT * FROM big_table;
+
+-- How many rows does this has?
+SELECT count(*) FROM information_schema.columns;
+
+-- Create a new table that is the same but compressed
+CREATE TABLE key_block_size_8 LIKE big_table;
+ALTER TABLE key_block_size_8 key_block_size=8 row_format=compressed;
+
+-- Insert 3 millions row into the table to compressed
+INSERT INTO key_block_size_8 SELECT * FROM big_table;
+commit;
+
+drop table key_block_size_4;
+
+SELECT * FROM information_schema.INNODB_CMP;
+SELECT * FROM information_schema.INNODB_CMPMEM;
+
+
+select count(*) as count_row from big_table;
+select count(*) as count_row from key_block_size_8;

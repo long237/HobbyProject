@@ -1,0 +1,63 @@
+title Use Case: Archiving
+
+participant ArchiveController.cs
+participant DataConnection
+participant DataSourceFactory
+participant SQLSource
+participant MariaDB
+
+activate ArchiveController.cs
+ArchiveController.cs ->DataConnection:static DataConnection getDataConnection()
+DataConnection -->ArchiveController.cs:return DataConnection
+
+ArchiveController.cs->DataSourceFactory:new DataSourceFactory()
+activate DataSourceFactory
+DataSourceFactory ->DataSourceFactory:DataSourceFactory()\nconstructor
+ArchiveController.cs <-- DataSourceFactory:return DataSourceFactory
+deactivate DataSourceFactory
+
+activate SQLSource
+ArchiveController.cs->SQLSource: IDataSource DataSourceFact.GetDataSource(String sourceName)
+SQLSource->SQLSource: SQLSource()\nconstructor
+SQLSource --> ArchiveController.cs :return SQLSource
+
+loop #lightblue while true
+alt #lightgreen date == 1
+ArchiveController.cs -> SQLSource: int Compress(DataConnection conn, IDataSource ds, String logList[])
+activate MariaDB
+alt #lightgreen archive == 0 (If Archive have not exist already
+SQLSource -> MariaDB: int createArchive(DataConnection conn, String SQLcmd)
+SQLSource <-- MariaDB:return 0
+end 
+
+alt #red No error when doing executing copy SQL command
+SQLSource ->SQLSource: int updateArchive(DataConnection conn, String logList[])
+SQLSource ->MariaDB: int CopremovyEntries(DataConnection conn, String logList[])
+MariaDB --> SQLSource: return 0
+SQLSource -->ArchiveController.cs: return 0
+else Error occur when executing copy SQL command on Database
+MariaDB -->SQLSource: throw SQLException
+SQLSource -->ArchiveController.cs: throw SQLException
+ArchiveController.cs ->ArchiveController.cs: Console.WriteLine(SQLException.Message) \n (As a form of handling error)
+end
+
+alt #red No error when doing executing remove SQL command
+SQLSource ->MariaDB: int RemoveEntries(DataConnection conn, String logList[])
+MariaDB-->SQLSource:return 0
+SQLSource -->ArchiveController.cs: return 0
+
+else Error occur when executing removing SQL command on Database
+MariaDB -->SQLSource: throw SQLException
+SQLSource -->ArchiveController.cs: throw SQLException
+ArchiveController.cs ->ArchiveController.cs: Console.WriteLine(SQLException.Message) \n (As a form of handling error)
+end 
+end
+
+
+deactivate MariaDB
+
+SQLSource-->ArchiveController.cs:return 0
+end 
+
+deactivate ArchiveController.cs
+deactivate SQLSource

@@ -1,0 +1,49 @@
+title Use Case: Archiving
+
+participant ArchiveController.cs
+participant DataConnection
+participant DataSourceFactory
+participant SQLSource
+participant MariaDB
+
+activate ArchiveController.cs
+activate DataConnection
+ArchiveController.cs ->DataConnection:static DataConnection getDataConnection()
+DataConnection -->ArchiveController.cs:return DataConnection
+deactivate DataConnection
+
+activate DataSourceFactory
+DataSourceFactory ->DataSourceFactory:DataSourceFactory()\nconstructor
+ArchiveController.cs <-- DataSourceFactory:return DataSourceFactory
+deactivate DataSourceFactory
+
+activate SQLSource
+ArchiveController.cs->SQLSource: IDataSource DataSourceFact.GetDataSource(String sourceName)
+SQLSource->SQLSource: SQLSource()\nconstructor
+SQLSource --> ArchiveController.cs :return SQLSource
+
+loop #lightblue while true
+alt #lightgreen date == 1
+ArchiveController.cs -> SQLSource: int Compress(DataConnection conn, IDataSource ds, String logList[])
+activate MariaDB
+alt #lightgreen archive == 0 
+SQLSource -> MariaDB: int createArchive(DataConnection conn, String SQLcmd)
+MariaDB -->SQLSource:return 0
+end 
+
+SQLSource ->SQLSource: int updateArchive(DataConnection conn, String logList[])
+SQLSource ->MariaDB: int CopremovyEntries(DataConnection conn, String logList[])
+MariaDB --> SQLSource: return 0
+
+SQLSource ->MariaDB: int RemoveEntries(DataConnection conn, String logList[])
+MariaDB-->SQLSource:return 0
+end 
+
+
+deactivate MariaDB
+
+SQLSource-->ArchiveController.cs:return 0
+end 
+
+deactivate ArchiveController.cs
+deactivate SQLSource
