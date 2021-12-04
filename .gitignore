@@ -2,3 +2,6 @@
 venv/
 HaskellCode/.vscode/tasks.json
 Notes/
+
+.vscode/*
+!.vscode/launch.json
