@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamHobby.HobbyProjectGenerator", "TeamHobby.HobbyProjectGenerator.csproj", "{C75B6909-FD9E-4382-94B6-7CA2CE371C9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator", "TeamHobby.HobbyProjectGenerator.csproj", "{C75B6909-FD9E-4382-94B6-7CA2CE371C9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamHobby.HobbyProjectGenerator.Archive", "..\TeamHobby.HobbyProjectGenerator.Archive\TeamHobby.HobbyProjectGenerator.Archive.csproj", "{F0E39503-E55A-4EB8-AA98-98D74A79D7D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C75B6909-FD9E-4382-94B6-7CA2CE371C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C75B6909-FD9E-4382-94B6-7CA2CE371C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C75B6909-FD9E-4382-94B6-7CA2CE371C9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0E39503-E55A-4EB8-AA98-98D74A79D7D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E39503-E55A-4EB8-AA98-98D74A79D7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0E39503-E55A-4EB8-AA98-98D74A79D7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E39503-E55A-4EB8-AA98-98D74A79D7D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
