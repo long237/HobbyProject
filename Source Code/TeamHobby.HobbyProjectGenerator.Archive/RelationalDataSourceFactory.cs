@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TeamHobby.HobbyProjectGenerator.Archive.Implementations;
+using TeamHobby.HobbyProjectGenerator.Archive;
 
 namespace TeamHobby.HobbyProjectGenerator.Archive
 {
-    public class DataSourceFactory
+    public class RelationalDataSourceFactory
     {
         // Mehthod to create a specific data source suitable to the need
         public IDataSource? getDataSource(string name)
