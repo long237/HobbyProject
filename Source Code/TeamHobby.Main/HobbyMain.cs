@@ -10,7 +10,7 @@ public class HobbyMain
         Console.WriteLine("Hello World!");
 
         // Testing Compressing a file
-        string fileName = @"C:\Users\Chunchunmaru\Documents\csulbFall2021\HobbyProject\Source Code\TeamHobby.Main\archiving2.txt";
+        string fileName = @"C:\Users\Chunchunmaru\Documents\csulbFall2021\HobbyProject\Source Code\TeamHobby.Main\rando";
         //string fileName = @"arhiving2.txt";
         FileInfo fileInfo = new FileInfo(fileName);
 
