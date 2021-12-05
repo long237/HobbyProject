@@ -51,6 +51,8 @@ TERMINATED BY ','
 ESCAPED BY '"'
 LINES TERMINATED BY '\r\n';
 
+-- Remove old logs from the log table
+DELETE from log where DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;
 
 show columns from log;
 
