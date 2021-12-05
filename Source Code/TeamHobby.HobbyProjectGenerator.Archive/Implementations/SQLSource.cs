@@ -81,9 +81,9 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
                     origFile.CopyTo(compressor);
 
                 return true;
-            }
+                }
 
-                return true;
+                return false;
             }
             catch (Exception ex)
             {
