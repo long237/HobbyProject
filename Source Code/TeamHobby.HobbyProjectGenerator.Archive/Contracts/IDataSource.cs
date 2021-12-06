@@ -16,9 +16,9 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
         bool WriteData(string cmd);
 
         //Method for deleteing data from a data source, 0 for successful
-        bool DeleteData();
+        bool DeleteData(string cmd);
 
         // Method for updating data from a data source, 0 for sucessful
-        bool UpdateData();
+        bool UpdateData(string cmd);
     }
 }

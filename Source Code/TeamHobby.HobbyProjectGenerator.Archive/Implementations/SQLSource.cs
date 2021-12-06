@@ -12,31 +12,41 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
 {
     public class SQLSource : IDataSource, IRelationArchivable
     {
-        //private SqlConnection conn;
+        private SqlConnection conn;
 
-        //public SQLSource(string info)
-        //{
-        //    conn = new SqlConnection(info);
-        //}
+        public SQLSource(string info)
+        {
+           // Do I put using here to make sure the connection closed once the object is gone?
+           conn = new SqlConnection(info);
+           // Perhaps open the connection here?
+           // conn.Open();
+        }
 
         public bool DeleteData()
         {
             throw new NotImplementedException();
         }
 
+        // Makre sure to Check for instanceof() before casting to a SQLReader in the controller
         public Object ReadData(string cmd)
         {
             try
             {
-                // conn.open();
+                conn.Open();
+                //SqlCommand command = new SqlCommand(null, conn);
+                SqlCommand command = new SqlCommand(cmd, conn);
+
                 // conn.Execute();
                 Console.WriteLine("Access a SQL database");
                 Console.WriteLine("Select * from archive");
 
+                // Execute the command to query the data
+                using SqlDataReader sqlReader = command.ExecuteReader();
+
                 // while (myReader)
                 // Print to console
-                // conn.close();
-                return null;
+                conn.Close();
+                return sqlReader;
             }
             catch (Exception e)
             {
@@ -45,7 +55,7 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             }
         }
 
-        public bool UpdateData()
+        public bool UpdateData(string cmd)
         {
             throw new NotImplementedException();
         }
@@ -90,6 +100,29 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
                 Console.WriteLine(ex.Message);
                 return false;
             }
+        }
+
+        public Object ReadPreparedStmt(string table){
+            conn.Open();
+            //SqlCommand command = new SqlCommand(null, conn);
+            SqlCommand command = new SqlCommand("SELECT * from @table;", conn);
+            SqlParameter tableParam = new SqlParameter("@table", System.Data.SqlDbType.Text, 50);
+
+            tableParam.Value = table;
+            command.Parameters.Add(tableParam);
+
+            // conn.Execute();
+            Console.WriteLine("Access a SQL database");
+            Console.WriteLine("Select * from archive");
+
+            // Make the Prepare statement and excute the query:
+            command.Prepare();
+            SqlDataReader sqlReader = command.ExecuteReader();
+
+            // while (myReader)
+            // Print to console
+            // conn.close();
+            return sqlReader;
         }
 
     }
