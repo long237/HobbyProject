@@ -22,7 +22,8 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
            // conn.Open();
         }
 
-        public bool DeleteData()
+        // The also Identical to update data, maybe only one method is enough
+        public bool DeleteData(string cmd)
         {
             throw new NotImplementedException();
         }
@@ -46,6 +47,7 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
                 // while (myReader)
                 // Print to console
                 conn.Close();
+                conn.Dispose();
                 return sqlReader;
             }
             catch (Exception e)
@@ -55,11 +57,31 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             }
         }
 
+        // TODO: No idea how to check if the command is valid or where to check it
         public bool UpdateData(string cmd)
         {
-            throw new NotImplementedException();
+            try
+            {
+                conn.Open();
+                
+                // Create the SQL command object
+                SqlCommand command = new SqlCommand(cmd, conn);
+
+                // Execute the command to change the rows in a table
+                command.ExecuteNonQuery();
+
+                conn.Close();
+                conn.Dispose();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
 
+        // Very similar to UpdataData if not identical
         public bool WriteData(string cmd)
         {
             throw new NotImplementedException();
