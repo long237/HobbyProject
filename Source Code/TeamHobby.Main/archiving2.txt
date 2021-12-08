@@ -1,0 +1,46 @@
+title Use Case: Archiving
+
+participant ArchiveController.cs
+participant DataConnection
+participant DataSourceFactory
+participant SQLSource
+participant MariaDB
+
+activate ArchiveController.cs
+activate DataConnection
+ArchiveController.cs ->DataConnection:static DataConnection getDataConnection()
+DataConnection -->ArchiveController.cs:return DataConnection
+deactivate DataConnection
+
+activate DataSourceFactory
+ArchiveController.cs ->DataSourceFactory: new DataSourceFactory()
+DataSourceFactory ->DataSourceFactory:DataSourceFactory()\nconstructor
+ArchiveController.cs <-- DataSourceFactory:return DataSourceFactory
+deactivate DataSourceFactory
+
+activate SQLSource
+ArchiveController.cs->SQLSource: IDataSource DataSourceFact.GetDataSource(String sourceName, string info)
+SQLSource->SQLSource: SQLSource(string info)\nconstructor
+SQLSource --> ArchiveController.cs :return SQLSource
+
+loop #lightblue while true
+alt #lightgreen date == 1
+ArchiveController.cs ->ArchiveController.cs: string fileName = string CreateFileName( )
+ArchiveController.cs -> SQLSource: int Compress(string fileName)
+activate MariaDB
+
+SQLSource -> MariaDB: int createArchive(string fileLocation)
+MariaDB -->SQLSource:return 0
+
+SQLSource ->MariaDB: int RemoveEntries()
+MariaDB-->SQLSource:return 0
+end 
+
+
+deactivate MariaDB
+
+SQLSource-->ArchiveController.cs:return 0
+end 
+
+deactivate ArchiveController.cs
+deactivate SQLSource
