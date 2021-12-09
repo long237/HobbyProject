@@ -1,0 +1,99 @@
+
+title Use Case: Archiving
+
+participant Controller.cs #90EE90
+participant RDSFactory #26abff
+participant ArchiveManager #ffffe0
+participant SqlDAO #D3D3D3
+participant MariaDB
+
+activate Controller.cs
+// Create a new factory 
+Controller.cs->RDSFactory:factory = new RDSFactory()
+activate RDSFactory #26abff
+RDSFactory->RDSFactory:Constructor()
+Controller.cs<--RDSFactory:return RDSFactory
+deactivate RDSFactory
+Controller.cs->SqlDAO: ++IDataSource factory.GetDataSource(string name, string connInfo)++
+activate SqlDAO #D3D3D3
+SqlDAO->SqlDAO:++Constructor(string connInfo)++
+Controller.cs<--SqlDAO: ++return SqlDAO++
+deactivate SqlDAO
+
+// Create Archive Manager
+activate ArchiveManager
+Controller.cs ->ArchiveManager:new ArchiveManager(IDataSource conn)
+ArchiveManager ->ArchiveManager: ArchiveManager(IDatasSource conn)
+
+// Calling the main:
+ArchiveManager -->Controller.cs: return ArchiveManager
+Controller.cs ->ArchiveManager: bool ArchiveManager.Controller( )
+
+// Keep looping
+
+loop #lightblue while true
+alt #lightgreen The First Day of the month at 00:00:00 AM
+// Check if the directory exist or not
+alt #lightgreen Archive folder does not exist already in the current directory
+ArchiveManager -> ArchiveManager:int CreateArchiveFolder(string path)
+
+end 
+// Create the file name 
+ArchiveManager ->ArchiveManager: string filePath = string CreateFileName( )
+ArchiveManager ->SqlDAO:bool Compress(string filePath)
+
+activate SqlDAO
+activate MariaDB
+SqlDAO ->MariaDB: bool CopyToArchive(string filePath)
+alt #red No error when doing executing copy SQL command
+MariaDB --> SqlDAO: return True
+
+else #red Error occur when executing copy SQL command on Database
+MariaDB -->SqlDAO: throw SQLException
+deactivate MariaDB
+SqlDAO -->ArchiveManager: throw SqlException
+deactivate SqlDAO
+
+ArchiveManager ->ArchiveManager: Catch SqlException
+end
+
+activate SqlDAO
+// Compress the file 
+SqlDAO ->SqlDAO: bool CompressArchive(string filePath)
+// Remove output file
+SqlDAO ->SqlDAO:bool RemoveOutputFile(string filePath)
+alt #red File was created succesffuly
+SqlDAO -->SqlDAO: new file
+else File Exception
+SqlDAO ->SqlDAO: Catch FileException
+SqlDAO -->ArchiveManager: throw FileException
+deactivate SqlDAO
+ArchiveManager ->ArchiveManager: catch FileException
+end
+
+activate SqlDAO
+
+SqlDAO ->MariaDB: bool RemoveEntries( )
+activate MariaDB
+alt #red No error when doing executing remove old logs SQL command
+MariaDB-->SqlDAO:return True
+
+
+else Error occur when executing removing SQL command on Database
+MariaDB -->SqlDAO: throw SQLException
+deactivate MariaDB
+SqlDAO-->ArchiveManager: throw SQLException
+deactivate SqlDAO
+ArchiveManager ->ArchiveManager:Catch SqlException
+end 
+activate SqlDAO
+SqlDAO-->ArchiveManager:return True
+deactivate SqlDAO
+end
+
+
+deactivate MariaDB
+
+end 
+deactivate ArchiveManager
+deactivate SqlDAO

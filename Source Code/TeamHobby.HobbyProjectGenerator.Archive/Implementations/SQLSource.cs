@@ -12,15 +12,15 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
 {
     public class SQLSource : IDataSource, IRelationArchivable
     {
-        private SqlConnection conn;
+        //private SqlConnection conn;
 
-        public SQLSource(string info)
-        {
-           // Do I put using here to make sure the connection closed once the object is gone?
-           conn = new SqlConnection(info);
-           // Perhaps open the connection here?
-           // conn.Open();
-        }
+        //public SQLSource(string info)
+        //{
+        //   // Do I put using here to make sure the connection closed once the object is gone?
+        //   conn = new SqlConnection(info);
+        //   // Perhaps open the connection here?
+        //   // conn.Open();
+        //}
 
         // The also Identical to update data, maybe only one method is enough
         public bool DeleteData(string cmd)
@@ -33,22 +33,23 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
         {
             try
             {
-                conn.Open();
+                //conn.Open();
                 //SqlCommand command = new SqlCommand(null, conn);
-                SqlCommand command = new SqlCommand(cmd, conn);
+                //SqlCommand command = new SqlCommand(cmd, conn);
 
                 // conn.Execute();
                 Console.WriteLine("Access a SQL database");
                 Console.WriteLine("Select * from archive");
 
                 // Execute the command to query the data
-                using SqlDataReader sqlReader = command.ExecuteReader();
+                //using SqlDataReader sqlReader = command.ExecuteReader();
 
                 // while (myReader)
                 // Print to console
-                conn.Close();
-                conn.Dispose();
-                return sqlReader;
+                //conn.Close();
+                //conn.Dispose();
+                //return sqlReader;
+                return new SqlConnection();
             }
             catch (Exception e)
             {
@@ -62,16 +63,16 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
         {
             try
             {
-                conn.Open();
-                
+                //conn.Open();
+
                 // Create the SQL command object
-                SqlCommand command = new SqlCommand(cmd, conn);
+                //SqlCommand command = new SqlCommand(cmd, conn);
 
                 // Execute the command to change the rows in a table
-                command.ExecuteNonQuery();
+                //command.ExecuteNonQuery();
 
-                conn.Close();
-                conn.Dispose();
+                //conn.Close();
+                //conn.Dispose();
                 return true;
             }
             catch (Exception e)
@@ -124,28 +125,28 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             }
         }
 
-        public Object ReadPreparedStmt(string table){
-            conn.Open();
-            //SqlCommand command = new SqlCommand(null, conn);
-            SqlCommand command = new SqlCommand("SELECT * from @table;", conn);
-            SqlParameter tableParam = new SqlParameter("@table", System.Data.SqlDbType.Text, 50);
+        //public Object ReadPreparedStmt(string table){
+        //    //conn.Open();
+        //    //SqlCommand command = new SqlCommand(null, conn);
+        //    SqlCommand command = new SqlCommand("SELECT * from @table;", conn);
+        //    SqlParameter tableParam = new SqlParameter("@table", System.Data.SqlDbType.Text, 50);
 
-            tableParam.Value = table;
-            command.Parameters.Add(tableParam);
+        //    tableParam.Value = table;
+        //    command.Parameters.Add(tableParam);
 
-            // conn.Execute();
-            Console.WriteLine("Access a SQL database");
-            Console.WriteLine("Select * from archive");
+        //    // conn.Execute();
+        //    Console.WriteLine("Access a SQL database");
+        //    Console.WriteLine("Select * from archive");
 
-            // Make the Prepare statement and excute the query:
-            command.Prepare();
-            SqlDataReader sqlReader = command.ExecuteReader();
+        //    // Make the Prepare statement and excute the query:
+        //    command.Prepare();
+        //    SqlDataReader sqlReader = command.ExecuteReader();
 
-            // while (myReader)
-            // Print to console
-            // conn.close();
-            return sqlReader;
-        }
+        //    // while (myReader)
+        //    // Print to console
+        //    // conn.close();
+        //    return sqlReader;
+        //}
 
     }
 }
