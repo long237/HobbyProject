@@ -18,10 +18,18 @@ Controller.cs->SqlDAO: ++IDataSource factory.GetDataSource(string name, string c
 activate SqlDAO #D3D3D3
 SqlDAO->SqlDAO:++Constructor(string connInfo)++
 Controller.cs<--SqlDAO: ++return SqlDAO++
+
+
+alt #red 
+SqlDAO ->SqlDAO: Catch Exception
+SqlDAO -->Controller.cs:return "DataSourceTimeOut"
+end 
 deactivate SqlDAO
 
 // Create Archive Manager
+
 activate ArchiveManager #ffffe0
+group #lightblue Connection to DataSource successful
 Controller.cs ->ArchiveManager:new ArchiveManager(IDataSource conn)
 ArchiveManager ->ArchiveManager: ArchiveManager(IDatasSource conn)
 
@@ -105,10 +113,10 @@ end
 end 
 
 activate SqlDAO #D3D3D3
-
+activate MariaDB #00FFFF
 SqlDAO ->MariaDB: bool RemoveEntries( )
 MariaDB ->MariaDB: DELETE from log \nWHERE \nDATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;
-activate MariaDB #00FFFF
+
 alt #lightgreen No error when doing executing remove old logs SQL command
 MariaDB-->SqlDAO:return True
 SqlDAO -->ArchiveManager: return True
@@ -133,5 +141,6 @@ ArchiveManager --> Controller.cs:return True
 deactivate ArchiveManager
 end
 
+end 
 end 
 
