@@ -1,4 +1,4 @@
-title Disable Specfied User
+title Enable Specfied User
 actor User
 participant Controller.cs #90EE90
 participant RDSFactory #26abff
