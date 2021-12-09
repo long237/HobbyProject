@@ -45,6 +45,8 @@ ArchiveManager ->SqlDAO:bool Compress(string filePath)
 activate SqlDAO #D3D3D3
 activate MariaDB #00FFFF
 SqlDAO ->MariaDB: bool CopyToArchive(string filePath)
+// Sql Command to add data to the table
+MariaDB ->MariaDB: SELECT 'LtimeStamp', 'logID', 'LvName', 'catName', 'userOP', 'logMessage' \nUNION ALL\nSELECT * FROM log\nWHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30\nINTO OUTFILE @filePath\nFIELDS ENCLOSED BY ''\nTERMINATED BY ','\nESCAPED BY '"'\nLINES TERMINATED BY '\r\\n';
 alt #lightgreen No error when doing executing copy SQL command
 MariaDB --> SqlDAO: return True
 SqlDAO -->ArchiveManager: return True
@@ -105,6 +107,7 @@ end
 activate SqlDAO #D3D3D3
 
 SqlDAO ->MariaDB: bool RemoveEntries( )
+MariaDB ->MariaDB: DELETE from log \nWHERE \nDATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;
 activate MariaDB #00FFFF
 alt #lightgreen No error when doing executing remove old logs SQL command
 MariaDB-->SqlDAO:return True
