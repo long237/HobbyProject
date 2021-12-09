@@ -116,7 +116,7 @@ AccountService->SqlDAO:++SqlDAO\n.DisableUser(user:NewUser,\nUpdateType:userDisa
 activate SqlDAO #D3D3D3
 SqlDAO->SqlServer(MariaDB):++isUser(user:NewUser)++
 activate SqlServer(MariaDB) #00FFFF
-SqlServer(MariaDB)->SqlServer(MariaDB):++ Select *\nFrom Users\nwhere Username\n= @UserName OR\nemail = @Email++
+SqlServer(MariaDB)->SqlServer(MariaDB):++ Select *\nFrom Users\nwhere Username\n= @UserName and\nRole = @UserRole\n
 group #red data store timed out #white
 SqlDAO<--SqlServer(MariaDB):++SqlException++
 deactivate SqlServer(MariaDB)
