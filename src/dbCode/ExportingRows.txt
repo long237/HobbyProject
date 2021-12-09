@@ -1,0 +1,64 @@
+
+select * from log;
+
+-- Find logs that are older than 30 days of current time.
+SELECT * FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;
+
+-- Output logs to a file
+SELECT * FROM log
+WHERE
+      DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30
+INTO OUTFILE 'C:/Temp/oldlogs.csv'
+FIELDS ENCLOSED BY '"'
+TERMINATED BY ';'
+ESCAPED BY '"'
+LINES TERMINATED BY '\r\n';
+
+-- Output into comma separated file
+SELECT * INTO OUTFILE 'C:/Temp/oldlogs2.csv'
+FIELDS ENCLOSED BY '"'
+TERMINATED BY ','
+ESCAPED BY '"'
+LINES TERMINATED BY '\r\n'
+FROM log
+WHERE
+      DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;
+
+-- Output into comma separated file
+SELECT *
+INTO OUTFILE 'C:/Temp/oldlogs4.csv'
+    FIELDS ENCLOSED BY ''
+    TERMINATED BY ','
+    ESCAPED BY '"'
+    LINES TERMINATED BY '\r\n'
+FROM log
+WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;
+
+-- Find the name of each columns
+SELECT `COLUMN_NAME`
+FROM `information_schema`.`COLUMNS`
+WHERE `TABLE_SCHEMA` = 'hobby' AND `TABLE_NAME` = 'log';
+
+-- Add the column names to the heading of the file
+SELECT 'LtimeStamp', 'logID', 'LvName', 'catName', 'userOP', 'logMessage'
+UNION ALL
+SELECT * FROM log
+WHERE
+      DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30
+INTO OUTFILE 'C:/Temp/oldlogs5.csv'
+FIELDS ENCLOSED BY ''
+TERMINATED BY ','
+ESCAPED BY '"'
+LINES TERMINATED BY '\r\n';
+
+-- Remove old logs from the log table
+DELETE from log where DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;
+
+show columns from log;
+
+SELECT COLUMN_NAME FROM information_schema.COLUMNS;
+
+
+-- Remove logs from the table
+
+SELECT DATEDIFF('2021-08-07 23:00:00', current_timestamp);

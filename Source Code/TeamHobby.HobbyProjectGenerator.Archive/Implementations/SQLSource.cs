@@ -16,27 +16,40 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
 
         //public SQLSource(string info)
         //{
-        //    conn = new SqlConnection(info);
+        //   // Do I put using here to make sure the connection closed once the object is gone?
+        //   conn = new SqlConnection(info);
+        //   // Perhaps open the connection here?
+        //   // conn.Open();
         //}
 
-        public bool DeleteData()
+        // The also Identical to update data, maybe only one method is enough
+        public bool DeleteData(string cmd)
         {
             throw new NotImplementedException();
         }
 
+        // Makre sure to Check for instanceof() before casting to a SQLReader in the controller
         public Object ReadData(string cmd)
         {
             try
             {
-                // conn.open();
+                //conn.Open();
+                //SqlCommand command = new SqlCommand(null, conn);
+                //SqlCommand command = new SqlCommand(cmd, conn);
+
                 // conn.Execute();
                 Console.WriteLine("Access a SQL database");
                 Console.WriteLine("Select * from archive");
 
+                // Execute the command to query the data
+                //using SqlDataReader sqlReader = command.ExecuteReader();
+
                 // while (myReader)
                 // Print to console
-                // conn.close();
-                return null;
+                //conn.Close();
+                //conn.Dispose();
+                //return sqlReader;
+                return new SqlConnection();
             }
             catch (Exception e)
             {
@@ -45,11 +58,31 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             }
         }
 
-        public bool UpdateData()
+        // TODO: No idea how to check if the command is valid or where to check it
+        public bool UpdateData(string cmd)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //conn.Open();
+
+                // Create the SQL command object
+                //SqlCommand command = new SqlCommand(cmd, conn);
+
+                // Execute the command to change the rows in a table
+                //command.ExecuteNonQuery();
+
+                //conn.Close();
+                //conn.Dispose();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
 
+        // Very similar to UpdataData if not identical
         public bool WriteData(string cmd)
         {
             throw new NotImplementedException();
@@ -81,9 +114,9 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
                     origFile.CopyTo(compressor);
 
                 return true;
-            }
+                }
 
-                return true;
+                return false;
             }
             catch (Exception ex)
             {
@@ -91,6 +124,29 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
                 return false;
             }
         }
+
+        //public Object ReadPreparedStmt(string table){
+        //    //conn.Open();
+        //    //SqlCommand command = new SqlCommand(null, conn);
+        //    SqlCommand command = new SqlCommand("SELECT * from @table;", conn);
+        //    SqlParameter tableParam = new SqlParameter("@table", System.Data.SqlDbType.Text, 50);
+
+        //    tableParam.Value = table;
+        //    command.Parameters.Add(tableParam);
+
+        //    // conn.Execute();
+        //    Console.WriteLine("Access a SQL database");
+        //    Console.WriteLine("Select * from archive");
+
+        //    // Make the Prepare statement and excute the query:
+        //    command.Prepare();
+        //    SqlDataReader sqlReader = command.ExecuteReader();
+
+        //    // while (myReader)
+        //    // Print to console
+        //    // conn.close();
+        //    return sqlReader;
+        //}
 
     }
 }
