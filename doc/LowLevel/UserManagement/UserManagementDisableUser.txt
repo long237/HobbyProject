@@ -37,12 +37,28 @@ SystemAccountManager->SystemAccountManager:++Constructor(IDataSource conn)++
 Controller.cs<--SystemAccountManager:++ New SystemAccountManager++
 deactivate SystemAccountManager
 
+// GetUserName
+Controller.cs->Controller.cs:++string GetUserName()++
+
+// GetPassword
+Controller.cs->Controller.cs:++string GetPassword()++
+
 // Pass object
-activate UserAccount #CBC3E3
 Controller.cs->UserAccount:++ new UserAccount(string username,\n string password\n DateTime RegistrationTimeStamp)++
+activate UserAccount #CBC3E3
 UserAccount->UserAccount:  ++Constructor(string username,\n string password,\n DateTime RegistrationTimeStamp)++
 Controller.cs<--UserAccount:++New UserAccount++
 deactivate UserAccount
+
+activate SystemAccountManager #ffffe0
+SystemAccountManager->SystemAccountManager:++isInputValid(user: UserAccount)++
+group #red Invalid Information #white
+Controller.cs<--SystemAccountManager:++return "Invalid input"++
+User<--Controller.cs:++ return "Invalid input"++
+end
+Controller.cs<--SystemAccountManager:++return true++
+deactivate SystemAccountManager
+
 //
 Controller.cs->SystemAccountManager: ++manager.DisableUserRecord(user:UserAccount)++
 
@@ -77,21 +93,28 @@ deactivate SqlServer(MariaDB)
 SystemAccountManager<--SqlDAO:++return true++
 deactivate SqlDAO
 deactivate SystemAccountManager
-activate SystemAccountManager #ffffe0
-SystemAccountManager->SystemAccountManager:++isInputValid(user: UserAccount)++
 
-group #red Invalid Information #white
-Controller.cs<--SystemAccountManager:++return "Invalid input"++
-User<--Controller.cs:++ return "Invalid input"++
-deactivate SystemAccountManager
-end
 group #green Valid Information #white
 activate SystemAccountManager #ffffe0
-SystemAccountManager->AccountService:++AccountService\n.DisableUserRecord(user:UserAccount)++
+// GetUserName
+SystemAccountManager->SystemAccountManager:++string NewUserName()++
+// Enter UserName
+User->SystemAccountManager:++string NewUserName++
+// GetRole
+SystemAccountManager->SystemAccountManager:++string NewRole()++
+// Enter Role
+User->SystemAccountManager:++string NewRole++
+// Create NewUser object
+UserAccount<-SystemAccountManager:++new NewUser(\nstring NewUserName,\nstring role,\nDateTime TimeStamp)++
+activate UserAccount #CBC3E3
+UserAccount->UserAccount:++Constructor(\nstring NewUserName,\nstring role,\nDateTime TimeStamp)++
+UserAccount-->SystemAccountManager:++return NewUser++ 
+deactivate UserAccount
+SystemAccountManager->AccountService:++AccountService\n.DisableUserRecord(user:NewUser,\nUpdateType:userDisable)++
 activate AccountService 	#ff8b3d
-AccountService->SqlDAO:++SqlDAO\n.DisableUser(user:UserAccount)++
+AccountService->SqlDAO:++SqlDAO\n.DisableUser(user:NewUser,\nUpdateType:userDisable)++
 activate SqlDAO #D3D3D3
-SqlDAO->SqlServer(MariaDB): ++isUser(user:UserAccount)++
+SqlDAO->SqlServer(MariaDB):++isUser(user:NewUser)++
 activate SqlServer(MariaDB) #00FFFF
 SqlServer(MariaDB)->SqlServer(MariaDB):++ Select *\nFrom Users\nwhere Username\n= @UserName OR\nemail = @Email++
 group #red data store timed out #white
@@ -111,24 +134,24 @@ activate SqlServer(MariaDB) #00FFFF
 SqlDAO<--SqlServer(MariaDB):++ return True++
 SqlDAO->SqlServer(MariaDB):++Update users Set isActive = 0\nwhere UserName = @UserName++
 SqlDAO<--SqlServer(MariaDB):++ return 1++
+deactivate SqlServer(MariaDB)
 AccountService<--SqlDAO:++return "User is now disabled"++
 SystemAccountManager<--AccountService:++return "User is now disabled"++
 Controller.cs<--SystemAccountManager:++return "User is now disabled"++
 User<--Controller.cs:++               return \n"User is now disabled"++
-deactivate SqlServer(MariaDB)
 end 
 // User doesn't exist
 group #red User does not exist #white
 activate SqlServer(MariaDB) #00FFFF
 SqlDAO<--SqlServer(MariaDB):++ return False++
-AccountService<--SqlDAO:++return "User does not exist"++
-SystemAccountManager<--AccountService:++return "User does not exist"++
-Controller.cs<--SystemAccountManager:++return "User does not exist"++
-User<--Controller.cs:++               return \n"User does not exist"++
-deactivate AccountService
-deactivate SqlDAO
 deactivate SqlServer(MariaDB)
+AccountService<--SqlDAO:++return "User does not exist"++
+deactivate SqlDAO
+SystemAccountManager<--AccountService:++return "User does not exist"++
+deactivate AccountService
+Controller.cs<--SystemAccountManager:++return "User does not exist"++
 deactivate SystemAccountManager
+User<--Controller.cs:++               return \n"User does not exist"++
 deactivate Controller.cs
 end
 //deactivate User

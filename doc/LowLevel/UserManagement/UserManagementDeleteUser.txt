@@ -37,12 +37,28 @@ SystemAccountManager->SystemAccountManager:++Constructor(IDataSource conn)++
 Controller.cs<--SystemAccountManager:++ New SystemAccountManager++
 deactivate SystemAccountManager
 
+// GetUserName
+Controller.cs->Controller.cs:++string GetUserName()++
+
+// GetPassword
+Controller.cs->Controller.cs:++string GetPassword()++
+
 //
-activate UserAccount #CBC3E3
 Controller.cs->UserAccount:++ new UserAccount(string username,\n string password\n DateTime RegistrationTimeStamp)++
+activate UserAccount #CBC3E3
 UserAccount->UserAccount:  ++Constructor(string username,\n string password,\n DateTime RegistrationTimeStamp)++
 Controller.cs<--UserAccount:++New UserAccount++
 deactivate UserAccount
+
+activate SystemAccountManager #ffffe0
+SystemAccountManager->SystemAccountManager:++isInputValid(user: UserAccount)++
+group #red Invalid Information #white
+Controller.cs<--SystemAccountManager:++return "Invalid input"++
+User<--Controller.cs:++ return "Invalid input"++
+end
+Controller.cs<--SystemAccountManager:++return true++
+deactivate SystemAccountManager
+
 //
 Controller.cs->SystemAccountManager: ++manager.DeleteUserRecord(user:UserAccount)++
 
@@ -77,20 +93,31 @@ deactivate SqlServer(MariaDB)
 SystemAccountManager<--SqlDAO:++return true++
 deactivate SqlDAO
 deactivate SystemAccountManager
-activate SystemAccountManager #ffffe0
-SystemAccountManager->SystemAccountManager:++isInputValid(user: UserAccount)++
-group #red Invalid Information #white
-Controller.cs<--SystemAccountManager:++return "Invalid input"++
-User<--Controller.cs:++ return "Invalid input"++
-deactivate SystemAccountManager
-end
 group #green Valid Information #white
 activate SystemAccountManager #ffffe0
-SystemAccountManager->AccountService:++AccountService\n.DeleteUserRecord(user:UserAccount)++
+// GetUserName
+SystemAccountManager->SystemAccountManager:++string NewUserName()++
+// Enter UserName
+User->SystemAccountManager:++string NewUserName++
+// GetPassword
+SystemAccountManager->SystemAccountManager:++string NewPassword()++
+// Enter Password
+User->SystemAccountManager:++string NewPassword++
+// GetRole
+SystemAccountManager->SystemAccountManager:++string NewRole()++
+// Enter Role
+User->SystemAccountManager:++string NewRole++
+// Create NewUser object
+UserAccount<-SystemAccountManager:++new NewUser(\nstring NewUserName,\nstring NewPassword,\nstring role,\nDateTime TimeStamp)++
+activate UserAccount #CBC3E3
+UserAccount->UserAccount:++Constructor(\nstring NewUserName,\nstring NewPassword,\nstring role,\nDateTime TimeStamp)++
+UserAccount-->SystemAccountManager:++return NewUser++ 
+deactivate UserAccount
+SystemAccountManager->AccountService:++AccountService\n.DeleteUserRecord(user:NewUser,\nUpdateType: userDelete)++
 activate AccountService 	#ff8b3d
-AccountService->SqlDAO:++SqlDAO\n.DeleteUserRecord(user:UserAccount)++
+AccountService->SqlDAO:++SqlDAO\n.DeleteUserRecord(user:NewUser,\nUpdateType: userDelete)++
 activate SqlDAO #D3D3D3
-SqlDAO->SqlServer(MariaDB): ++isUser(user:UserAccount)++
+SqlDAO->SqlServer(MariaDB):++isUser(user:NewUser)++
 activate SqlServer(MariaDB) #00FFFF
 SqlServer(MariaDB)->SqlServer(MariaDB):++ Select *\nFrom Users\nwhere Username\n= @UserName OR\nemail = @Email++
 group #red data store timed out #white
