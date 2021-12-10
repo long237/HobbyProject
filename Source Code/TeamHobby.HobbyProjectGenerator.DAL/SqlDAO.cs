@@ -32,17 +32,19 @@ namespace TeamHobby.HobbyProjectGenerator.DAL
                     {
                         Console.WriteLine(r.ToString());
                     }
-
+                    return null;
                 }
 
-               /*
-                * this is meant for specific basic sql commands
+                /*// this is meant for specific basic sql commands
                 using (var adapter = new SqlDataAdapter())
-                {
-                    adapter.SelectCommand
-                }
-               */
-            } 
+                    {
+                        adapter.UpdateCommand
+                        adapter.DeleteCommand
+                        adapter.InsertCommand
+                        adapter.SelectCommand
+                }*/
+
+            }
         }
     }
 }
