@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGener
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "main", "..\main\main.csproj", "{30C7EBF3-3957-46E5-86C1-C13356841ECA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator.Archive", "..\TeamHobby.HobbyProjectGenerator.Archive\TeamHobby.HobbyProjectGenerator.Archive.csproj", "{7F4B93F8-27D6-4A2F-9E14-04385BF2D875}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{30C7EBF3-3957-46E5-86C1-C13356841ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30C7EBF3-3957-46E5-86C1-C13356841ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30C7EBF3-3957-46E5-86C1-C13356841ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F4B93F8-27D6-4A2F-9E14-04385BF2D875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F4B93F8-27D6-4A2F-9E14-04385BF2D875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F4B93F8-27D6-4A2F-9E14-04385BF2D875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F4B93F8-27D6-4A2F-9E14-04385BF2D875}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
