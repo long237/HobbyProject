@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeamHobby.HobbyProjectGenerator.Archive;
+using TeamHobby.HobbyProjectGenerator.DataAccess;
 
 namespace TeamHobby.HobbyProjectGenerator.Archive
 {
@@ -16,7 +17,7 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             {
                 if (String.Equals(name, "SQL", StringComparison.OrdinalIgnoreCase))
                 {
-                    return new SQLSource();
+                    return null;
                 }
                 else
                 {

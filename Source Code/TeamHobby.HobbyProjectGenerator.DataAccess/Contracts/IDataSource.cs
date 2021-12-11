@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//namespace TeamHobby.HobbyProjectGenerator.Archive.Contracts
-namespace TeamHobby.HobbyProjectGenerator.Archive
+
+namespace TeamHobby.HobbyProjectGenerator.DataAccess
 {
     public interface IDataSource<T>
     {

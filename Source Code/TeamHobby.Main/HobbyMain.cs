@@ -34,7 +34,7 @@ public class HobbyMain
 
         string connString = "user id=root;" + "password=Teamhobby;server=localhost;" + "Trusted_Connection=yes;" + "database=Alatreon; " + "connection timeout=5";
         string connMariaDB = "server=localhost;port=3306;uid=root;pwd=Teamhobby;connection timeout=5";
-        var conn = new SqlConnection(connString);
+        //var conn = new SqlConnection(connString);
 
 
 

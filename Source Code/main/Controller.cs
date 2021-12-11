@@ -1,5 +1,7 @@
 ﻿using main;
 using System;
+using System.Data.Odbc;
+using TeamHobby.HobbyProjectGenerator.DataAccess;
 
 
 namespace TeamHobby.HobbyProjectGenerator.Main
@@ -30,7 +32,40 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             
                        
             Console.WriteLine(value: $"username is {username}\npassword is {password}");
-            
+
+            // Testing Data Access Layer
+            string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
+              "SERVER=localhost;" +
+              "DATABASE=hobby;" +
+              "UID=root;" +
+              "PASSWORD=Teamhobby;" +
+              "OPTION=3";
+            IDataSource<string> datasource = new SqlDAO(dbInfo);
+
+            string sqlQuery = "Select * from log;";
+            Object result = datasource.ReadData(sqlQuery);
+            Console.WriteLine("type of Result: " + result.GetType());
+            OdbcDataReader reader = null;
+
+            if (result.GetType() == typeof(OdbcDataReader))
+            {
+                reader = (OdbcDataReader)result;
+
+            }
+
+            Console.WriteLine("Reading from the database");
+            while (reader.Read())
+            {
+                Console.WriteLine("Date={0} {1} {2} {3} {4} {5}", reader[0], reader[1], reader[2], reader[3], reader[4], reader[5]);
+                //Console.WriteLine("Col A: {0} ", reader[0]);
+                //Console.WriteLine("Column: " + reader.FieldCount);
+                //Console.WriteLine("Column={1}", reader[1]);
+            }
+
+
+
+
+
             /* ExampleDAO z = new ExampleDAO();
              z.UserData("Tomato");
              Console.Read();*/

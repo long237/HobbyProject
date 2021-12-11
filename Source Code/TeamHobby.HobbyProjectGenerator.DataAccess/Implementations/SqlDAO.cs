@@ -6,34 +6,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Compression;
+using System.Data.Odbc;
 
-
-namespace TeamHobby.HobbyProjectGenerator.Archive
+namespace TeamHobby.HobbyProjectGenerator.DataAccess
 {
-    public class SQLSource : IDataSource<string>
+    public class SqlDAO : IDataSource<string>
     {
-        //private SqlConnection conn;
+        private OdbcConnection _conn;
 
-        //public SQLSource(string info)
-        //{
-        //   // Do I put using here to make sure the connection closed once the object is gone?
-        //   conn = new SqlConnection(info);
-        //   // Perhaps open the connection here?
-        //   // conn.Open();
-        //}
+        public SqlDAO(string info)
+        {
+            try {
+                Console.WriteLine("Establising Connection");
+                _conn = new OdbcConnection(info);
+                Console.WriteLine("Connection established");
+            }
+            catch {
+                //conn = null;
+                Console.WriteLine("Error when creating a connection");
+                throw;
+            }
+
+        }
+
+        // Getter and setter for Odbc
+        public OdbcConnection Connection { get; set; }
 
         // Makre sure to Check for instanceof() before casting to a SQLReader in the controller
-        public Object ReadData(string cmd)
+        public Object? ReadData(string cmd)
         {
             try
             {
-                //conn.Open();
-                //SqlCommand command = new SqlCommand(null, conn);
-                //SqlCommand command = new SqlCommand(cmd, conn);
+                _conn.Open();
+                OdbcCommand command = new OdbcCommand(cmd, _conn);
 
-                // conn.Execute();
-                Console.WriteLine("Access a SQL database");
-                Console.WriteLine("Select * from archive");
+                OdbcDataReader reader = command.ExecuteReader();
 
                 // Execute the command to query the data
                 //using SqlDataReader sqlReader = command.ExecuteReader();
@@ -43,7 +50,7 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
                 //conn.Close();
                 //conn.Dispose();
                 //return sqlReader;
-                return new SqlConnection();
+                return reader;
             }
             catch (Exception e)
             {
