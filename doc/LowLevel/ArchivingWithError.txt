@@ -1,0 +1,146 @@
+
+title Use Case: Archiving
+
+participant Controller.cs #90EE90
+participant RDSFactory #26abff
+participant ArchiveManager #ffffe0
+participant SqlDAO #D3D3D3
+participant MariaDB #00FFFF
+
+activate Controller.cs #90EE90
+// Create a new factory 
+Controller.cs->RDSFactory:factory = new RDSFactory()
+activate RDSFactory #26abff
+RDSFactory->RDSFactory:Constructor()
+Controller.cs<--RDSFactory:return RDSFactory
+deactivate RDSFactory
+Controller.cs->SqlDAO: ++IDataSource factory.GetDataSource(string name, string connInfo)++
+activate SqlDAO #D3D3D3
+SqlDAO->SqlDAO:++Constructor(string connInfo)++
+Controller.cs<--SqlDAO: ++return SqlDAO++
+
+
+alt #red 
+SqlDAO ->SqlDAO: Catch Exception
+SqlDAO -->Controller.cs:return "DataSourceTimeOut"
+end 
+deactivate SqlDAO
+
+// Create Archive Manager
+
+activate ArchiveManager #ffffe0
+group #lightblue Connection to DataSource successful
+Controller.cs ->ArchiveManager:new ArchiveManager(IDataSource conn)
+ArchiveManager ->ArchiveManager: ArchiveManager(IDatasSource conn)
+
+// Calling the main:
+ArchiveManager -->Controller.cs: return ArchiveManager
+loop #lightblue while true
+alt #lightgreen The First Day of the month at 00:00:00 AM
+Controller.cs ->ArchiveManager: bool ArchiveManager.Controller( )
+
+// Keep looping
+
+// Check if the directory exist or not
+alt #lightgreen Archive folder does not exist already in the current directory
+ArchiveManager -> ArchiveManager:bool CreateArchiveFolder(string path)
+
+end 
+// Create the file name 
+ArchiveManager ->ArchiveManager:string filePath = string CreateOutFileName( )
+ArchiveManager ->SqlDAO:bool Compress(string filePath)
+
+activate SqlDAO #D3D3D3
+activate MariaDB #00FFFF
+SqlDAO ->MariaDB: bool CopyToArchive(string filePath)
+// Sql Command to add data to the table
+MariaDB ->MariaDB: SELECT 'LtimeStamp', 'logID', 'LvName', 'catName', 'userOP', 'logMessage' \nUNION ALL\nSELECT * FROM log\nWHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30\nINTO OUTFILE @filePath\nFIELDS ENCLOSED BY ''\nTERMINATED BY ','\nESCAPED BY '"'\nLINES TERMINATED BY '\r\\n';
+alt #lightgreen No error when doing executing copy SQL command
+MariaDB --> SqlDAO: return True
+SqlDAO -->ArchiveManager: return True
+end 
+
+alt #red Error occur when executing copy SQL command on Database
+MariaDB -->SqlDAO: throw SQLException
+deactivate MariaDB
+SqlDAO -->ArchiveManager: throw SqlException
+deactivate SqlDAO
+
+
+ArchiveManager ->ArchiveManager: Catch Exception
+// Removing created files if the process failed
+alt #red Log output text file exist
+ArchiveManager ->ArchiveManager: File.Delete(string filePath)
+end
+alt #red Compressed file exist
+ArchiveManager ->ArchiveManager: File.Delete(string comFilePath)
+end
+end 
+
+activate SqlDAO #D3D3D3
+// Compress the file 
+SqlDAO ->SqlDAO: bool CompressArchive(string filePath)
+alt #lightgreen File Compression was successful
+SqlDAO -->ArchiveManager: return True
+end 
+alt #red File Compresssion failed
+SqlDAO -->ArchiveManager: throw FileException
+ArchiveManager ->ArchiveManager: Catch Exception
+alt #red Log output text file exist
+ArchiveManager ->ArchiveManager: File.Delete(filePath)
+end
+alt #red Compressed file exist
+ArchiveManager ->ArchiveManager: File.Delete(string comFilePath)
+end
+end
+// Remove output file
+SqlDAO ->SqlDAO:bool RemoveOutputFile(string filePath)
+alt #lightgreen UncompressFile was removed successfully
+SqlDAO -->ArchiveManager: return true
+end 
+
+alt #red Uncompressfile failed to be removed
+SqlDAO -->ArchiveManager: throw FileException
+deactivate SqlDAO
+ArchiveManager ->ArchiveManager: catch Exception
+
+alt #red Log output text file exist
+ArchiveManager ->ArchiveManager: File.Delete(string filePath)
+end
+alt #red Compressed file exist
+ArchiveManager ->ArchiveManager: File.Delete(string comFilePath)
+end
+end 
+
+activate SqlDAO #D3D3D3
+activate MariaDB #00FFFF
+SqlDAO ->MariaDB: bool RemoveEntries( )
+MariaDB ->MariaDB: DELETE from log \nWHERE \nDATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;
+
+alt #lightgreen No error when doing executing remove old logs SQL command
+MariaDB-->SqlDAO:return True
+SqlDAO -->ArchiveManager: return True
+end
+
+alt #red Error occur when executing removing SQL command on Database
+MariaDB -->SqlDAO: throw SQLException
+deactivate MariaDB
+SqlDAO-->ArchiveManager: throw SQLException
+deactivate SqlDAO
+ArchiveManager ->ArchiveManager:Catch Exception
+alt #red Log output text file exist
+ArchiveManager ->ArchiveManager: File.Delete(string filePath)
+end
+alt #red Compressed file exist
+ArchiveManager ->ArchiveManager: File.Delete(string comFilePath)
+end
+end 
+
+
+ArchiveManager --> Controller.cs:return True
+deactivate ArchiveManager
+end
+
+end 
+end 
+
