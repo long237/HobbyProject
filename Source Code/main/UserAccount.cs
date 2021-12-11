@@ -8,7 +8,7 @@ namespace main
 {
     public class UserAccount
     {
-        private string username;
+       /* private string username;
         private string password;
         private string role;
 
@@ -20,7 +20,7 @@ namespace main
 
         }
 
-        public UserAccount()
+        public void UserAccount()
         {
             password = "1234";
             role = "Regular";
@@ -29,6 +29,6 @@ namespace main
         public void newUser()
         {
           
-        }
+        }*/
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.Data.SqlClient;
-using TeamHobby.HobbyProjectGenerator;
-using TeamHobby.HobbyProjectGenerator.DAL;
-using TeamHobby.HobbyProjectGenerator.Models;
+﻿using Microsoft.Data.SqlClient;
 
 namespace TeamHobby.HobbyProjectGenerator.Main
 {
