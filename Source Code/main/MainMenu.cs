@@ -4,12 +4,12 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 {
     public class MainMenu
     {
-        static void Main(string[] args)
+        /*static void Main(string[] args)
         {
             /* ExampleDAO z = new ExampleDAO();
              z.UserData("Tomato");
              Console.Read();*/
-            bool menu = true;
+            /*bool menu = true;
 
             // Set up menu loop
             while (menu == true)
@@ -83,7 +83,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                                     {
 
                                     }*/
-                                    conPsswrd = false;
+                                  /*  conPsswrd = false;
                                 }
                                 else
                                 {
@@ -127,8 +127,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 {
                     menu = false;
                 };
-            }
+            }*/
 
-        }
+        //}
     }
 }
