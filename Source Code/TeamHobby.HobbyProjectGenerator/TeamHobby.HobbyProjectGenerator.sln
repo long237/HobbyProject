@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGener
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "main", "..\main\main.csproj", "{30C7EBF3-3957-46E5-86C1-C13356841ECA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator.Archive", "..\TeamHobby.HobbyProjectGenerator.Archive\TeamHobby.HobbyProjectGenerator.Archive.csproj", "{B88ED0D9-72E2-4245-BD8F-856FF42E500C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.Main", "..\TeamHobby.Main\TeamHobby.Main.csproj", "{ED126EFB-B337-42F9-BE4B-65A5AE90503B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{30C7EBF3-3957-46E5-86C1-C13356841ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30C7EBF3-3957-46E5-86C1-C13356841ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30C7EBF3-3957-46E5-86C1-C13356841ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B88ED0D9-72E2-4245-BD8F-856FF42E500C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B88ED0D9-72E2-4245-BD8F-856FF42E500C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B88ED0D9-72E2-4245-BD8F-856FF42E500C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B88ED0D9-72E2-4245-BD8F-856FF42E500C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED126EFB-B337-42F9-BE4B-65A5AE90503B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED126EFB-B337-42F9-BE4B-65A5AE90503B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED126EFB-B337-42F9-BE4B-65A5AE90503B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED126EFB-B337-42F9-BE4B-65A5AE90503B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
