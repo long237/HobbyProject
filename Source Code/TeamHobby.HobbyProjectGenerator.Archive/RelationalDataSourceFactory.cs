@@ -10,7 +10,7 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
     public class RelationalDataSourceFactory
     {
         // Mehthod to create a specific data source suitable to the need
-        public IDataSource? getDataSource(string name)
+        public IDataSource<string> getDataSource(string name)
         {
             try
             {

@@ -10,7 +10,7 @@ using System.IO.Compression;
 
 namespace TeamHobby.HobbyProjectGenerator.Archive
 {
-    public class SQLSource : IDataSource, IRelationArchivable
+    public class SQLSource : IDataSource<string>
     {
         //private SqlConnection conn;
 
@@ -21,12 +21,6 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
         //   // Perhaps open the connection here?
         //   // conn.Open();
         //}
-
-        // The also Identical to update data, maybe only one method is enough
-        public bool DeleteData(string cmd)
-        {
-            throw new NotImplementedException();
-        }
 
         // Makre sure to Check for instanceof() before casting to a SQLReader in the controller
         public Object ReadData(string cmd)
@@ -58,6 +52,13 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             }
         }
 
+        // The also Identical to update data, maybe only one method is enough
+        public bool DeleteData(string cmd)
+        {
+            throw new NotImplementedException();
+        }
+
+
         // TODO: No idea how to check if the command is valid or where to check it
         public bool UpdateData(string cmd)
         {
@@ -88,11 +89,6 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             throw new NotImplementedException();
         }
 
-        // Method to archive data
-        public bool CreateArchived(string fileName)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool CompressFile(string fileName)
         {
@@ -122,6 +118,30 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             {
                 Console.WriteLine(ex.Message);
                 return false;
+            }
+        }
+
+        // Copy the Sql data to the a text file
+        public bool CopyToFile(string filePath){
+            return true;
+        }
+
+        public bool RemoveOutputFile(string filePath){
+            return true;
+        }
+
+        // Remove data from the database, if failed, let the controller handle it. 
+        public bool RemoveEntries() {
+            
+            string sqlCmd = "DELETE FROM log WHERE DATE_DIFF(current_timestamp, log.LtimeStamp) > 30";
+
+            try{
+                DeleteData(sqlCmd);
+                return true;
+            }
+            catch {
+                Console.WriteLine("Eeep! an error in Remove Entries, not to worry, will be handled higher up the call stack");
+                throw;
             }
         }
 
