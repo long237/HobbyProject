@@ -3,7 +3,6 @@
 using System.IO.Compression;
 using TeamHobby.HobbyProjectGenerator.Archive;
 //using MySql.Data.MySqlClient;
-using Microsoft.Data.SqlClient;
 using System.Data.Odbc;
 
 public class HobbyMain
@@ -116,7 +115,7 @@ public class HobbyMain
 
     public static void ReadData(string connectionString)
     {
-        string queryString = "SELECT logID from log;";
+        string queryString = "SELECT * from log;";
 
         using (OdbcConnection connection = new OdbcConnection(connectionString))
         {
@@ -129,8 +128,8 @@ public class HobbyMain
             Console.WriteLine("Read the database");
             while (reader.Read())
             {
-                //Console.WriteLine("Date={0} {1} {2} {3} {4} {5}", reader[0], reader[1], reader[2], reader[3],reader[4], reader[5]);
-                Console.WriteLine("Col A: {0} ", reader[0]);
+                Console.WriteLine("Date={0} {1} {2} {3} {4} {5}", reader[0], reader[1], reader[2], reader[3],reader[4], reader[5]);
+                //Console.WriteLine("Col A: {0} ", reader[0]);
                 //Console.WriteLine("Column: " + reader.FieldCount);
                 //Console.WriteLine("Column={1}", reader[1]);
 
