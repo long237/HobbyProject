@@ -31,6 +31,11 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         // Getter and setter for Odbc
         public OdbcConnection Connection { get; set; }
 
+        public OdbcConnection getConnection()
+        {
+            return _conn;
+        }
+
         // Closing a connection here will cause a problem
         // Make sure whoever called this need to close the connection until we can fixed it. 
         public Object? ReadData(string cmd)
