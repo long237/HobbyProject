@@ -23,7 +23,7 @@ Controller.cs->SqlDAO:++IDataSource factory.GetDataSource(string DbName, string 
 activate SqlDAO #D3D3D3
 SqlDAO->SqlDAO:++Constructor(string connInfo)++
 group #red Data Store Timed Out #white
-SqlDAO->SqlDAO:++Catch Exception++
+SqlDAO->SqlDAO: ++Catch SqlException++
 Controller.cs<--SqlDAO:++return "Data Source Timed Out"++
 end
 group #blue Data Store Online #white
@@ -49,7 +49,8 @@ activate UserAccount #CBC3E3
 UserAccount->UserAccount:++Constructor(string username,\n string password,\n DateTime TimeStamp)++
 Controller.cs<--UserAccount:++New UserAccount++
 deactivate UserAccount
-
+//
+Controller.cs->SystemAccountManager:++manager.CreateUserRecord(user:UserAccount)++
 activate SystemAccountManager #ffffe0
 SystemAccountManager->SystemAccountManager:++isInputValid(user: UserAccount)++
 
@@ -57,13 +58,9 @@ group #red Invalid Information #white
 Controller.cs<--SystemAccountManager:++return "Invalid input"++
 User<--Controller.cs:++ return "Invalid input"++
 end
-Controller.cs<--SystemAccountManager:++return true++
-deactivate SystemAccountManager
-//
-Controller.cs->SystemAccountManager:++manager.CreateUserRecord(user:UserAccount)++
+group #green Information Valid #white
 
 //check if there is an admin user
-activate SystemAccountManager #ffffe0
 SystemAccountManager->SqlDAO:++bool isAdmin(user:UserAccount)++
 activate SqlDAO #D3D3D3
 SqlDAO->SqlServer(MariaDB):++SqlRead confirmAdmin()++
@@ -114,9 +111,9 @@ SystemAccountManager->SystemAccountManager:++string NewRole()++
 // Enter Role
 User->SystemAccountManager:++string NewRole++
 // Create NewUser object
-UserAccount<-SystemAccountManager:++new NewUser(\nstring NewUserName,\nstring NewPassword,\nstring New Email,\nstring NewRole,\nDateTime TimeStamp)++
+UserAccount<-SystemAccountManager:++new NewUser(\nstring NewUserName,\nstring NewPassword,\nstring New Email,\nDateTime TimeStamp)++
 activate UserAccount #CBC3E3
-UserAccount->UserAccount:++Constructor(\nstring NewUserName,\nstring NewPassword,\nstring New Email,\nstring NewRole,\nDateTime TimeStamp)++
+UserAccount->UserAccount:++Constructor(string NewUserName,\nstring NewPassword,\nstring New Email,\nDateTime TimeStamp)++
 UserAccount-->SystemAccountManager:++return NewUser++ 
 deactivate UserAccount
 //Create User Record
@@ -170,4 +167,6 @@ end
 end
 end
 end
+end
+
 end

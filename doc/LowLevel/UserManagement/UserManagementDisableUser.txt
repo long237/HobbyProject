@@ -49,21 +49,19 @@ activate UserAccount #CBC3E3
 UserAccount->UserAccount:  ++Constructor(string username,\n string password,\n DateTime RegistrationTimeStamp)++
 Controller.cs<--UserAccount:++New UserAccount++
 deactivate UserAccount
-
+Controller.cs->SystemAccountManager: ++manager.DisableUserRecord(user:UserAccount)++
 activate SystemAccountManager #ffffe0
 SystemAccountManager->SystemAccountManager:++isInputValid(user: UserAccount)++
 group #red Invalid Information #white
 Controller.cs<--SystemAccountManager:++return "Invalid input"++
 User<--Controller.cs:++ return "Invalid input"++
 end
-Controller.cs<--SystemAccountManager:++return true++
-deactivate SystemAccountManager
+group #green Information Valid #white
 
 //
-Controller.cs->SystemAccountManager: ++manager.DisableUserRecord(user:UserAccount)++
 
 //check if there is an admin user
-activate SystemAccountManager #ffffe0
+
 SystemAccountManager->SqlDAO:++isAdmin(user:UserAccount)++
 activate SqlDAO #D3D3D3
 SqlDAO->SqlServer(MariaDB):++SqlRead confirmAdmin()++
@@ -158,4 +156,5 @@ end
 end
 end
 end
+end 
 end

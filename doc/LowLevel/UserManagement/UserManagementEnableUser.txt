@@ -1,4 +1,4 @@
-title Enable Specfied User
+title Disable Specfied User
 actor User
 participant Controller.cs #90EE90
 participant RDSFactory #26abff
@@ -29,7 +29,6 @@ end
 group #blue Data Store Online #white
 Controller.cs<--SqlDAO: ++return SqlDAO++
 deactivate SqlDAO
-
 // Create new Admin
 Controller.cs->SystemAccountManager:++ manager = new SystemAccountManager(IDataSource conn)++
 activate SystemAccountManager #ffffe0
@@ -49,21 +48,18 @@ activate UserAccount #CBC3E3
 UserAccount->UserAccount:  ++Constructor(string username,\n string password,\n DateTime RegistrationTimeStamp)++
 Controller.cs<--UserAccount:++New UserAccount++
 deactivate UserAccount
-
+Controller.cs->SystemAccountManager:++manager.EnableUserRecord(user:UserAccount)++
 activate SystemAccountManager #ffffe0
 SystemAccountManager->SystemAccountManager:++isInputValid(user: UserAccount)++
 group #red Invalid Information #white
 Controller.cs<--SystemAccountManager:++return "Invalid input"++
 User<--Controller.cs:++ return "Invalid input"++
 end
-Controller.cs<--SystemAccountManager:++return true++
-deactivate SystemAccountManager
 
 //
-Controller.cs->SystemAccountManager:++manager.EnableUserRecord(user:UserAccount)++
 
+group #green Information Valid #white
 //check if there is an admin user
-activate SystemAccountManager #ffffe0
 SystemAccountManager->SqlDAO:++isAdmin(user:UserAccount)++
 activate SqlDAO #D3D3D3
 SqlDAO->SqlServer(MariaDB):++SqlRead confirmAdmin()++
@@ -155,6 +151,7 @@ User<--Controller.cs:++               return \n"User does not exist"++
 deactivate Controller.cs
 end
 //deactivate User
+end
 end
 end
 end

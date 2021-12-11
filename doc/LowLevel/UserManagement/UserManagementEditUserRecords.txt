@@ -50,20 +50,18 @@ activate UserAccount #CBC3E3
 UserAccount->UserAccount: ++string username,\n string password,\n DateTime RegistrationTimeStamp++
 Controller.cs<--UserAccount:++New UserAccount++
 deactivate UserAccount
+Controller.cs->SystemAccountManager:++manager.UpdateUserRecord(user:UserAccount)++
 activate SystemAccountManager #ffffe0
 SystemAccountManager->SystemAccountManager:++isInputValid(user: UserAccount)++
 group #red Invalid Information #white
 Controller.cs<--SystemAccountManager:++return "Invalid input"++
 User<--Controller.cs:++ return "Invalid input"++
 end
-Controller.cs<--SystemAccountManager:++return true++
-deactivate SystemAccountManager
+group #green Information Valid #white
 
 //look over
-Controller.cs->SystemAccountManager:++manager.UpdateUserRecord(user:UserAccount)++
 
 //check if there is an admin user
-activate SystemAccountManager #ffffe0
 SystemAccountManager->SqlDAO:++bool isAdmin(user:UserAccount)++
 activate SqlDAO #D3D3D3
 SqlDAO->SqlServer(MariaDB):++SqlRead confirmAdmin()++
@@ -113,9 +111,9 @@ SystemAccountManager->SystemAccountManager:++string NewRole()++
 // Enter Role
 User->SystemAccountManager:++string NewRole++
 // Create NewUser object
-UserAccount<-SystemAccountManager:++new NewUser(\nstring NewUserName,\nstring NewPassword,\nstring New Email,\nstring NewRole,\nDateTime TimeStamp)++
+UserAccount<-SystemAccountManager:++new NewUser(\nstring NewUserName,\nstring NewPassword,\nstring New Email,\nstring NewRole\nDateTime TimeStamp)++
 activate UserAccount #CBC3E3
-UserAccount->UserAccount:++Constructor(\nstring NewUserName,\nstring NewPassword,\nstring New Email,\nstring NewRole,\nDateTime TimeStamp)++
+UserAccount->UserAccount:++Constructor(\nstring NewUserName,\nstring NewPassword,\nstring New Email,\nstring NewRole\nDateTime TimeStamp)++
 UserAccount-->SystemAccountManager:++return NewUser++ 
 deactivate UserAccount
 SystemAccountManager->AccountService:++AccountService\n.UpdateUserRecord(user:NewUser,\nUpdateType: userUpdate)++
@@ -124,7 +122,7 @@ AccountService->SqlDAO:++SqlDAO\n.UpdateUserRecord(user:NewUser,\nUpdateType: us
 activate SqlDAO #D3D3D3
 SqlDAO->SqlServer(MariaDB):++isUser(user:NewUser)++
 activate SqlServer(MariaDB) #00FFFF
-SqlServer(MariaDB)->SqlServer(MariaDB):++Update *\nFrom Users\nwhere Username\n= @UserName and\nRole = @UserRole
+SqlServer(MariaDB)->SqlServer(MariaDB):++Update *\nFrom Users\nwhere Username\n= @UserName OR\nemail = @Email++
 group #red data store timed out #white
 SqlDAO<--SqlServer(MariaDB):++SqlException++
 deactivate SqlServer(MariaDB)
@@ -142,11 +140,11 @@ activate SqlServer(MariaDB) #00FFFF
 SqlDAO<--SqlServer(MariaDB):++ return True++
 SqlDAO->SqlServer(MariaDB):++ SQL insert\nupdate credentials++
 SqlDAO<--SqlServer(MariaDB):++ return 1++
-deactivate SqlServer(MariaDB)
 AccountService<--SqlDAO:++return "User information updated successfully"++
 SystemAccountManager<--AccountService:++return "User information updated successfully"++
 Controller.cs<--SystemAccountManager:++return "User information updated successfully"++
 User<--Controller.cs:++ return "User information\n updated successfully"++
+deactivate SqlServer(MariaDB)
 end 
 // User doesn't exist
 group #green User does not exist #white
@@ -154,17 +152,18 @@ activate SqlServer(MariaDB) #00FFFF
 SqlDAO<--SqlServer(MariaDB):++ return False++
 SqlDAO->SqlServer(MariaDB):++ SQL insert\nuser credentials++
 SqlDAO<--SqlServer(MariaDB):++ return 1++
-deactivate SqlServer(MariaDB)
 AccountService<--SqlDAO:++return "User is now registered"++
-deactivate SqlDAO
 SystemAccountManager<--AccountService:++return "User is now registered"++
-deactivate AccountService
 Controller.cs<--SystemAccountManager:++return "User is now registered"++
-deactivate SystemAccountManager
 User<--Controller.cs:++               return \n"User is now registered"++
+deactivate AccountService
+deactivate SqlDAO
+deactivate SqlServer(MariaDB)
+deactivate SystemAccountManager
 deactivate Controller.cs
 end
 //deactivate User
+end
 end
 end
 end
