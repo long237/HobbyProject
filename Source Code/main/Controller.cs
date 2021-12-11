@@ -43,24 +43,34 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             IDataSource<string> datasource = new SqlDAO(dbInfo);
 
             string sqlQuery = "Select * from log;";
-            Object result = datasource.ReadData(sqlQuery);
-            Console.WriteLine("type of Result: " + result.GetType());
-            OdbcDataReader reader = null;
+            //Object result = datasource.ReadData(sqlQuery);
+            //Console.WriteLine("type of Result: " + result.GetType());
+            //OdbcDataReader reader = null;
 
-            if (result.GetType() == typeof(OdbcDataReader))
-            {
-                reader = (OdbcDataReader)result;
+            //if (result.GetType() == typeof(OdbcDataReader))
+            //{
+            //    reader = (OdbcDataReader)result;
 
-            }
+            //}
 
-            Console.WriteLine("Reading from the database");
-            while (reader.Read())
-            {
-                Console.WriteLine("Date={0} {1} {2} {3} {4} {5}", reader[0], reader[1], reader[2], reader[3], reader[4], reader[5]);
-                //Console.WriteLine("Col A: {0} ", reader[0]);
-                //Console.WriteLine("Column: " + reader.FieldCount);
-                //Console.WriteLine("Column={1}", reader[1]);
-            }
+            //Console.WriteLine("Reading from the database");
+            //while (reader.Read())
+            //{
+            //    Console.WriteLine("Date={0} {1} {2} {3} {4} {5}", reader[0], reader[1], reader[2], reader[3], reader[4], reader[5]);
+            //}
+
+            // Inserting Data into the database:
+            //string sqlWrite = "INSERT into log(lvname, catname, userop, logmessage) values " +
+            //    "('Info', 'View', 'Testing DAL stuffs', 'new DAL method tested');";
+
+            //Console.WriteLine("Writing to the database... ");
+            //datasource.WriteData(sqlWrite);
+            //Console.WriteLine("Writing completed. ");
+
+            string sqlRemove = "DELETE from log where logID = 28;";
+            Console.WriteLine("Writing to the database... ");
+            datasource.WriteData(sqlRemove);
+            Console.WriteLine("Writing completed. ");
 
 
 

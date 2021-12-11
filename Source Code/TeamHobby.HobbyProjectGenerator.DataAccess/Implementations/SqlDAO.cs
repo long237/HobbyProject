@@ -22,47 +22,65 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
                 Console.WriteLine("Connection established");
             }
             catch {
-                //conn = null;
+                //_conn = null;
                 Console.WriteLine("Error when creating a connection");
                 throw;
             }
-
         }
 
         // Getter and setter for Odbc
         public OdbcConnection Connection { get; set; }
 
-        // Makre sure to Check for instanceof() before casting to a SQLReader in the controller
+        // Closing a connection here will cause a problem
+        // Make sure whoever called this need to close the connection until we can fixed it. 
         public Object? ReadData(string cmd)
         {
             try
             {
                 _conn.Open();
                 OdbcCommand command = new OdbcCommand(cmd, _conn);
-
                 OdbcDataReader reader = command.ExecuteReader();
 
-                // Execute the command to query the data
-                //using SqlDataReader sqlReader = command.ExecuteReader();
-
-                // while (myReader)
-                // Print to console
-                //conn.Close();
-                //conn.Dispose();
-                //return sqlReader;
+                //_conn.Close();
                 return reader;
+                
             }
             catch (Exception e)
             {
+                Console.WriteLine("Error when Reading data from databse.");
                 Console.WriteLine(e.Message);
                 return null;
             }
+            //finally
+            //{
+            //    _conn.Close();
+            //}
         }
 
         // The also Identical to update data, maybe only one method is enough
         public bool DeleteData(string cmd)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _conn.Open();
+
+                OdbcCommand command = new OdbcCommand(cmd, _conn);
+                command.ExecuteNonQuery();
+
+                _conn.Close();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error when deleting data from database!!");
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            finally
+            {
+                _conn.Close();
+            }
         }
 
 
@@ -71,29 +89,51 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         {
             try
             {
-                //conn.Open();
+                _conn.Open();
 
-                // Create the SQL command object
-                //SqlCommand command = new SqlCommand(cmd, conn);
+                OdbcCommand command = new OdbcCommand(cmd, _conn);
+                command.ExecuteNonQuery();
 
-                // Execute the command to change the rows in a table
-                //command.ExecuteNonQuery();
+                _conn.Close();
 
-                //conn.Close();
-                //conn.Dispose();
                 return true;
             }
             catch (Exception e)
             {
+                Console.WriteLine("Error when updating data from database!!");
                 Console.WriteLine(e.Message);
                 return false;
+            }
+            finally
+            {
+                _conn.Close();
             }
         }
 
         // Very similar to UpdataData if not identical
         public bool WriteData(string cmd)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _conn.Open();
+
+                OdbcCommand command = new OdbcCommand(cmd, _conn);
+                command.ExecuteNonQuery();
+
+                _conn.Close();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error when Writing data from database!!");
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            finally
+            {
+                _conn.Close();
+            }
         }
 
 
