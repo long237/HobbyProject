@@ -26,14 +26,14 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
         public static void Main(string[] args)
         {
-            //GetCredentials credentials = new GetCredentials();
-            //string? username = credentials.GetUserName();
-            //string? password = credentials.GetPassword();
+            GetCredentials credentials = new GetCredentials();
+            string? username = credentials.GetUserName();
+            string? password = credentials.GetPassword();
 
 
-            //Console.WriteLine(value: $"username is {username}\npassword is {password}");
+            Console.WriteLine(value: $"username is {username}\npassword is {password}");
 
-            // Creating the Factory class
+           /* // Creating the Factory class
             string dbType = "sql";
             RelationalDataSourceFactory dbFactory = new RelationalDataSourceFactory();
 
@@ -65,7 +65,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             SqlDAO sqlDS = (SqlDAO)datasource;
 
             // Closing the connection
-            sqlDS.getConnection().Close();
+            sqlDS.getConnection().Close();*/
 
             // 2.Inserting Data into the database:
             //string sqlWrite = "INSERT into log(lvname, catname, userop, logmessage) values " +
