@@ -1,6 +1,7 @@
 ﻿using main;
 using System;
 using System.Data.Odbc;
+using TeamHobby.HobbyProjectGenerator.Archive;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
 
 
@@ -63,9 +64,56 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 Console.WriteLine("Date={0} {1} {2} {3} {4} {5}", reader[0], reader[1], reader[2], reader[3], reader[4], reader[5]);
             }
             SqlDAO sqlDS = (SqlDAO)datasource;
+            Console.WriteLine("");
 
             // Closing the connection
             sqlDS.getConnection().Close();*/
+
+            // While loop to keep this running forever with UserManagement
+            // Testing archive Manager
+            //while (true)
+            //{
+                string currentDate = DateTime.Now.ToString("dd");
+                string currentTime = DateTime.Now.ToString("T");
+                Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
+                if (String.Equals(currentDate, "1") && String.Equals(currentTime, "00:00:00 AM")){            
+                    ArchiveManager archive = new ArchiveManager(datasource);
+                    archive.Controller();
+                }
+            //}
+
+
+
+            //Creating the folder Archive
+            //Console.WriteLine("Creating a new folder ...");
+            //archive.CreateArchiveFolder();
+            //Console.WriteLine("");
+
+            //// Creating a file name:
+            //string filePath = @"C:\HobbyArchive";
+            ////Console.WriteLine("Creating file name ... ");
+            ////string curPath = archive.CreateOutFileName();
+            //string curPath = archive.CreateOutFileName(filePath);
+
+            ////string pathForward = @"C:\Users\Chunchunmaru\Documents\csulbFall2021\HobbyProject\Source Code\main\bin\Debug\net6.0\HobbyArchive";
+            ////string pathTemp = "C:/Temp/oldlogs10.txt";
+            ////string pathTempBack = @"C:\Temp\oldlogs10.txt";
+            //Console.WriteLine("----------------");
+
+            ////Output SQL to a text file
+            //sqlDS.CopyToFile(curPath);
+
+            //// Compress the file
+            //sqlDS.CompressFile(curPath);
+
+            ////Remove output file
+            //sqlDS.RemoveOutputFile(curPath);
+
+            //// Remove entries fromt the database
+            //sqlDS.RemoveEntries();
+
+            
+
 
             // 2.Inserting Data into the database:
             //string sqlWrite = "INSERT into log(lvname, catname, userop, logmessage) values " +
@@ -80,9 +128,6 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             //Console.WriteLine("Writing to the database... ");
             //datasource.WriteData(sqlRemove);
             //Console.WriteLine("Writing completed. ");
-
-
-
 
 
             /* ExampleDAO z = new ExampleDAO();

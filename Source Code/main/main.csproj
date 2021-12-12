@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Archive\TeamHobby.HobbyProjectGenerator.Archive.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccess\TeamHobby.HobbyProjectGenerator.DataAccess.csproj" />
   </ItemGroup>
 
