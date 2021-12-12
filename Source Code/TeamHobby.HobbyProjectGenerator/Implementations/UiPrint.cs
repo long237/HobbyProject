@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 // Print Statements used throughout the program.
 
-namespace main
+namespace TeamHobby.HobbyProjectGenerator
 {
-    internal class UiPrint
+    public class UiPrint
     {
         public void InitialMenu()
         {
