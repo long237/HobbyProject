@@ -16,7 +16,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
         }
         public string? GetPassword()
         {
-            Console.WriteLine("Please enter a password:");
+            Console.WriteLine("Please enter " +
+                "a password:");
             string? userPassword = Console.ReadLine();
             return userPassword;
         }
@@ -26,8 +27,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
         public static void Main(string[] args)
         {
-           // Logger log = new Logger();
-            Logger.PrintTest();
+            // Logger log = new Logger();
+            //Logger.PrintTest();
             //GetCredentials credentials = new GetCredentials();
             //string? username = credentials.GetUserName();
             //string? password = credentials.GetPassword();
@@ -36,38 +37,38 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             //Console.WriteLine(value: $"username is {username}\npassword is {password}");
 
             // Creating the Factory class
-            //string dbType = "sql";
-            //RelationalDataSourceFactory dbFactory = new RelationalDataSourceFactory();
+            string dbType = "sql";
+            RelationalDataSourceFactory dbFactory = new RelationalDataSourceFactory();
 
-            //// Testing Data Access Layer
-            //string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
-            //  "SERVER=localhost;" +
-            //  "DATABASE=hobby;" +
-            //  "UID=root;" +
-            //  "PASSWORD=Teamhobby;" +
-            //  "OPTION=3";
-            //IDataSource<string> datasource = dbFactory.getDataSource(dbType,dbInfo);
+            // Testing Data Access Layer
+            string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
+              "TCPIP=1;" +
+              "SERVER=localhost;" +
+              "DATABASE=hobby;" +
+              "UID=root;" +
+              "PASSWORD=Teamhobby;";
+            IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
 
-            //string sqlQuery = "Select * from log;";
-            //Object result = datasource.ReadData(sqlQuery);
-            //Console.WriteLine("type of Result: " + result.GetType());
-            //OdbcDataReader reader = null;
+            string sqlQuery = "Select * from log;";
+            Object result = datasource.ReadData(sqlQuery);
+            Console.WriteLine("type of Result: " + result.GetType());
+            OdbcDataReader reader = null;
 
-            //if (result.GetType() == typeof(OdbcDataReader))
-            //{
-            //    reader = (OdbcDataReader)result;
+            if (result.GetType() == typeof(OdbcDataReader))
+            {
+                reader = (OdbcDataReader)result;
 
-            //}
+            }
 
-            //Console.WriteLine("Reading from the database");
-            //while (reader.Read())
-            //{
-            //    Console.WriteLine("Date={0} {1} {2} {3} {4} {5}", reader[0], reader[1], reader[2], reader[3], reader[4], reader[5]);
-            //}
-            //SqlDAO sqlDS = (SqlDAO)datasource;
+            Console.WriteLine("Reading from the database");
+            while (reader.Read())
+            {
+                Console.WriteLine("Date={0} {1} {2} {3} {4} {5}", reader[0], reader[1], reader[2], reader[3], reader[4], reader[5]);
+            }
+            SqlDAO sqlDS = (SqlDAO)datasource;
 
-            //// Closing the connection
-            //sqlDS.getConnection().Close();
+            // Closing the connection
+            sqlDS.getConnection().Close();
 
             // 2.Inserting Data into the database:
             //string sqlWrite = "INSERT into log(lvname, catname, userop, logmessage) values " +
