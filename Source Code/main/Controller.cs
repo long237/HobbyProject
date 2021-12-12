@@ -1,6 +1,7 @@
 ﻿using main;
 using System;
 using System.Data.Odbc;
+using TeamHobby.HobbyProjectGenerator.Archive;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
 
 
@@ -66,6 +67,16 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
             // Closing the connection
             sqlDS.getConnection().Close();
+
+            // Testing archive Manager
+            ArchiveController archive = new ArchiveController(datasource);
+            string curPath = archive.CreateOutFileName();
+
+            //Creating the folder Archive
+            Console.WriteLine("Creating a new folder ...");
+            archive.CreateArchiveFolder();
+            
+
 
             // 2.Inserting Data into the database:
             //string sqlWrite = "INSERT into log(lvname, catname, userop, logmessage) values " +

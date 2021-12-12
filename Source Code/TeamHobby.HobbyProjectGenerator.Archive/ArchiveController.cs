@@ -12,18 +12,33 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             _conn = dataSource;
         }
 
-        public IDataSource<string> GetDataSource(){
-            return _conn;
-        }
 
         // Create the folder where the compress file will be stored
         public bool CreateArchiveFolder(){
+            string curPath = Directory.GetCurrentDirectory();
+            //string temp = @
+            string archiveFolder = curPath + "\\HobbyArhive";
+            //Console.WriteLine("Creating a new folder at: {0}", archiveFolder);
+            if (!Directory.Exists(archiveFolder))
+            {
+                Console.WriteLine("Creating a new folder at: {0}", archiveFolder);
+                Directory.CreateDirectory(archiveFolder);
+            }
             return true;
         }
 
         // Return the name of the new output file with Path
-        public string CreateOutFileName(){
-            return "hello";
+        public string CreateOutFileName() {
+            try { 
+                string path = Directory.GetCurrentDirectory();
+                Console.WriteLine("The current directory is {0}", path);
+                return path;
+            }
+            catch
+            {
+                Console.WriteLine("ArchiveCon: Creating a file name failed. ");
+                return "";
+            }
         }
 
         // put everything toget here
