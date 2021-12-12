@@ -36,7 +36,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             return _conn;
         }
 
-        // Closing a connection here will cause a problem
+        // TODO: Closing a connection here will cause a problem
         // Make sure whoever called this need to close the connection until we can fixed it. 
         public Object? ReadData(string cmd)
         {
@@ -175,17 +175,68 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
 
         // Copy the Sql data to the a text file
         public bool CopyToFile(string filePath){
-            return true;
+            try
+            {
+                _conn.Open();
+                // Conver backward slash in to forward slash
+                filePath = filePath.Replace("\\", "/");
+                string sqlQuery = "SELECT 'LtimeStamp', 'logID', 'LvName', 'catName', 'userOP', 'logMessage' " +
+                    "UNION ALL " +
+                    "SELECT* FROM log " +
+                    "WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30 " +
+                    "INTO OUTFILE '" + filePath + "'" +
+                    "FIELDS ENCLOSED BY ''" + 
+                    "TERMINATED BY ',' " +
+                    "LINES TERMINATED BY '\r\n';";
+
+                Console.WriteLine(sqlQuery);
+
+                OdbcCommand command = new OdbcCommand(sqlQuery, _conn);
+                //command.Parameters.AddWithValue("@filePath", filePath);
+                //command.Prepare();
+
+                Console.WriteLine("Output to a file started. ");
+                command.ExecuteNonQuery();
+                Console.WriteLine("Output to a file completed. ");
+
+
+                _conn.Close();
+                return true;
+               
+            }
+            catch
+            {
+                _conn.Close();
+                Console.WriteLine("Error when copying query to a file !!");
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
         }
 
         public bool RemoveOutputFile(string filePath){
-            return true;
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    Console.WriteLine("File at: {0} exist, proceed to remove.", filePath);
+                    File.Delete(filePath);
+                    return true;
+                }
+                return false;
+            }
+            catch {
+                Console.WriteLine("Removing file failed!!");
+                return false; 
+            }
         }
 
         // Remove data from the database, if failed, let the controller handle it. 
         public bool RemoveEntries() {
             
-            string sqlCmd = "DELETE FROM log WHERE DATE_DIFF(current_timestamp, log.LtimeStamp) > 30";
+            string sqlCmd = "DELETE FROM log WHERE DATEDIFF(current_timestamp, log.LtimeStamp) > 30";
 
             try{
                 DeleteData(sqlCmd);
