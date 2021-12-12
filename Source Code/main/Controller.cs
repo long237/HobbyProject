@@ -46,7 +46,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
               "SERVER=localhost;" +
               "DATABASE=hobby;" +
               "UID=root;" +
-              "PASSWORD=Teamhobby;";
+              "PASSWORD=Teamhobby;" +
+              "PORT=3306;";
             IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
 
             string sqlQuery = "Select * from log;";
