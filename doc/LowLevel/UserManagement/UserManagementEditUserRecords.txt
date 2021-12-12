@@ -1,0 +1,170 @@
+title Edit User Record
+actor User
+participant Controller.cs #90EE90
+participant RDSFactory #26abff
+participant UserAccount #CBC3E3
+participant SystemAccountManager #ffffe0
+participant AccountService #ff8b3d
+participant SqlDAO #D3D3D3
+//SqlDAO
+database SqlServer(MariaDB) #00FFFF
+
+//activate User 
+activate Controller.cs #90EE90
+User->Controller.cs: ++Request to edit user\nby a different user++
+
+//RelatDSFactory
+Controller.cs->RDSFactory:++factory = new RDSFactory()++
+activate RDSFactory #26abff
+RDSFactory->RDSFactory:++Constructor()++
+Controller.cs<--RDSFactory:++return RDSFactory++
+deactivate RDSFactory
+Controller.cs->SqlDAO:++IDataSource factory.GetDataSource(string DbName, string connInfo)++
+activate SqlDAO #D3D3D3
+SqlDAO->SqlDAO:++Constructor(string connInfo)++
+group #red Data Store Timed Out #white
+SqlDAO->SqlDAO: ++Catch Exception++
+Controller.cs<--SqlDAO:++return "Data Source Timed Out"++
+end
+group #blue Data Store Online #white
+Controller.cs<--SqlDAO: ++return SqlDAO++
+deactivate SqlDAO
+
+// Create new Admin
+Controller.cs->SystemAccountManager:++ manager = new SystemAccountManager(IDataSource conn)++
+activate SystemAccountManager #ffffe0
+SystemAccountManager->SystemAccountManager:++Constructor(IDataSource conn)++
+Controller.cs<--SystemAccountManager:++ New SystemAccountManager++
+deactivate SystemAccountManager
+
+// GetUserName
+Controller.cs->Controller.cs:++string GetUserName()++
+
+// GetPassword
+Controller.cs->Controller.cs:++string GetPassword()++
+
+//
+
+Controller.cs->UserAccount:++ new UserAccount(string username,\n string password,\n DateTime RegistrationTimeStamp)++
+activate UserAccount #CBC3E3
+UserAccount->UserAccount: ++string username,\n string password,\n DateTime RegistrationTimeStamp++
+Controller.cs<--UserAccount:++New UserAccount++
+deactivate UserAccount
+Controller.cs->SystemAccountManager:++manager.UpdateUserRecord(user:UserAccount)++
+activate SystemAccountManager #ffffe0
+SystemAccountManager->SystemAccountManager:++isInputValid(user: UserAccount)++
+group #red Invalid Information #white
+Controller.cs<--SystemAccountManager:++return "Invalid input"++
+User<--Controller.cs:++ return "Invalid input"++
+end
+group #green Information Valid #white
+
+//look over
+
+//check if there is an admin user
+SystemAccountManager->SqlDAO:++bool isAdmin(user:UserAccount)++
+activate SqlDAO #D3D3D3
+SqlDAO->SqlServer(MariaDB):++SqlRead confirmAdmin()++
+activate SqlServer(MariaDB)#00FFFF
+//authorized
+SqlServer(MariaDB)->SqlServer(MariaDB):++Select * from Admins\n where Username = @UserName \nand Password = @Pwd++
+//Unauthorized role section
+group #red Unauthorized User #white
+SqlDAO<--SqlServer(MariaDB):++SqlException++
+SqlDAO->SqlDAO:      ++Catch\nSqlException++
+SystemAccountManager<--SqlDAO:++return false++
+Controller.cs<--SystemAccountManager:++ return "Access Denied: \nUnauthorized"++
+User<--Controller.cs:++return "Access Denied: \nUnauthorized"++
+end
+//Unauthorized role section
+group #red Unauthorized User #white
+SqlDAO<--SqlServer(MariaDB):++return false++
+SystemAccountManager<--SqlDAO:++return false++
+Controller.cs<--SystemAccountManager:++ return "Access Denied: \nUnauthorized"++
+User<--Controller.cs:++return "Access Denied: \nUnauthorized"++
+end
+
+
+//Authorized role section
+group #blue Authorized User #white
+SqlDAO<--SqlServer(MariaDB):++return true++
+deactivate SqlServer(MariaDB)
+SystemAccountManager<--SqlDAO:++return true++
+deactivate SqlDAO
+deactivate SystemAccountManager
+group #green Valid Information #white
+activate SystemAccountManager #ffffe0
+// GetUserName
+SystemAccountManager->SystemAccountManager:++string NewUserName()++
+// Enter UserName
+User->SystemAccountManager:++string NewUserName++
+// GetPassword
+SystemAccountManager->SystemAccountManager:++string NewPassword()++
+// Enter Password
+User->SystemAccountManager:++string NewPassword++
+// GetEmail
+SystemAccountManager->SystemAccountManager:++string NewEmail()++
+// Enter Email
+User->SystemAccountManager:++string NewEmail++
+// GetRole
+SystemAccountManager->SystemAccountManager:++string NewRole()++
+// Enter Role
+User->SystemAccountManager:++string NewRole++
+// Create NewUser object
+UserAccount<-SystemAccountManager:++new NewUser(\nstring NewUserName,\nstring NewPassword,\nstring New Email,\nstring NewRole\nDateTime TimeStamp)++
+activate UserAccount #CBC3E3
+UserAccount->UserAccount:++Constructor(\nstring NewUserName,\nstring NewPassword,\nstring New Email,\nstring NewRole\nDateTime TimeStamp)++
+UserAccount-->SystemAccountManager:++return NewUser++ 
+deactivate UserAccount
+SystemAccountManager->AccountService:++AccountService\n.UpdateUserRecord(user:NewUser,\nUpdateType: userUpdate)++
+activate AccountService 	#ff8b3d
+AccountService->SqlDAO:++SqlDAO\n.UpdateUserRecord(user:NewUser,\nUpdateType: userUpdate)++
+activate SqlDAO #D3D3D3
+SqlDAO->SqlServer(MariaDB):++isUser(user:NewUser)++
+activate SqlServer(MariaDB) #00FFFF
+SqlServer(MariaDB)->SqlServer(MariaDB):++Update *\nFrom Users\nwhere Username\n= @UserName OR\nemail = @Email++
+group #red data store timed out #white
+SqlDAO<--SqlServer(MariaDB):++SqlException++
+deactivate SqlServer(MariaDB)
+SqlDAO->SqlDAO:      ++Catch\nSqlException++
+AccountService<--SqlDAO:++return "Database timed out"++
+
+SystemAccountManager<--AccountService:++ return "Database timed out"++
+Controller.cs<--SystemAccountManager:++ return "Database timed out"++
+User<--Controller.cs:++ return "Database timed out"++
+end
+group #blue data store is online #white
+// User exists
+group #green User does exist #white
+activate SqlServer(MariaDB) #00FFFF
+SqlDAO<--SqlServer(MariaDB):++ return True++
+SqlDAO->SqlServer(MariaDB):++ SQL insert\nupdate credentials++
+SqlDAO<--SqlServer(MariaDB):++ return 1++
+AccountService<--SqlDAO:++return "User information updated successfully"++
+SystemAccountManager<--AccountService:++return "User information updated successfully"++
+Controller.cs<--SystemAccountManager:++return "User information updated successfully"++
+User<--Controller.cs:++ return "User information\n updated successfully"++
+deactivate SqlServer(MariaDB)
+end 
+// User doesn't exist
+group #green User does not exist #white
+activate SqlServer(MariaDB) #00FFFF
+SqlDAO<--SqlServer(MariaDB):++ return False++
+SqlDAO->SqlServer(MariaDB):++ SQL insert\nuser credentials++
+SqlDAO<--SqlServer(MariaDB):++ return 1++
+AccountService<--SqlDAO:++return "User is now registered"++
+SystemAccountManager<--AccountService:++return "User is now registered"++
+Controller.cs<--SystemAccountManager:++return "User is now registered"++
+User<--Controller.cs:++               return \n"User is now registered"++
+deactivate AccountService
+deactivate SqlDAO
+deactivate SqlServer(MariaDB)
+deactivate SystemAccountManager
+deactivate Controller.cs
+end
+//deactivate User
+end
+end
+end
+end
+end

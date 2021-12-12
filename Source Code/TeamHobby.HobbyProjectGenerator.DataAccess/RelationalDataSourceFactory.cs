@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TeamHobby.HobbyProjectGenerator.Archive;
+using TeamHobby.HobbyProjectGenerator.DataAccess;
 
-namespace TeamHobby.HobbyProjectGenerator.Archive
+namespace TeamHobby.HobbyProjectGenerator.DataAccess
 {
     public class RelationalDataSourceFactory
     {
         // Mehthod to create a specific data source suitable to the need
-        public IDataSource? getDataSource(string name)
+        public IDataSource<string> getDataSource(string name, string info)
         {
             try
             {
                 if (String.Equals(name, "SQL", StringComparison.OrdinalIgnoreCase))
                 {
-                    return new SQLSource();
+                    return new SqlDAO(info);
                 }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
             catch (Exception ex)
             {
+                Console.WriteLine("RelationDataFactory: Data Access object creation failed!");
                 Console.WriteLine(ex.Message);
                 return null;
             }
