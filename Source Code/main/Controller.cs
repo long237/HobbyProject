@@ -77,13 +77,15 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             Console.WriteLine("");
 
             // Creating a file name:
+            string filePath = @"C:\HobbyArchive";
             Console.WriteLine("Creating file name ... ");
-            string curPath = archive.CreateOutFileName();
+            //string curPath = archive.CreateOutFileName();
+            string curPath = archive.CreateOutFileName(filePath);
 
-            string pathForward = @"C:\Users\Chunchunmaru\Documents\csulbFall2021\HobbyProject\Source Code\main\bin\Debug\net6.0\HobbyArchive";
-            string pathTemp = "C:/Temp/oldlogs10.txt";
-            string pathTempBack = @"C:\Temp\oldlogs10.txt";
-            Console.WriteLine("----------------");
+            //string pathForward = @"C:\Users\Chunchunmaru\Documents\csulbFall2021\HobbyProject\Source Code\main\bin\Debug\net6.0\HobbyArchive";
+            //string pathTemp = "C:/Temp/oldlogs10.txt";
+            //string pathTempBack = @"C:\Temp\oldlogs10.txt";
+            //Console.WriteLine("----------------");
 
             //Output SQL to a text file
             sqlDS.CopyToFile(curPath);
