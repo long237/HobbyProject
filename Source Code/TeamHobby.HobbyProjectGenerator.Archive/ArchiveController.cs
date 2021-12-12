@@ -65,9 +65,10 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             {
                 //string path = archivePath + "\\HobbyArchive";
                 Console.WriteLine("The current directory is {0}", archivePath);
+                //string date = DateTime.Now.ToString("M_d_yyyy_H:mm:ss");
                 string date = DateTime.Now.ToString("M_d_yyyy");
                 string fileName = date + "_archive.csv";
-                string filePath = System.IO.Path.Combine(archivePath, fileName);
+                string filePath = Path.Combine(archivePath, fileName);
 
                 Console.WriteLine("Date: {0}", date);
                 Console.WriteLine("Filepath: {0}", filePath);

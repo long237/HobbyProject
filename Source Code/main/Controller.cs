@@ -78,17 +78,31 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
             // Creating a file name:
             string filePath = @"C:\HobbyArchive";
-            Console.WriteLine("Creating file name ... ");
+            //Console.WriteLine("Creating file name ... ");
             //string curPath = archive.CreateOutFileName();
             string curPath = archive.CreateOutFileName(filePath);
 
             //string pathForward = @"C:\Users\Chunchunmaru\Documents\csulbFall2021\HobbyProject\Source Code\main\bin\Debug\net6.0\HobbyArchive";
             //string pathTemp = "C:/Temp/oldlogs10.txt";
             //string pathTempBack = @"C:\Temp\oldlogs10.txt";
-            //Console.WriteLine("----------------");
+            Console.WriteLine("----------------");
 
             //Output SQL to a text file
             sqlDS.CopyToFile(curPath);
+
+            // Compress the file
+            sqlDS.CompressFile(curPath);
+
+            //Remove output file
+            sqlDS.RemoveOutputFile(curPath);
+
+            // Remove entries fromt the database
+            sqlDS.RemoveEntries();
+
+            // Testing date time patters
+            //string date = DateTime.Now.ToString("d");
+            //Console.WriteLine(date);
+            //Console.WriteLine(DateTime.Now.ToString("M_d_yyyy_H:mm:ss"));
 
 
             // 2.Inserting Data into the database:

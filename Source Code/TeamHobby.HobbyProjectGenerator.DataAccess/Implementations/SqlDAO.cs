@@ -217,13 +217,26 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         }
 
         public bool RemoveOutputFile(string filePath){
-            return true;
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    Console.WriteLine("File at: {0} exist, proceed to remove.", filePath);
+                    File.Delete(filePath);
+                    return true;
+                }
+                return false;
+            }
+            catch {
+                Console.WriteLine("Removing file failed!!");
+                return false; 
+            }
         }
 
         // Remove data from the database, if failed, let the controller handle it. 
         public bool RemoveEntries() {
             
-            string sqlCmd = "DELETE FROM log WHERE DATE_DIFF(current_timestamp, log.LtimeStamp) > 30";
+            string sqlCmd = "DELETE FROM log WHERE DATEDIFF(current_timestamp, log.LtimeStamp) > 30";
 
             try{
                 DeleteData(sqlCmd);
