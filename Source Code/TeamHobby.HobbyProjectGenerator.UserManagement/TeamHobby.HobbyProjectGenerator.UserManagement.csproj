@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator\TeamHobby.HobbyProjectGenerator.csproj" />
+  </ItemGroup>
+
 </Project>

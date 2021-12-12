@@ -1,8 +1,8 @@
-﻿using main;
-using System;
+﻿using System;
 using System.Data.Odbc;
 using TeamHobby.HobbyProjectGenerator.Archive;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
+using TeamHobby.HobbyProjectGenerator.UserManagement;
 
 
 namespace TeamHobby.HobbyProjectGenerator.Main
@@ -24,19 +24,11 @@ namespace TeamHobby.HobbyProjectGenerator.Main
     }
     public class Controller 
     {
-
         public static void Main(string[] args)
         {
-            GetCredentials credentials = new GetCredentials();
-            string? username = credentials.GetUserName();
-            string? password = credentials.GetPassword();
-
-
-            Console.WriteLine(value: $"username is {username}\npassword is {password}");
-
-           /* // Creating the Factory class
+            /*// Creating the Factory class
             string dbType = "sql";
-            RelationalDataSourceFactory dbFactory = new RelationalDataSourceFactory();
+            RDSFactory factory = new RDSFactory();
 
             // Testing Data Access Layer
             string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
@@ -45,9 +37,27 @@ namespace TeamHobby.HobbyProjectGenerator.Main
               "UID=root;" +
               "PASSWORD=Teamhobby;" +
               "OPTION=3";
-            IDataSource<string> datasource = dbFactory.getDataSource(dbType,dbInfo);
+            IDataSource<string> datasource = factory.getDataSource(dbType, dbInfo);*/
 
-            string sqlQuery = "Select * from log;";
+            // Create manager class from UserManagement
+            SystemAccountManager manager = new SystemAccountManager();
+            
+            // Admin Sign in
+            GetCredentials credentials = new GetCredentials();
+            string? username = credentials.GetUserName();
+            string? password = credentials.GetPassword();
+
+            // Get time of login attempt
+            DateTime TimeStamp = DateTime.UtcNow;
+
+            // Create UserAccount class
+            UserAccount user = new UserAccount(username, password, TimeStamp);
+
+            manager.CreateUserRecord(user);
+            
+            //Console.WriteLine(value: $"Welcome {username}\n");
+
+           /* string sqlQuery = "Select * from log;";
             Object result = datasource.ReadData(sqlQuery);
             Console.WriteLine("type of Result: " + result.GetType());
             OdbcDataReader reader = null;
@@ -73,13 +83,13 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             // Testing archive Manager
             //while (true)
             //{
-                string currentDate = DateTime.Now.ToString("dd");
+              /*  string currentDate = DateTime.Now.ToString("dd");
                 string currentTime = DateTime.Now.ToString("T");
                 Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
                 if (String.Equals(currentDate, "1") && String.Equals(currentTime, "00:00:00 AM")){            
                     ArchiveManager archive = new ArchiveManager(datasource);
                     archive.Controller();
-                }
+                }*/
             //}
 
 
@@ -129,11 +139,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             //datasource.WriteData(sqlRemove);
             //Console.WriteLine("Writing completed. ");
 
-
-            /* ExampleDAO z = new ExampleDAO();
-             z.UserData("Tomato");
-             Console.Read();*/
-            /*bool MainMenu = true;
+           /* bool MainMenu = true;
 
             // Set up menu loop
             while (MainMenu == true)
@@ -149,7 +155,6 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
                 // Create class objects
                 UiPrint menu = new UiPrint();
-                UserAccount user = new UserAccount();
 
 
                 // Print main menu
@@ -207,8 +212,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 catch
                 {
                     MainMenu = false;
-                };
-            }*/
+                };*/
+            //}
 
         }
     }

@@ -3,11 +3,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeamHobby.HobbyProjectGenerator.UserManagement;
+using TeamHobby.HobbyProjectGenerator.Implementations;
 
-namespace main
+namespace TeamHobby.HobbyProjectGenerator.UserManagement
 {
-    internal class SystemAccountManager
+    public class SystemAccountManager
     {
+        public string IsInputValid(string checkUN, string checkPWD)
+        {
+            // Create bool variables to check if username and password are valid
+            bool ValidUN = checkUN.All(un=>Char.IsLetterOrDigit(un) || un=='@' 
+            || un == '.' || un == ',' || un == '!');
+
+            bool ValidPwd = checkPWD.All(Char.IsLetterOrDigit);
+
+
+            if (checkUN == null || checkPWD == null)
+            {
+                return "Invalid input\n";
+            }
+            else if (checkUN.Length > 15 || checkUN.Length <= 0
+                || ValidUN is false)
+            {
+                return "Invalid Username\n";
+            }
+            else if (checkPWD.Length > 18 || checkPWD.Length <= 0
+                || ValidPwd is false)
+            {
+                return "Invalid Password\n";
+            }
+            else if (checkUN.Length <= 15 && checkUN.Length > 0
+                || ValidUN is true && checkPWD.Length <= 18 
+                && checkPWD.Length > 0 || ValidPwd is true)
+            {
+                return "Username and password is valid.\n";
+            }
+            else if (checkUN.Length <= 15 && checkUN.Length > 0
+                || ValidUN is true)
+            {
+                return "Valid Username\n";
+            }
+            else if (checkPWD.Length <= 18 && checkPWD.Length > 0
+                || ValidPwd is true)
+            {
+                return "Valid Password\n";
+            }
+            else
+            {
+                return "Invalid Input\n";
+            }
+        }
+        public bool isAdmin()
+        {
+            return false;
+        }
+        public void CreateUserRecord(UserAccount user)
+        {
+            Console.Write(IsInputValid(user.username, user.password));
+
+        }
+
+
+
         /*public NewUserName()
         {
 
@@ -60,7 +118,7 @@ namespace main
         public void AccountController()
         {
             // Create objects
-            UserAccount user = new UserAccount();
+            //UserAccount user = new UserAccount();
             UiPrint ui = new UiPrint();
             
             bool foo = true;
