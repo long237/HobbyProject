@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccess\TeamHobby.HobbyProjectGenerator.DataAccess.csproj" />
+    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Logging\TeamHobby.HobbyProjectGenerator.Logging.csproj" />
   </ItemGroup>
 
 </Project>
