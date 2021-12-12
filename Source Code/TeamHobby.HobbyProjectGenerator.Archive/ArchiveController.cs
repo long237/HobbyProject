@@ -17,7 +17,7 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
         public bool CreateArchiveFolder(){
             string curPath = Directory.GetCurrentDirectory();
             //string temp = @
-            string archiveFolder = curPath + "\\HobbyArhive";
+            string archiveFolder = curPath + "\\HobbyArchive";
             //Console.WriteLine("Creating a new folder at: {0}", archiveFolder);
             if (!Directory.Exists(archiveFolder))
             {
@@ -30,8 +30,14 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
         // Return the name of the new output file with Path
         public string CreateOutFileName() {
             try { 
-                string path = Directory.GetCurrentDirectory();
+                string path = Directory.GetCurrentDirectory() + "\\HobbyArchive";
                 Console.WriteLine("The current directory is {0}", path);
+                string date = DateTime.Now.ToString("M_d_yyyy");
+                string fileName = date + "_archive.csv";
+                string filePath = System.IO.Path.Combine(path, fileName);
+
+                Console.WriteLine("Date: {0}", date);
+                Console.WriteLine("Filepath: {0}", filePath);            
                 return path;
             }
             catch
@@ -43,6 +49,12 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
 
         // put everything toget here
         public bool Controller(){
+            
+            // Create the folder for Archiving
+            CreateArchiveFolder();
+
+            // Create the file name for output
+            CreateOutFileName();
             return true;
         }
 

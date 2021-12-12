@@ -70,12 +70,23 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
             // Testing archive Manager
             ArchiveController archive = new ArchiveController(datasource);
-            string curPath = archive.CreateOutFileName();
 
             //Creating the folder Archive
             Console.WriteLine("Creating a new folder ...");
             archive.CreateArchiveFolder();
-            
+            Console.WriteLine("");
+
+            // Creating a file name:
+            Console.WriteLine("Creating file name ... ");
+            string curPath = archive.CreateOutFileName();
+
+            string pathForward = @"C:\Users\Chunchunmaru\Documents\csulbFall2021\HobbyProject\Source Code\main\bin\Debug\net6.0\HobbyArchive";
+            string pathTemp = "C:/Temp/oldlogs10.txt";
+            string pathTempBack = @"C:\Temp\oldlogs10.txt";
+            Console.WriteLine("----------------");
+
+            //Output SQL to a text file
+            sqlDS.CopyToFile(curPath);
 
 
             // 2.Inserting Data into the database:
