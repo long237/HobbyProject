@@ -149,7 +149,6 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
                 // Get the stream of the original file
                 using FileStream origFile = File.Open(fileName, FileMode.Open);
 
-
                 // Get the attribute of the file
                 FileAttributes atrribute = File.GetAttributes(fileName);
 
@@ -161,15 +160,16 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
                     using GZipStream compressor = new GZipStream(outputFile, CompressionMode.Compress);
                     origFile.CopyTo(compressor);
 
-                return true;
+                    return true;
                 }
 
                 return false;
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error when compressing a file !!, will be handled higher up the call stack");
                 Console.WriteLine(ex.Message);
-                return false;
+                throw;
             }
         }
 
@@ -204,10 +204,10 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
                 return true;
                
             }
-            catch
-            {
+            catch (Exception ex)
+            {   
                 _conn.Close();
-                Console.WriteLine("Error when copying query to a file !!");
+                Console.WriteLine("Error when copying query to a file !!, will be handled higher up the call stack");
                 throw;
             }
             finally
@@ -229,7 +229,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             }
             catch {
                 Console.WriteLine("Removing file failed!!");
-                return false; 
+                throw; 
             }
         }
 
