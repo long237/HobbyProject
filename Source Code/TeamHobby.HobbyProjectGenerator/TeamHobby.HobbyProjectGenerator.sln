@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGener
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.Main", "..\TeamHobby.Main\TeamHobby.Main.csproj", "{ED126EFB-B337-42F9-BE4B-65A5AE90503B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamHobby.HobbyProjectGenerator.DataAccess", "..\TeamHobby.HobbyProjectGenerator.DataAccess\TeamHobby.HobbyProjectGenerator.DataAccess.csproj", "{AA48A66C-FA36-4AF9-A782-CEC22838EB8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator.DataAccess", "..\TeamHobby.HobbyProjectGenerator.DataAccess\TeamHobby.HobbyProjectGenerator.DataAccess.csproj", "{AA48A66C-FA36-4AF9-A782-CEC22838EB8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamHobby.HobbyProjectGenerator.ArchiveTests", "..\TeamHobby.HobbyProjectGenerator.ArchiveTests\TeamHobby.HobbyProjectGenerator.ArchiveTests.csproj", "{C5EBD1F8-C806-4BF9-B2D7-8876072630FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,10 @@ Global
 		{AA48A66C-FA36-4AF9-A782-CEC22838EB8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA48A66C-FA36-4AF9-A782-CEC22838EB8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA48A66C-FA36-4AF9-A782-CEC22838EB8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5EBD1F8-C806-4BF9-B2D7-8876072630FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5EBD1F8-C806-4BF9-B2D7-8876072630FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5EBD1F8-C806-4BF9-B2D7-8876072630FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5EBD1F8-C806-4BF9-B2D7-8876072630FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
