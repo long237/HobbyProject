@@ -12,6 +12,10 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             _conn = dataSource;
         }
 
+        //public IDataSource<string> GetConnection()
+        //{
+        //    return _conn;
+        //}
 
         // Create the folder where the compress file will be stored
         public bool CreateArchiveFolder(){

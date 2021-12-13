@@ -31,7 +31,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         // Getter and setter for Odbc
         public OdbcConnection Connection { get; set; }
 
-        public OdbcConnection getConnection()
+        public OdbcConnection GetConnection()
         {
             return _conn;
         }

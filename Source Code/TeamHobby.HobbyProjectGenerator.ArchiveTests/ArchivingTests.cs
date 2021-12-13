@@ -75,8 +75,21 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
 
         }
 
-        public void FolderCreationFailed()
+        public void CopyingToAFileTest(IDataSource<string> sqlDAO)
         {
+            // Arrange
+            ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
+            SqlDAO sqlDS = null;
+            
+            if (sqlDAO.GetType() == typeof(SqlDAO))
+            {
+                sqlDS = (SqlDAO)sqlDAO;
+            }
+
+            // Act
+
+
+            // Assert 
 
         }
 
