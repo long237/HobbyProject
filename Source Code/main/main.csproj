@@ -16,7 +16,6 @@
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccess\TeamHobby.HobbyProjectGenerator.DataAccess.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Models\TeamHobby.HobbyProjectGenerator.Models.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.UserManagement\TeamHobby.HobbyProjectGenerator.UserManagement.csproj" />
-    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator\TeamHobby.HobbyProjectGenerator.csproj" />
   </ItemGroup>
 
 </Project>

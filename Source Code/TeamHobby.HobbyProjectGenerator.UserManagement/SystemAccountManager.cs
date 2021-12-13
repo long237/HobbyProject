@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Odbc;
 using TeamHobby.HobbyProjectGenerator.UserManagement;
-using TeamHobby.HobbyProjectGenerator.Implementations;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
 
 namespace TeamHobby.HobbyProjectGenerator.UserManagement
@@ -112,17 +111,29 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             {
                 // db.users layout (UserName, Password, RoleID, IsActive, CreatedBy, CreatedDate)
                 // db.roles layout (RoleID(AutoGen), Role, CreatedBy, CreatedDate)
-
-                // Menu for all UserManagement options
-                int menu = 0;
-                Console.WriteLine($"Welcome {user.username} to User Management.\n");
-                Console.WriteLine("What would you like to do?\n");
-                Console.WriteLine((menu + 1) + ". Create a new account.");
-                Console.WriteLine((menu + 1) + ". Edit an account.");
-                Console.WriteLine((menu + 1) + ". Delete an account.");
-                Console.WriteLine((menu + 1) + ". Disable an account.");
-                Console.WriteLine((menu + 1) + ". Enable an account.");
-
+                // Create UiPrint Object
+                UiPrint ui = new UiPrint();
+                // Print User Management menu
+                ui.UserManagementMenu(user.username);
+                // Create bool object for menu loop
+                bool menuLoop = true;
+                // Create loop for menu
+                while (menuLoop is true) {
+                    // Get user choice
+                    int menuChoice = Convert.ToInt32(Console.ReadLine());
+                    // Complete the appropriate action
+                    switch (menuChoice)
+                    {
+                        case 0:
+                            return "Exiting UserManagement.\n";
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input.\nPlease enter a valid option.\n");
+                            break;
+                    }
+                }
 
 
 
@@ -196,14 +207,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             
             bool foo = true;
 
-            while (foo == true)
-            {
-                // sub menu
-                ui.SystemAccountMenu();
-                // 
-
-            }
-
+            
         }
 
     }

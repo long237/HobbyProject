@@ -11,6 +11,14 @@ namespace TeamHobby.HobbyProjectGenerator.Main
     {
         public static void Main(string[] args)
         {
+            // Console customization
+            // Change the look of the console
+            Console.Title = "HobbyProjectGenerator";
+            // Change console text color
+            Console.ForegroundColor = ConsoleColor.Green;
+            // Change terminal height
+            Console.WindowHeight = 40;
+
             // Creating the Factory class
             string dbType = "sql";
             RDSFactory factory = new RDSFactory();
