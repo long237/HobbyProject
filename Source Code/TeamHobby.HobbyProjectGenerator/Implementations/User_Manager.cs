@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeamHobby.HobbyProjectGenerator.Implementations
 {
-    public class User_Manager : IUserService
+    public class User_Manager 
     {
         public IList<string> GetAllUsers()
         {

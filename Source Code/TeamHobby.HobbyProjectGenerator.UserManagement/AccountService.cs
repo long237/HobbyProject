@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamHobby.HobbyProjectGenerator.Contracts
+namespace TeamHobby.HobbyProjectGenerator.UserManagement
 {
-    internal interface IDataSource
+    internal class AccountService
     {
     }
 }

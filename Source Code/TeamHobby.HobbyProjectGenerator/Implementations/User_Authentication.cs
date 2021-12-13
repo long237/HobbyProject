@@ -1,6 +1,6 @@
 ﻿namespace TeamHobby.HobbyProjectGenerator
 {
-    public class User_Authentication : IUserService
+    public class User_Authentication 
     {
         public IList<string> GetAllUsers()
         {

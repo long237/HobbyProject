@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeamHobby.HobbyProjectGenerator.Implementations
 {
-    public class InMemoryUserService : IUserService
+    public class InMemoryUserService 
     {
         // Make it readonly so it can't be changed
         private readonly IList<string> _logstore;
