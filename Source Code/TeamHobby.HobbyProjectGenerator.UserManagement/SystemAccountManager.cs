@@ -14,39 +14,127 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         public string IsInputValid(string checkUN, string checkPWD)
         {
             // Create bool variables to check if username and password are valid
-            bool ValidUN = checkUN.All(un=>Char.IsLetterOrDigit(un) || un=='@' 
+            bool validUN = checkUN.All(un=>Char.IsLetterOrDigit(un) || un=='@' 
             || un == '.' || un == ',' || un == '!');
 
-            bool ValidPwd = checkPWD.All(Char.IsLetterOrDigit);
+            bool validPwd = checkPWD.All(Char.IsLetterOrDigit);
 
 
+            // Check if any are empty
             if (checkUN == null || checkPWD == null)
             {
                 return "Invalid input\n";
             }
+            // Check if username is within the restricted length
             else if (checkUN.Length > 15 || checkUN.Length <= 0
-                || ValidUN is false)
+                || validUN is false)
             {
                 return "Invalid Username\n";
             }
+            // Check if password is within the restricted length
             else if (checkPWD.Length > 18 || checkPWD.Length <= 0
-                || ValidPwd is false)
+                || validPwd is false)
             {
                 return "Invalid Password\n";
             }
+            // Check if username and password are valid
             else if (checkUN.Length <= 15 && checkUN.Length > 0
-                || ValidUN is true && checkPWD.Length <= 18 
-                && checkPWD.Length > 0 || ValidPwd is true)
+                && validUN is true && checkPWD.Length <= 18
+                && checkPWD.Length > 0 && validPwd is true)
             {
                 return "Username and password is valid.\n";
             }
+            // Check if username and password and email are valid
             else if (checkUN.Length <= 15 && checkUN.Length > 0
-                || ValidUN is true)
+                && validUN is true && checkPWD.Length <= 18
+                && checkPWD.Length > 0 && validPwd is true)
+            {
+                return "Username and password is valid.\n";
+            }
+            // For testing to make sure username is valid
+            else if (checkUN.Length <= 15 && checkUN.Length > 0
+                && validUN is true)
             {
                 return "Valid Username\n";
             }
+            // For testing to make sure password is valid
             else if (checkPWD.Length <= 18 && checkPWD.Length > 0
-                || ValidPwd is true)
+                && validPwd is true)
+            {
+                return "Valid Password\n";
+            }
+            else
+            {
+                return "Invalid input\n";
+            }
+        }
+        public string IsInputValid(string checkUN, string checkPWD, string email, string role)
+        {
+            // Create bool variables to check if username and password and email are valid
+            bool validUN = checkUN.All(un => Char.IsLetterOrDigit(un) || un == '@'
+            || un == '.' || un == ',' || un == '!');
+
+            bool validPwd = checkPWD.All(Char.IsLetterOrDigit);
+
+            bool validEmail = email.All(email => Char.IsLetterOrDigit(email) && email == '@'
+            && email == '.');
+
+            bool validRole = role.All(role => Char.IsLetter(role));
+
+            // Check if any are empty
+            if (checkUN == null || checkPWD == null || email == null)
+            {
+                return "Invalid input\n";
+            }
+            // Check if username is within the restricted length
+            else if (checkUN.Length > 15 || checkUN.Length <= 0
+                || validUN is false)
+            {
+                return "Invalid Username\n";
+            }
+            // Check if password is within the restricted length
+            else if (checkPWD.Length > 18 || checkPWD.Length <= 0
+                || validPwd is false)
+            {
+                return "Invalid Password\n";
+            }
+            // Check if email is within the restricted length
+            else if (email.Length > 18 || email.Length <= 0
+               || validEmail is false)
+            {
+                return "Invalid Email.\n";
+            }
+            // Check if username and password are valid
+            else if (checkUN.Length <= 15 && checkUN.Length > 0
+                && validUN is true && checkPWD.Length <= 18
+                && checkPWD.Length > 0 && validPwd is true)
+            {
+                return "Username and password is valid.\n";
+            }
+            // Check if username and password and email are valid
+            else if (checkUN.Length <= 15 && checkUN.Length > 0
+                && validUN is true && checkPWD.Length <= 18
+                && checkPWD.Length > 0 && validPwd is true
+                && email.Length > 18 && email.Length <= 0
+                && validEmail is true)
+            {
+                return "Username and password is valid.\n";
+            }
+            // For testing to make sure username is valid
+            else if (checkUN.Length <= 15 && checkUN.Length > 0
+                && validUN is true)
+            {
+                return "Valid Username\n";
+            }
+            // For testing to make sure password is valid
+            else if (checkPWD.Length <= 18 && checkPWD.Length > 0
+                && validPwd is true)
+            {
+                return "Valid Password\n";
+            }
+            // For testing to make sure email is valid
+            else if (email.Length > 18 && email.Length <= 0
+                && validEmail is true)
             {
                 return "Valid Password\n";
             }
@@ -113,6 +201,10 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                 // db.roles layout (RoleID(AutoGen), Role, CreatedBy, CreatedDate)
                 // Create UiPrint Object
                 UiPrint ui = new UiPrint();
+                // Create Account Service object
+                AccountService accountService = new AccountService();
+                // Create credentials object for new inptus
+                GetCredentials newCredentials = new GetCredentials();
                 // Print User Management menu
                 ui.UserManagementMenu(user.username);
                 // Create bool object for menu loop
@@ -124,24 +216,52 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                     // Complete the appropriate action
                     switch (menuChoice)
                     {
+                        // Exit menu
                         case 0:
                             return "Exiting UserManagement.\n";
                             break;
+                        // Create account 
                         case 1:
+                            UserAccount newUser = new UserAccount(newCredentials.GetUserName(),
+                            newCredentials.GetPassword(), newCredentials.GetEmail(), 
+                                newCredentials.GetRole(), DateTime.UtcNow);
+                            accountService.CreateUserRecord(newUser);
+                            break;
+                        // Edit account
+                        case 2:
+                            UserAccount newEditUser = new UserAccount(newCredentials.GetUserName(),
+                                newCredentials.GetPassword(), DateTime.UtcNow);
+                            accountService.EditUserRecord(newEditUser);
+                            break;
+                        // Delete account
+                        case 3:
+                            UserAccount newDeleteUser = new UserAccount(newCredentials.GetUserName(),
+                                newCredentials.GetPassword(), DateTime.UtcNow);
+                            accountService.DeleteUserRecord(newDeleteUser);
+                            break;
+                        // Disable account
+                        case 4:
+                            UserAccount newDisableUser = new UserAccount(newCredentials.GetUserName(),
+                                newCredentials.GetPassword(), DateTime.UtcNow);
+                            accountService.DisableUser(newDisableUser);
+                            break;
+                        // Enable account
+                        case 5:
+                            UserAccount newEnableUser = new UserAccount(newCredentials.GetUserName(),
+                                newCredentials.GetPassword(), DateTime.UtcNow);
+                            accountService.EnableUser(newEnableUser);
+                            break;
+                        // View logs
+                        case 6:
+                            break;
+                        // View archive
+                        case 7:
                             break;
                         default:
                             Console.WriteLine("Invalid input.\nPlease enter a valid option.\n");
                             break;
                     }
                 }
-
-
-
-                // Notify user of new credentials to be input
-                Console.WriteLine("Please enter the new user information:\n");
-                GetCredentials credentials = new GetCredentials();
-
-
                 
                 string dbAction = user.NewUserName;
                 return dbAction;

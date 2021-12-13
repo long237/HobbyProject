@@ -20,6 +20,16 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             string? userPassword = Console.ReadLine();
             return userPassword;
         }
+        public string GetEmail()
+        {
+            Console.WriteLine("Please enter an email:");
+            return Console.ReadLine();
+        }
+        public string GetRole()
+        {
+            Console.WriteLine("Please enter the role of the user:");
+            return Console.ReadLine();
+        }
     }
     public class UserAccount
     {
@@ -41,13 +51,20 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         private string _newUserName;
         private string _newPassword;
         private string _newEmail;
+        private string _role;
         private DateTime _newTime;
-        public UserAccount(string newUN, string newPWD, string Email, DateTime newTime)
+        public UserAccount(string newUN, string newPWD, string Email, string role, DateTime newTime)
         {
             _newUserName = newUN;
             _newPassword = newPWD;
+            _role = role;
             _newEmail = Email;
             _newTime = newTime;
+        }
+        public UserAccount()
+        {
+            _role = "regular";
+            _newTime= DateTime.Now;
         }
         public string NewUserName { get { return _newUserName; } }
         public string NewPassword { get { return _newPassword; } }

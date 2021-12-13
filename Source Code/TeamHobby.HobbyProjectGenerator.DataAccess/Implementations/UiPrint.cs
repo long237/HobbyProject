@@ -33,7 +33,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             menu += 1;
             Console.WriteLine(menu + ") View logs.\n");
             menu += 1;
-            Console.WriteLine(menu + ") View Archive.\n");
+            Console.WriteLine(menu + ") View archive.\n");
         }
     }
 }
