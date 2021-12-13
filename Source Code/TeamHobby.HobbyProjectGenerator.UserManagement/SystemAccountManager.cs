@@ -13,7 +13,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         public string IsInputValid(string checkUN, string checkPWD)
         {
             // Create bool variables to check if username and password are valid
-            bool ValidUN = checkUN.All(un=>Char.IsLetterOrDigit(un) || un=='@' 
+            bool ValidUN = checkUN.All(un => Char.IsLetterOrDigit(un) || un == '@'
             || un == '.' || un == ',' || un == '!');
 
             bool ValidPwd = checkPWD.All(Char.IsLetterOrDigit);
@@ -34,7 +34,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                 return "Invalid Password\n";
             }
             else if (checkUN.Length <= 15 && checkUN.Length > 0
-                || ValidUN is true && checkPWD.Length <= 18 
+                || ValidUN is true && checkPWD.Length <= 18
                 && checkPWD.Length > 0 || ValidPwd is true)
             {
                 return "Username and password is valid.\n";
@@ -105,22 +105,22 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                     {
 
                     }*/
-                    /*conPsswrd = false;
-                }
-                else
-                {
-                    Console.WriteLine("Passwords did not match, please try again.");
-                }
-            }
-            return true;
-        }*/
-    
+        /*conPsswrd = false;
+    }
+    else
+    {
+        Console.WriteLine("Passwords did not match, please try again.");
+    }
+}
+return true;
+}*/
+
         public void AccountController()
         {
             // Create objects
             //UserAccount user = new UserAccount();
             UiPrint ui = new UiPrint();
-            
+
             bool foo = true;
 
             while (foo == true)

@@ -19,7 +19,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             Password = pwd;
             Time = TimeStamp;
         }
-        public string username { get { return UserName; } } 
+        public string username { get { return UserName; } }
         public string password { get { return Password; } }
 
         // New User Credentials
@@ -37,6 +37,6 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         public string NewUserName { get { return newusername; } }
         public string NewPassword { get { return newpassword; } }
         public string NewEmail { get { return newemail; } }
-        public DateTime Newtime { get { return newtime;} }
+        public DateTime Newtime { get { return newtime; } }
     }
 }

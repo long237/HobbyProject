@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamHobby.HobbyProjectGenerator.Implementations
+namespace TeamHobby.HobbyProjectGenerator.Logging
 {
-    public class User_Manager
+    public class ConsoleLogger : ILogger
     {
-        public IList<string> GetAllUsers()
+        public IList<string> GetAllLogs()
         {
             throw new NotImplementedException();
         }
 
-        public bool User(string username)
+        public bool Log(string description)
         {
             throw new NotImplementedException();
         }
