@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Odbc;
 using TeamHobby.HobbyProjectGenerator.UserManagement;
 using TeamHobby.HobbyProjectGenerator.Implementations;
+using TeamHobby.HobbyProjectGenerator.DataAccess;
 
 namespace TeamHobby.HobbyProjectGenerator.UserManagement
 {
@@ -51,17 +53,88 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             }
             else
             {
-                return "Invalid Input\n";
+                return "Invalid input\n";
             }
         }
-        public bool isAdmin()
+        // Check with database if user is an admin
+        public bool isAdmin(UserAccount user, IDataSource<string> dbSource)
         {
-            return false;
-        }
-        public void CreateUserRecord(UserAccount user)
-        {
-            Console.Write(IsInputValid(user.username, user.password));
+            // select r.Role from roles r, users u where UserName = '{user.username}' and Password = '{user.password}' and r.RoleID = u.RoleID;
+            // string checkAdmin = $"Select * from users where username = {user.username} and password = {user.password};";
+            string checkAdmin = $"select r.Role from roles r, users u where " +
+                $"UserName = '{user.username}' and Password = '{user.password}' and r.RoleID = u.RoleID;";
+            Object confirmAdmin = dbSource.ReadData(checkAdmin);
+            //Console.WriteLine("type of Reesult:" + confirmAdmin.GetType());
+            OdbcDataReader reader = null;
 
+            if (confirmAdmin.GetType() == typeof(OdbcDataReader))
+            {
+                reader = (OdbcDataReader)confirmAdmin;
+            }
+
+            // Create String to hold sql output
+            string checkSql = "";
+
+            // Read Sql query results
+            while (reader.Read())
+            {
+                checkSql = reader.GetString(0);
+            }
+            
+            SqlDAO sqlDS = (SqlDAO)dbSource;
+            Console.WriteLine("");
+
+            // Closing the connection
+            sqlDS.getConnection().Close();
+
+            if (checkSql == "Admin")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public string CreateUserRecord(UserAccount user, IDataSource<string> dbSource)
+        {
+            // Check Login inputs
+            IsInputValid(user.username, user.password);
+
+            bool Admin = isAdmin(user, dbSource);
+
+            // Give access if the user is and Admin
+            if (Admin is false)
+            {
+                return "Access Denied: Unauthorized\n";
+            }
+            else
+            {
+                // db.users layout (UserName, Password, RoleID, IsActive, CreatedBy, CreatedDate)
+                // db.roles layout (RoleID(AutoGen), Role, CreatedBy, CreatedDate)
+
+                // Menu for all UserManagement options
+                int menu = 0;
+                Console.WriteLine($"Welcome {user.username} to User Management.\n");
+                Console.WriteLine("What would you like to do?\n");
+                Console.WriteLine((menu + 1) + ". Create a new account.");
+                Console.WriteLine((menu + 1) + ". Edit an account.");
+                Console.WriteLine((menu + 1) + ". Delete an account.");
+                Console.WriteLine((menu + 1) + ". Disable an account.");
+                Console.WriteLine((menu + 1) + ". Enable an account.");
+
+
+
+
+                // Notify user of new credentials to be input
+                Console.WriteLine("Please enter the new user information:\n");
+                GetCredentials credentials = new GetCredentials();
+
+
+                
+                string dbAction = user.NewUserName;
+                return dbAction;
+            }
         }
 
 
