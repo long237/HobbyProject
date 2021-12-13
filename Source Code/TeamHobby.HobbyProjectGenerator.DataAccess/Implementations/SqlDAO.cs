@@ -17,9 +17,9 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         public SqlDAO(string info)
         {
             try {
-                Console.WriteLine("Establising Connection");
+                Console.WriteLine("Establising Connection...");
                 _conn = new OdbcConnection(info);
-                Console.WriteLine("Connection established");
+                Console.WriteLine("Connection established.");
             }
             catch {
                 //_conn = null;

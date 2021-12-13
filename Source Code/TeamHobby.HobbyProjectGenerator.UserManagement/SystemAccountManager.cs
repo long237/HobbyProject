@@ -146,7 +146,6 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         // Check with database if user is an admin
         public bool isAdmin(UserAccount user, IDataSource<string> dbSource)
         {
-            // select r.Role from roles r, users u where UserName = '{user.username}' and Password = '{user.password}' and r.RoleID = u.RoleID;
             // string checkAdmin = $"Select * from users where username = {user.username} and password = {user.password};";
             string checkAdmin = $"select r.Role from roles r, users u where " +
                 $"UserName = '{user.username}' and Password = '{user.password}' and r.RoleID = u.RoleID;";
@@ -225,31 +224,31 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             UserAccount newUser = new UserAccount(newCredentials.GetUserName(),
                             newCredentials.GetPassword(), newCredentials.GetEmail(), 
                                 newCredentials.GetRole(), DateTime.UtcNow);
-                            accountService.CreateUserRecord(newUser);
+                            accountService.CreateUserRecord(newUser, dbSource);
                             break;
                         // Edit account
                         case 2:
                             UserAccount newEditUser = new UserAccount(newCredentials.GetUserName(),
                                 newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.EditUserRecord(newEditUser);
+                            accountService.EditUserRecord(newEditUser, dbSource);
                             break;
                         // Delete account
                         case 3:
                             UserAccount newDeleteUser = new UserAccount(newCredentials.GetUserName(),
                                 newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.DeleteUserRecord(newDeleteUser);
+                            accountService.DeleteUserRecord(newDeleteUser, dbSource);
                             break;
                         // Disable account
                         case 4:
                             UserAccount newDisableUser = new UserAccount(newCredentials.GetUserName(),
                                 newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.DisableUser(newDisableUser);
+                            accountService.DisableUser(newDisableUser, dbSource);
                             break;
                         // Enable account
                         case 5:
                             UserAccount newEnableUser = new UserAccount(newCredentials.GetUserName(),
                                 newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.EnableUser(newEnableUser);
+                            accountService.EnableUser(newEnableUser, dbSource);
                             break;
                         // View logs
                         case 6:

@@ -19,6 +19,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             // Change terminal height
             Console.WindowHeight = 40;
 
+            Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
+
             // Creating the Factory class
             string dbType = "sql";
             RDSFactory factory = new RDSFactory();

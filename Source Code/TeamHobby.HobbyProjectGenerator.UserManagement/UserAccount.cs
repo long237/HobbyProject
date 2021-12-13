@@ -51,24 +51,25 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         private string _newUserName;
         private string _newPassword;
         private string _newEmail;
-        private string _role;
+        private string _newRole;
         private DateTime _newTime;
         public UserAccount(string newUN, string newPWD, string Email, string role, DateTime newTime)
         {
             _newUserName = newUN;
             _newPassword = newPWD;
-            _role = role;
+            _newRole = role;
             _newEmail = Email;
             _newTime = newTime;
         }
         public UserAccount()
         {
-            _role = "regular";
+            _newRole = "regular";
             _newTime= DateTime.Now;
         }
         public string NewUserName { get { return _newUserName; } }
         public string NewPassword { get { return _newPassword; } }
         public string NewEmail { get { return _newEmail; } }
-        public DateTime Newtime { get { return _newTime; } }
+        public string NewRole { get { return _newRole; } }
+        public DateTime NewTime { get { return _newTime; } }
     }
 }
