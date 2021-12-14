@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 namespace TeamHobby.HobbyProjectGenerator.Logging
 {
@@ -35,4 +35,4 @@ namespace TeamHobby.HobbyProjectGenerator.Logging
         }
     }
 
-}
+}*/

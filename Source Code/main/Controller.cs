@@ -2,7 +2,6 @@
 using System.Data.Odbc;
 using TeamHobby.HobbyProjectGenerator.Archive;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
-using TeamHobby.HobbyProjectGenerator.Logging;
 using TeamHobby.HobbyProjectGenerator.UserManagement;
 
 namespace TeamHobby.HobbyProjectGenerator.Main
@@ -39,9 +38,11 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             // Creating the Factory class
             // Logger log = new Logger();
             //Logger.PrintTest();
-            //GetCredentials credentials = new GetCredentials();
-            //string? username = credentials.GetUserName();
-            //string? password = credentials.GetPassword();
+
+            // Admin login
+            GetCredentials credentials = new GetCredentials();
+            string? username = credentials.GetUserName();
+            string? password = credentials.GetPassword();
 
 
             //Console.WriteLine(value: $"username is {username}\npassword is {password}");
@@ -60,20 +61,14 @@ namespace TeamHobby.HobbyProjectGenerator.Main
               "UID=root;" +
               "PASSWORD=Teamhobby;" +
               "OPTION=3";
-            IDataSource<string> datasource = factory.getDataSource(dbType, dbInfo);
-              "PORT=3306;";
-            
-
-              "OPTION=3";
-            
             IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
             // Create manager class from UserManagement
             SystemAccountManager manager = new SystemAccountManager();
             
-            // Admin Sign in
+           /* // Admin Sign in
             GetCredentials credentials = new GetCredentials();
             string? username = credentials.GetUserName();
-            string? password = credentials.GetPassword();
+            string? password = credentials.GetPassword();*/
 
             // Get time of login attempt
             DateTime TimeStamp = DateTime.UtcNow;
@@ -242,8 +237,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                  {
                      MainMenu = false;
                  };*/
-            //}
-
+            }
         }
     }
 }

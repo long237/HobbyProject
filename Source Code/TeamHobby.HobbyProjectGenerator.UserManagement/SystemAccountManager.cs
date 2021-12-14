@@ -171,7 +171,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             Console.WriteLine("");
 
             // Closing the connection
-            sqlDS.getConnection().Close();
+            sqlDS.GetConnection().Close();
 
             if (checkSql == "Admin")
             {
@@ -204,12 +204,12 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                 AccountService accountService = new AccountService();
                 // Create credentials object for new inptus
                 GetCredentials newCredentials = new GetCredentials();
-                // Print User Management menu
-                ui.UserManagementMenu(user.username);
                 // Create bool object for menu loop
                 bool menuLoop = true;
                 // Create loop for menu
                 while (menuLoop is true) {
+                    // Print User Management menu
+                    ui.UserManagementMenu(user.username);
                     // Get user choice
                     int menuChoice = Convert.ToInt32(Console.ReadLine());
                     // Complete the appropriate action
@@ -224,8 +224,17 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             UserAccount newUser = new UserAccount(newCredentials.GetUserName(),
                             newCredentials.GetPassword(), newCredentials.GetEmail(), 
                                 newCredentials.GetRole(), DateTime.UtcNow);           
-                            accountService.CreateUserRecord(newUser,user.username, dbSource);
-                            break;
+                            bool accountValid = accountService.CreateUserRecord(newUser,user.username, dbSource);
+                            if (accountValid is true)
+                            {
+                                Console.WriteLine("Account created Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "Database Timed out";
+                            }
+                            //break;
                         // Edit account
                         case 2:
                            /* UserAccount newEditUser = new UserAccount(newCredentials.GetUserName(),
@@ -257,7 +266,8 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                         case 7:
                             break;
                         default:
-                            Console.WriteLine("Invalid input.\nPlease enter a valid option.\n");
+                            Console.WriteLine("Invalid input.\nPlease enter a valid option.\n" +
+                                "------------------------------------\n\n");
                             break;
                     }
                 }
