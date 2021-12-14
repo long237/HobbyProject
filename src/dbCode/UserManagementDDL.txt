@@ -34,4 +34,4 @@ INSERT INTO hobby.users (UserName, Password, Role, IsActive, CreatedBy, CreatedD
 
 INSERT INTO hobby.roles (Role, CreatedBy, CreatedDate) VALUES 
 ('Admin', 'Jacob', '2021-12-13 03:25:14'),
-('regular', 'Colin', '2021-12-13 03:25:14');
+('regular', 'Jacob', '2021-12-13 03:25:14');

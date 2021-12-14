@@ -29,6 +29,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             // Loop Admin login
             while (mainMenu is true)
             {
+
                 // Admin Sign in
                 GetCredentials credentials = new GetCredentials();
                 Console.WriteLine("\nPlease Enter Admin Credentials " +
@@ -61,6 +62,21 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                     "PASSWORD=Teamhobby;" +
                     "OPTION=3";
                 IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
+
+                // While loop to keep this running forever with UserManagement
+                // Testing archive Manager
+                //while (true)
+                //{
+                string currentDate = DateTime.Now.ToString("dd");
+                string currentTime = DateTime.Now.ToString("T");
+                //Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
+                if (String.Equals(currentDate, "1") && String.Equals(currentTime, "00:00:00 AM"))
+                {
+                    ArchiveManager archive = new ArchiveManager(datasource);
+                    archive.Controller();
+                }
+                //}
+
                 // Create manager class from UserManagement
                 SystemAccountManager manager = new SystemAccountManager();
 
@@ -81,22 +97,6 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 }
                 
             }
-
-            /*  // While loop to keep this running forever with UserManagement
-              // Testing archive Manager
-              //while (true)
-              //{
-              string currentDate = DateTime.Now.ToString("dd");
-              string currentTime = DateTime.Now.ToString("T");
-              Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
-              if (String.Equals(currentDate, "1") && String.Equals(currentTime, "00:00:00 AM"))
-              {
-                  ArchiveManager archive = new ArchiveManager(datasource);
-                  archive.Controller();
-              }
-              //}*/
-
-
 
             //Creating the folder Archive
             //Console.WriteLine("Creating a new folder ...");
@@ -125,8 +125,6 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
             //// Remove entries fromt the database
             //sqlDS.RemoveEntries();
-
-
 
 
             // 2.Inserting Data into the database:
