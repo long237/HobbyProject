@@ -1,7 +1,9 @@
 
-public class MasterController{
-    
-    public static void main(string[] args){
+public class MasterController
+{
+
+    public static void main(string[] args)
+    {
 
         //The main Controller of the program, It will run all services here
 
@@ -13,12 +15,14 @@ public class MasterController{
 
         int userInput = 0;
 
-        while (userInput != -1) {
+        while (userInput != -1)
+        {
 
             // Print the menu
 
             // 
-            if (userInput == 1){
+            if (userInput == 1)
+            {
                 // 1. User Managment goes here
             }
 

@@ -5,6 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Archive\TeamHobby.HobbyProjectGenerator.Archive.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccess\TeamHobby.HobbyProjectGenerator.DataAccess.csproj" />
+    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Logging\TeamHobby.HobbyProjectGenerator.Logging.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Models\TeamHobby.HobbyProjectGenerator.Models.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.UserManagement\TeamHobby.HobbyProjectGenerator.UserManagement.csproj" />
   </ItemGroup>

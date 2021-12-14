@@ -2,11 +2,26 @@
 using System.Data.Odbc;
 using TeamHobby.HobbyProjectGenerator.Archive;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
+using TeamHobby.HobbyProjectGenerator.Logging;
 using TeamHobby.HobbyProjectGenerator.UserManagement;
-
 
 namespace TeamHobby.HobbyProjectGenerator.Main
 {
+    public class GetCredentials
+    {
+        public string? GetUserName()
+        {
+            Console.WriteLine("Please enter a username:");
+            string? userName = Console.ReadLine();
+            return userName;
+        }
+        public string? GetPassword()
+        {
+            Console.WriteLine("Please enter " +
+                "a password:");
+            string? userPassword = Console.ReadLine();
+            return userPassword;
+    }
     public class Controller 
     {
         public static void Main(string[] args)
@@ -22,18 +37,36 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
 
             // Creating the Factory class
+            // Logger log = new Logger();
+            //Logger.PrintTest();
+            //GetCredentials credentials = new GetCredentials();
+            //string? username = credentials.GetUserName();
+            //string? password = credentials.GetPassword();
+
+
+            //Console.WriteLine(value: $"username is {username}\npassword is {password}");
+
+            // Creating the Factory class
+            // Creating the Factory class
+           
             string dbType = "sql";
-            RDSFactory factory = new RDSFactory();
+            RDSFactory dbFactory = new RDSFactory();
 
             // Testing Data Access Layer
             string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
+              "TCPIP=1;" +
               "SERVER=localhost;" +
               "DATABASE=hobby;" +
               "UID=root;" +
               "PASSWORD=Teamhobby;" +
               "OPTION=3";
             IDataSource<string> datasource = factory.getDataSource(dbType, dbInfo);
+              "PORT=3306;";
+            
 
+              "OPTION=3";
+            
+            IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
             // Create manager class from UserManagement
             SystemAccountManager manager = new SystemAccountManager();
             
