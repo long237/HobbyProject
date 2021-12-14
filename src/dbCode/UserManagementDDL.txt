@@ -1,19 +1,13 @@
 create table users
 (
-    UserName    varchar(50) charset utf8mb3 not null
-        primary key,
-    Password    varchar(50) charset utf8mb3 null,
-    Role        varchar(50)                 not null,
-    IsActive    int default 1               null,
-    CreatedBy   varchar(50) charset utf8mb3 null,
-    CreatedDate datetime                    null,
-    Email       varchar(50)                 null,
-    constraint users_Email_uindex
-        unique (Email),
-    constraint users_UserName_uindex
-        unique (UserName),
-    constraint users_roles_Role_fk
-        foreign key (Role) references roles (Role)
+    UserName    varchar(50) charset utf8mb3 not null,
+    Password    varchar(50) charset utf8mb3 not null,
+    Role        varchar(50) charset utf8mb3 not null,
+    IsActive    int default 1              not null,
+    CreatedBy   varchar(50) charset utf8mb3 not null,
+    CreatedDate datetime                    not null,
+    constraint userRole_fk foreign key (Role) references roles (Role),
+    constraint user_pk primary key (UserName)
 );
 
 INSERT INTO hobby.users (UserName, Password, Role, IsActive, CreatedBy, CreatedDate, Email) VALUES
@@ -34,5 +28,6 @@ create table roles
         primary key (Role)
 );
 
-INSERT INTO hobby.roles (Role, CreatedBy, CreatedDate) VALUES ('Admin', 'Jacob', '2021-12-13 03:25:14');
-INSERT INTO hobby.roles (Role, CreatedBy, CreatedDate) VALUES ('regular', 'Colin', '2021-12-13 03:25:14');
+INSERT INTO hobby.roles (Role, CreatedBy, CreatedDate) VALUES 
+('Admin', 'Jacob', '2021-12-13 03:25:14'),
+('regular', 'Colin', '2021-12-13 03:25:14');
