@@ -26,6 +26,28 @@ namespace TeamHobby.HobbyProjectGenerator.Logging
         public string description { get; init; }
         public DateTime timestamp { get; init; }
 
+
+        // Constructor requireing only the description as an arg
+        // Assigns default values for LogLevel (Info), LogCategory (Server), user ("System"), and the UTC time at initialization for timestamp
+        public LogEntry(string description)
+        {
+            this.level = LogLevel.Info;
+            this.category = LogCategory.Server;
+            this.user = "System";
+            this.description = description;
+            this.timestamp = DateTime.UtcNow;
+        }
+        // Constructor with args for all fields except timestamp
+        // timestamp is always set to the UTC time at the time of initialization
+        public LogEntry(LogLevel level, string user, LogCategory category, string description)
+        {
+            this.level = level;
+            this.category = category;
+            this.user = user;
+            this.description = description;
+            this.timestamp = DateTime.UtcNow;
+        }
+
+
     }
 }
-*/
