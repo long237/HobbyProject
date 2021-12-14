@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator\TeamHobby.HobbyProjectGenerator.csproj" />
+    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccess\TeamHobby.HobbyProjectGenerator.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
