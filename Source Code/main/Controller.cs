@@ -4,6 +4,7 @@ using TeamHobby.HobbyProjectGenerator.Archive;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
 using TeamHobby.HobbyProjectGenerator.Logging;
 using TeamHobby.HobbyProjectGenerator.UserManagement;
+
 namespace TeamHobby.HobbyProjectGenerator.Main
 {
     public class GetCredentials
@@ -39,7 +40,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             // Creating the Factory class
            
             string dbType = "sql";
-            RDSFactory factory = new RDSFactory();
+            RDSFactory dbFactory = new RDSFactory();
 
             // Testing Data Access Layer
             string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
@@ -49,11 +50,11 @@ namespace TeamHobby.HobbyProjectGenerator.Main
               "UID=root;" +
               "PASSWORD=Teamhobby;" +
               "PORT=3306;";
-            IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
+            
 
               "OPTION=3";
-            IDataSource<string> datasource = factory.getDataSource(dbType, dbInfo);*/
-
+            
+            IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
             // Create manager class from UserManagement
             SystemAccountManager manager = new SystemAccountManager();
             
