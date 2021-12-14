@@ -56,6 +56,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 reader = (OdbcDataReader)result;
 
             }
+            // [Logname, loglevel, date, time, ...]
 
             Console.WriteLine("Reading from the database");
             while (reader.Read())

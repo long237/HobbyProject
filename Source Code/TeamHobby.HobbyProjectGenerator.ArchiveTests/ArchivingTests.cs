@@ -135,6 +135,68 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
 
         }
 
+        // [Test Method]
+        public void IsProcessFlowCompleted(IDataSource<string> sqlDAO)
+        {
+            // Arrange 
+            ArchiveManager archive = new ArchiveManager(sqlDAO);
+
+            // Act
+            // Testing archive Manager
+            int i = -10;
+            while (i < 20)
+            {
+                DateTime date1 = new DateTime(2021, 12, 1, 0, 0, 0);
+                //Console.WriteLine("Testing first of month: {0}", date1.ToString("dd"));
+                //string currentDate = DateTime.Now.ToString("dd");
+                //string currentTime = DateTime.Now.ToString("T");
+                string currentTime = "00:00:00 AM";
+                string currentDate = i.ToString();
+
+                if (i == 1)
+                {
+                    currentDate = date1.ToString("dd");
+                    //ArchiveManager archive = new ArchiveManager(sqlDAO);
+                    //archive.Controller();
+                }
+
+                //Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
+                Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
+                if (String.Equals(currentDate, "01") && String.Equals(currentTime, "00:00:00 AM"))
+                {
+                    Console.WriteLine("Archiving process Start");
+                    //ArchiveManager archive = new ArchiveManager(sqlDAO);
+                    archive.Controller();
+                }
+
+                i++;
+            }
+
+        }
+
+        public void IsCleaningUpCompleted(IDataSource<string> sqlDAO)
+        {
+            //Arrange
+            ArchiveManager archive = new ArchiveManager(sqlDAO);
+            bool actualVal = false;
+            bool expectedVal = false;
+
+            // Act
+            actualVal = archive.Controller();
+
+            // Assert
+            //bool result = !(actualVal && expectedVal);
+            if (expectedVal == actualVal)
+            {
+                Console.WriteLine("Expected: {0}, Actual: {1}. Error handle correctly", expectedVal, actualVal);
+            }
+            else
+            {
+                Console.WriteLine("Expected: {0}, Actual: {1}. Error handle incorrectly", expectedVal, actualVal);
+            }
+
+        }
+
         public static void Main(string[] args)
         {
             string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
@@ -163,35 +225,12 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
             Console.WriteLine("-----------------");
             Console.WriteLine("");
 
-            // Testing archive Manager
-            int i = -10;
-            while (i < 20)
-            {
-                DateTime date1 = new DateTime(2021, 12, 1, 0, 0, 0);
-                //Console.WriteLine("Testing first of month: {0}", date1.ToString("dd"));
-                //string currentDate = DateTime.Now.ToString("dd");
-                //string currentTime = DateTime.Now.ToString("T");
-                string currentTime= "00:00:00 AM";
-                string currentDate = i.ToString();
+            
 
-                if (i == 1)
-                {
-                    currentDate = date1.ToString("dd");
-                    //ArchiveManager archive = new ArchiveManager(sqlDAO);
-                    //archive.Controller();
-                }
-
-                //Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
-                Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
-                if (String.Equals(currentDate, "01") && String.Equals(currentTime, "00:00:00 AM"))
-                {
-                    Console.WriteLine("Archiving process Start");
-                    ArchiveManager archive = new ArchiveManager(sqlDAO);
-                    archive.Controller();
-                }
-
-                i++;
-            }
+            // Testing clean up sequence
+            //test.IsCleaningUpCompleted(sqlDAO);
+            //Console.WriteLine("-----------------");
+            //Console.WriteLine("");
 
         }
 

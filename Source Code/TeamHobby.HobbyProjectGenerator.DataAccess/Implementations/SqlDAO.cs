@@ -238,14 +238,12 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             
             string sqlCmd = "DELETE FROM log WHERE DATEDIFF(current_timestamp, log.LtimeStamp) > 30";
 
-            try{
-                DeleteData(sqlCmd);
-                return true;
-            }
-            catch {
-                Console.WriteLine("Eeep! an error in Remove Entries, not to worry, will be handled higher up the call stack");
-                throw;
-            }
+            if (DeleteData(sqlCmd) == false)
+            {
+                throw new Exception("Error in removing entries,not to worry, will be handled higher up the call stack");
+            };
+            
+            return true;
         }
 
         //public Object ReadPreparedStmt(string table){
