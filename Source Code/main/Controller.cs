@@ -82,15 +82,16 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
                 // Create UserAccount class
                 UserAccount user = new UserAccount(username, password, TimeStamp);
-
+                // Call user object and wait for return string
                 string isLogin = manager.CreateUserRecord(user, datasource);
 
-
+                // If login is not incorrect and user is returning to login menu
                 if (isLogin != "Access Denied: Unauthorized\n")
                 {
                     Console.WriteLine("Returning to login...\n");
                     Console.WriteLine("-------------------------------------\n");
                 }
+                // If login is incorrect
                 else
                 {
                     Console.WriteLine("******Access Denied: Unauthorized******");
