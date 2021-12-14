@@ -21,6 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGener
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator.Logging.Tests", "..\TeamHobby.HobbyProjectGenerator.Logging.Tests\TeamHobby.HobbyProjectGenerator.Logging.Tests.csproj", "{CA8D11CF-807C-4C90-A529-0371F73518F6}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamHobby.HobbyProjectGenerator.ArchiveTests", "..\TeamHobby.HobbyProjectGenerator.ArchiveTests\TeamHobby.HobbyProjectGenerator.ArchiveTests.csproj", "{C5EBD1F8-C806-4BF9-B2D7-8876072630FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator.ArchiveTests", "..\TeamHobby.HobbyProjectGenerator.ArchiveTests\TeamHobby.HobbyProjectGenerator.ArchiveTests.csproj", "{C5EBD1F8-C806-4BF9-B2D7-8876072630FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

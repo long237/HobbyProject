@@ -103,6 +103,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 reader = (OdbcDataReader)result;
 
             }
+            // [Logname, loglevel, date, time, ...]
 
             Console.WriteLine("Reading from the database");
             while (reader.Read())
@@ -113,21 +114,23 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             Console.WriteLine("");
 
             // Closing the connection
-            sqlDS.getConnection().Close();*/
+            sqlDS.GetConnection().Close();
 
-            /*  // While loop to keep this running forever with UserManagement
-              // Testing archive Manager
-              //while (true)
-              //{
-              string currentDate = DateTime.Now.ToString("dd");
-              string currentTime = DateTime.Now.ToString("T");
-              Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
-              if (String.Equals(currentDate, "1") && String.Equals(currentTime, "00:00:00 AM"))
-              {
-                  ArchiveManager archive = new ArchiveManager(datasource);
-                  archive.Controller();
-              }
-              //}*/
+            // While loop to keep this running forever with UserManagement
+            //Testing archive Manager
+            //while (true)
+            //{
+                //string currentDate = DateTime.Now.ToString("dd");
+                //string currentTime = DateTime.Now.ToString("T");
+                //string activateDate = "01";
+                //string activateTime = "00:00:00 AM";
+                //Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
+                //if (String.Equals(currentDate, activateDate) && String.Equals(currentTime, activateTime))
+                //{
+                    //ArchiveManager archive = new ArchiveManager(datasource);
+                    //archive.Controller();
+                //}
+            //}
 
 
 
