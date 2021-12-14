@@ -14,7 +14,7 @@ namespace TeamHobby.UserManagement.xTests
         public UnitTest1(ITestOutputHelper output)
         {
             this.output = output;  
-        }/*
+        }
         [Fact]
         public void SingleOperationinFiveSec() 
         {
@@ -24,7 +24,6 @@ namespace TeamHobby.UserManagement.xTests
             var serviceTest = new AccountService();
             string dbType = "sql";
             RDSFactory dbFactory = new RDSFactory();
-
 
             // Testing Data Access Layer
             string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
@@ -43,21 +42,19 @@ namespace TeamHobby.UserManagement.xTests
             TimeSpan timeDiff = (eTime - sTime);
             var sec = timeDiff.TotalSeconds;
 
-
             // Assert
             if (sec > 5)
-            {
-                Assert.False(false);
-                output.WriteLine("Greater than 5 seconds");
-                
+            {                
+                output.WriteLine("Single Operation was unsuccessful");
+                Assert.False(true);
             }
             else 
             {
                 Assert.True(true);
-                output.WriteLine("Less than 5 seconds");
+                output.WriteLine("Single Operation was successful");
             }
         }
-        */
+        
         [Fact]
         public void BulkOperationforSixty()
         {
@@ -95,16 +92,14 @@ namespace TeamHobby.UserManagement.xTests
             // Assert
             if (sec > 60)
             {
-                Assert.False(false);
-                output.WriteLine("Greater than 60 seconds");
-
+                output.WriteLine("Bulk Operation was unsuccessful");
+                Assert.False(true);
             }
             else
             {
                 Assert.True(true);
-                output.WriteLine("Less than 60 seconds");
+                output.WriteLine("Bulk Operation was successful");
             }
         }
-
     }
 }
