@@ -95,29 +95,6 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 }
                 
             }
-            //Console.WriteLine(value: $"Welcome {username}\n");
-
-         /*   string sqlQuery = "Select * from log;";
-            Object result = datasource.ReadData(sqlQuery);
-            Console.WriteLine("type of Result: " + result.GetType());
-            OdbcDataReader reader = null;
-
-            if (result.GetType() == typeof(OdbcDataReader))
-            {
-                reader = (OdbcDataReader)result;
-
-            }
-
-            Console.WriteLine("Reading from the database");
-            while (reader.Read())
-            {
-                Console.WriteLine("Date={0} {1} {2} {3} {4} {5}", reader[0], reader[1], reader[2], reader[3], reader[4], reader[5]);
-            }
-            SqlDAO sqlDS = (SqlDAO)datasource;
-            Console.WriteLine("");
-
-            // Closing the connection
-            sqlDS.getConnection().Close();*/
 
             /*  // While loop to keep this running forever with UserManagement
               // Testing archive Manager

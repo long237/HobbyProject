@@ -52,6 +52,12 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             _password = pwd;
             _Time = TimeStamp;
         }
+        public UserAccount(string un, string role)
+        {
+            _userName = un;
+            _Role = role;
+            _Time = DateTime.UtcNow;
+        }
         public UserAccount(string newUN, string newPWD, string Email, string role, DateTime newTime)
         {
             _userName = newUN;

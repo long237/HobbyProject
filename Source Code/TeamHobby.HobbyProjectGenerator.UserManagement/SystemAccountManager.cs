@@ -224,7 +224,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             UserAccount newUser = new UserAccount(newCredentials.GetUserName(),
                             newCredentials.GetPassword(), newCredentials.GetEmail(), 
                                 newCredentials.GetRole(), DateTime.UtcNow);           
-                            bool accountValid = accountService.CreateUserRecord(newUser,user.username, dbSource);
+                            bool accountValid = accountService.CreateUserRecord(newUser, user.username, dbSource);
                             if (accountValid is true)
                             {
                                 Console.WriteLine("\nAccount created Successfully");
@@ -234,30 +234,74 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             {
                                 return "Database Timed out";
                             }
-                            //break;
                         // Edit account
                         case 2:
-                           /* UserAccount newEditUser = new UserAccount(newCredentials.GetUserName(),
-                                newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.EditUserRecord(newEditUser, dbSource);*/
+                            // State what account is being edited
+                            string userName = newCredentials.GetUserName();
+                            string userRole = newCredentials.GetRole();
+
+                            // Notify the user of what can be edited
+                            Console.WriteLine($"\n****The following information will be used to update {userName}");
+
+                            // Get updated parameters
+                            UserAccount newEditUser = new UserAccount(userName,
+                                newCredentials.GetPassword(), newCredentials.GetEmail(), 
+                                newCredentials.GetRole(), DateTime.UtcNow);
+                            bool editValid = accountService.EditUserRecord(newEditUser, user.username, dbSource);
+                            if (editValid is true)
+                            {
+                                Console.WriteLine("\nAccount updated Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "Database Timed out";
+                            }
                             break;
                         // Delete account
                         case 3:
                             UserAccount newDeleteUser = new UserAccount(newCredentials.GetUserName(),
                                 newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.DeleteUserRecord(newDeleteUser, dbSource);
+                            bool deleteValid = accountService.DeleteUserRecord(newDeleteUser, user.username , dbSource);
+                            if (deleteValid is true)
+                            {
+                                Console.WriteLine("\nAccount deleted Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "User does not exist";
+                            }
                             break;
                         // Disable account
                         case 4:
                             UserAccount newDisableUser = new UserAccount(newCredentials.GetUserName(),
-                                newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.DisableUser(newDisableUser, dbSource);
+                                newCredentials.GetRole());
+                            bool disableValid = accountService.DisableUser(newDisableUser, user.username , dbSource);
+                            if (disableValid is true)
+                            {
+                                Console.WriteLine("\nAccount disabled Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "Database Timed out";
+                            }
                             break;
                         // Enable account
                         case 5:
                             UserAccount newEnableUser = new UserAccount(newCredentials.GetUserName(),
-                                newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.EnableUser(newEnableUser, dbSource);
+                                newCredentials.GetRole());
+                            bool enableValid = accountService.EnableUser(newEnableUser, user.username , dbSource);
+                            if (enableValid is true)
+                            {
+                                Console.WriteLine("\nAccount enabled Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "Database Timed out";
+                            }
                             break;
                         // View logs
                         case 6:
