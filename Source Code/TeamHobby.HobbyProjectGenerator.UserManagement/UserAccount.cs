@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TeamHobby.HobbyProjectGenerator.UserManagement
-{
+{   // Class for getting user credentials
     public class GetCredentials
     {
         public string? GetUserName()
@@ -20,11 +20,26 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             string? userPassword = Console.ReadLine();
             return userPassword;
         }
-        /*public string ConfirmPassword()
+        public string ConfirmPassword()
         {
-            Console.WriteLine();
-            string confirmPassword = newUser.NewPassword;
-        }*/
+            while (true)
+            {
+                Console.WriteLine("Please enter a password:");
+                string? userPassword = Console.ReadLine();
+                // Confirm Password
+                Console.WriteLine("Please re-enter the password:");
+                string checkPsswd = Console.ReadLine();
+                // Check if passwords match
+                if (userPassword == checkPsswd)
+                {
+                    return userPassword;
+                }
+                else
+                {
+                    Console.WriteLine("Passwords do not match.\n");
+                }
+            }
+        }
         public string GetEmail()
         {
             Console.WriteLine("Please enter an email:");

@@ -221,8 +221,9 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             return "Back to Login";
                         // Create account 
                         case 1:
+                            // Get all credentials and create newUser
                             UserAccount newUser = new UserAccount(newCredentials.GetUserName(),
-                            newCredentials.GetPassword(), newCredentials.GetEmail(), 
+                            newCredentials.ConfirmPassword(), newCredentials.GetEmail(), 
                                 newCredentials.GetRole(), DateTime.UtcNow);           
                             bool accountValid = accountService.CreateUserRecord(newUser, user.username, dbSource);
                             if (accountValid is true)
