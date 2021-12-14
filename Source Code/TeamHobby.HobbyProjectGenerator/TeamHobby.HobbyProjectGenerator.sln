@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator", "TeamHobby.HobbyProjectGenerator.csproj", "{C75B6909-FD9E-4382-94B6-7CA2CE371C9A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.UserManagement.Tests", "..\TeamHobby.UserManagement.Tests\TeamHobby.UserManagement.Tests.csproj", "{5C5A44B4-EC3C-44F2-8F39-F917F8ED932F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator.Models", "..\TeamHobby.HobbyProjectGenerator.Models\TeamHobby.HobbyProjectGenerator.Models.csproj", "{75DED6C2-D404-4E71-A58B-0F616DB5C062}"
@@ -22,6 +20,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator.UserManagement", "..\TeamHobby.HobbyProjectGenerator.UserManagement\TeamHobby.HobbyProjectGenerator.UserManagement.csproj", "{2E7193B8-86B6-48DA-9671-CD84615A5F5D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamHobby.HobbyProjectGenerator.Logging.Tests", "..\TeamHobby.HobbyProjectGenerator.Logging.Tests\TeamHobby.HobbyProjectGenerator.Logging.Tests.csproj", "{CA8D11CF-807C-4C90-A529-0371F73518F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamHobby.HobbyProjectGenerator.ArchiveTests", "..\TeamHobby.HobbyProjectGenerator.ArchiveTests\TeamHobby.HobbyProjectGenerator.ArchiveTests.csproj", "{C5EBD1F8-C806-4BF9-B2D7-8876072630FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
