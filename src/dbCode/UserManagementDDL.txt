@@ -1,6 +1,5 @@
 create table roles
 (
-    RoleID      int not null,
     Role        varchar(50) charset utf8mb3  not null,
     CreatedBy   varchar(200) charset utf8mb3 not null,
     CreatedDate datetime                   not null,
