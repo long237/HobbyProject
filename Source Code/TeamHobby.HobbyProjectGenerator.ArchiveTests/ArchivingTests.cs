@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -197,6 +198,75 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
 
         }
 
+        public void RemoveEntriesTest(IDataSource<string> sqlDAO)
+        {
+            // Arrange
+            ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
+            SqlDAO sqlDS = null;
+
+            if (sqlDAO.GetType() == typeof(SqlDAO))
+            {
+                sqlDS = (SqlDAO)sqlDAO;
+                sqlDS.GetConnection().Open();
+
+                // Act
+                Console.WriteLine("Inserting into archive...");
+                sqlDS.WriteData("INSERT into log(LtimeStamp, LvName, catname, userop, logmessage) values " +
+                "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
+                "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
+                "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
+                "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
+                "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return')," +
+                "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully');");
+
+                OdbcDataReader odbcObj = (OdbcDataReader)sqlDS.ReadData("SELECT * FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
+
+                int count = 0;
+                while (odbcObj.Read()) { ++count; }
+                Console.WriteLine("Number of entries > 30 days old: " + count);
+
+                Console.WriteLine("");
+                Console.WriteLine("Removing entries from archive...");
+                sqlDS.RemoveEntries();
+
+                odbcObj = (OdbcDataReader)sqlDS.ReadData("SELECT * FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
+
+                count = 0;
+                while (odbcObj.Read()) { ++count; }
+                Console.WriteLine("Number of entries > 30 days old: " + count);
+
+                // Assert
+                bool expectedVal = true;
+                bool actualVal = !Convert.ToBoolean(count);
+
+                if (actualVal)
+                {
+                    Console.WriteLine("Expected: {0}, Actual: {0}. Entries removed correctly.", expectedVal, actualVal);
+                }
+                else
+                {
+                    Console.WriteLine("Expected: {0}, Actual: {1}. Entries not removed.", expectedVal, actualVal);
+                }
+                
+                sqlDS.GetConnection().Close();
+            }
+
+            return;
+        }
+
+        public void RemoveOutputFileTest(IDataSource<string> sqlDAO)
+        {
+            // Arrange
+            ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
+
+            // Act
+
+
+            // Assert 
+
+            return;
+        }
+
         public static void Main(string[] args)
         {
             string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
@@ -226,11 +296,20 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
             Console.WriteLine("");
 
 
-
             // Testing clean up sequence
             //test.IsCleaningUpCompleted(sqlDAO);
             //Console.WriteLine("-----------------");
             //Console.WriteLine("");
+
+            // Testing remove entries
+            test.RemoveEntriesTest(sqlDAO);
+            Console.WriteLine("-----------------");
+            Console.WriteLine("");
+
+            // Testing remove output file
+            test.RemoveOutputFileTest(sqlDAO);
+            Console.WriteLine("-----------------");
+            Console.WriteLine("");
 
         }
 
