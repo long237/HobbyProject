@@ -7,8 +7,10 @@ using TeamHobby.HobbyProjectGenerator.UserManagement;
 
 namespace TeamHobby.HobbyProjectGenerator.Main
 {
+
     public class GetCredentials
     {
+
         public string? GetUserName()
         {
             Console.WriteLine("Please enter a username:");
@@ -24,6 +26,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
     }
     public class Controller 
     {
+
         public static void Main(string[] args)
         {
             // Console customization
@@ -42,13 +45,18 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             //GetCredentials credentials = new GetCredentials();
             //string? username = credentials.GetUserName();
             //string? password = credentials.GetPassword();
-
-
+// Console customization
+            // Change the look of the console
+            Console.Title = "HobbyProjectGenerator";
+            // Change console text color
+            Console.ForegroundColor = ConsoleColor.Green;
+            // Change terminal height
+            Console.WindowHeight = 40;
             //Console.WriteLine(value: $"username is {username}\npassword is {password}");
 
             // Creating the Factory class
             // Creating the Factory class
-           
+
             string dbType = "sql";
             RDSFactory dbFactory = new RDSFactory();
 
@@ -246,4 +254,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
         }
     }
+    }
 }
+
+

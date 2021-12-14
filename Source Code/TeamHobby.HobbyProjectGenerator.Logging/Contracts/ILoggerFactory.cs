@@ -10,6 +10,7 @@ namespace TeamHobby.HobbyProjectGenerator.Logging.Contracts
     {
         ILogger CreateLogger()
         {
+            return new DBLogger();
         }
     }
 }
