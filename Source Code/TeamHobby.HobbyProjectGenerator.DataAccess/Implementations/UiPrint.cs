@@ -17,7 +17,8 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         {
             // Menu for all UserManagement options
             int menu = 0;
-            Console.WriteLine($"Welcome {username} to User Management.\n");
+            Console.WriteLine("-------------------------------------\n");
+            Console.WriteLine($"\nWelcome {username} to User Management.\n");
             Console.WriteLine("What would you like to do?\n");
             Console.WriteLine(menu + ") To exit User Management.\n");
             menu += 1;

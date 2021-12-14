@@ -33,51 +33,58 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             // Change terminal height
             Console.WindowHeight = 40;
 
-            Console.WriteLine(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"));
-
             // Creating the Factory class
             // Logger log = new Logger();
             //Logger.PrintTest();
 
-            // Admin login
-            GetCredentials credentials = new GetCredentials();
-            string? username = credentials.GetUserName();
-            string? password = credentials.GetPassword();
+            // Loop login terminal
+            bool mainMenu = true;
+
+            // Loop Admin login
+            while (mainMenu is true)
+            {
+                // Admin Sign in
+                GetCredentials credentials = new GetCredentials();
+                Console.WriteLine("\nPlease Enter Admin Credentials.\n");
+                string? username = credentials.GetUserName();
+                string? password = credentials.GetPassword();
+
+                // Get time of login attempt
+                DateTime TimeStamp = DateTime.UtcNow;
+
+                // String for checking query return type
+                string dbType = "sql";
+                // Creating the Factory class
+                RDSFactory dbFactory = new RDSFactory();
+
+                // Testing Data Access Layer
+                string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
+                    "TCPIP=1;" +
+                    "SERVER=localhost;" +
+                    "DATABASE=hobby;" +
+                    "UID=root;" +
+                    "PASSWORD=Teamhobby;" +
+                    "OPTION=3";
+                IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
+                // Create manager class from UserManagement
+                SystemAccountManager manager = new SystemAccountManager();
+
+                // Create UserAccount class
+                UserAccount user = new UserAccount(username, password, TimeStamp);
+
+                string isLogin = manager.CreateUserRecord(user, datasource);
 
 
-            //Console.WriteLine(value: $"username is {username}\npassword is {password}");
-
-            // Creating the Factory class
-            // Creating the Factory class
-           
-            string dbType = "sql";
-            RDSFactory dbFactory = new RDSFactory();
-
-            // Testing Data Access Layer
-            string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
-              "TCPIP=1;" +
-              "SERVER=localhost;" +
-              "DATABASE=hobby;" +
-              "UID=root;" +
-              "PASSWORD=Teamhobby;" +
-              "OPTION=3";
-            IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
-            // Create manager class from UserManagement
-            SystemAccountManager manager = new SystemAccountManager();
-            
-           /* // Admin Sign in
-            GetCredentials credentials = new GetCredentials();
-            string? username = credentials.GetUserName();
-            string? password = credentials.GetPassword();*/
-
-            // Get time of login attempt
-            DateTime TimeStamp = DateTime.UtcNow;
-
-            // Create UserAccount class
-            UserAccount user = new UserAccount(username, password, TimeStamp);
-
-            Console.Write(manager.CreateUserRecord(user, datasource));
-
+                if (isLogin != "Access Denied: Unauthorized\n")
+                {
+                    mainMenu = false;
+                }
+                else
+                {
+                    Console.WriteLine("******Access Denied: Unauthorized******");
+                }
+                
+            }
             //Console.WriteLine(value: $"Welcome {username}\n");
 
          /*   string sqlQuery = "Select * from log;";

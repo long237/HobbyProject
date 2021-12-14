@@ -175,6 +175,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
 
             if (checkSql == "Admin")
             {
+                Console.WriteLine("-- Logged in successfully.");
                 return true;
             }
             else
@@ -218,7 +219,6 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                         // Exit menu
                         case 0:
                             return "Exiting UserManagement.\n";
-                            break;
                         // Create account 
                         case 1:
                             UserAccount newUser = new UserAccount(newCredentials.GetUserName(),
@@ -266,8 +266,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                         case 7:
                             break;
                         default:
-                            Console.WriteLine("Invalid input.\nPlease enter a valid option.\n" +
-                                "------------------------------------\n\n");
+                            Console.WriteLine("Invalid input.\nPlease enter a valid option.\n");
                             break;
                     }
                 }
