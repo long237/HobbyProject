@@ -8,6 +8,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 {   
     public class Controller 
     {
+
         public static void Main(string[] args)
         {
             // Console customization
@@ -143,4 +144,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             //Console.WriteLine("Writing completed. ");
         }
     }
+    }
 }
+
+
