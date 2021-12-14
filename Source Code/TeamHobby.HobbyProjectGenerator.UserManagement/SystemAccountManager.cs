@@ -286,7 +286,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             }
                             else
                             {
-                                return "Database Timed out";
+                                return "User does not exist";
                             }
                             break;
                         // Enable account
@@ -301,7 +301,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             }
                             else
                             {
-                                return "Database Timed out";
+                                return "User does not exist";
                             }
                             break;
                         // View logs

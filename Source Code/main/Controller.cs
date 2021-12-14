@@ -29,6 +29,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             // Loop Admin login
             while (mainMenu is true)
             {
+
                 // Admin Sign in
                 GetCredentials credentials = new GetCredentials();
                 Console.WriteLine("\nPlease Enter Admin Credentials " +
@@ -68,7 +69,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 //{
                 string currentDate = DateTime.Now.ToString("dd");
                 string currentTime = DateTime.Now.ToString("T");
-                Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
+                //Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
                 if (String.Equals(currentDate, "1") && String.Equals(currentTime, "00:00:00 AM"))
                 {
                     ArchiveManager archive = new ArchiveManager(datasource);
@@ -81,15 +82,16 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
                 // Create UserAccount class
                 UserAccount user = new UserAccount(username, password, TimeStamp);
-
+                // Call user object and wait for return string
                 string isLogin = manager.CreateUserRecord(user, datasource);
 
-
+                // If login is not incorrect and user is returning to login menu
                 if (isLogin != "Access Denied: Unauthorized\n")
                 {
                     Console.WriteLine("Returning to login...\n");
                     Console.WriteLine("-------------------------------------\n");
                 }
+                // If login is incorrect
                 else
                 {
                     Console.WriteLine("******Access Denied: Unauthorized******");
@@ -126,8 +128,6 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             //sqlDS.RemoveEntries();
 
 
-
-
             // 2.Inserting Data into the database:
             //string sqlWrite = "INSERT into log(lvname, catname, userop, logmessage) values " +
             //    "('Info', 'View', 'Testing DAL stuffs', 'new DAL method tested');";
@@ -143,7 +143,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             //Console.WriteLine("Writing completed. ");
         }
     }
-    }
 }
+
 
 
