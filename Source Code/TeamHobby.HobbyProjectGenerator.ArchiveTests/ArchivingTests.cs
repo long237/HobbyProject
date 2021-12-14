@@ -225,7 +225,7 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
             Console.WriteLine("-----------------");
             Console.WriteLine("");
 
-            
+
 
             // Testing clean up sequence
             //test.IsCleaningUpCompleted(sqlDAO);
