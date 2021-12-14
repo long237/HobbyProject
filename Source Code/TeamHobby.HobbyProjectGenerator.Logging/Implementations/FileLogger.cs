@@ -1,18 +1,23 @@
-﻿using System;
+﻿// using System;
 
-namespace TeamHobby.HobbyProjectGenerator.Logging
-{
-    public class FileLogger : ILogger
-    {
-        public IList<string> GetAllLogs()
-        {
-            throw new NotImplementedException();
-        }
+// namespace TeamHobby.HobbyProjectGenerator.Logging
+// {
+//     public class FileLogger : Ilogger
+//     {
+//         public FileLogger()
+//         {
+//         }
 
-        public bool Log(string description)
-        {
-            throw new NotImplementedException();
-        }
-    }
+//         public IList<string> GetAllLogs()
+//         {
+//             throw new NotImplementedException();
+//         }
 
-}
+//         public bool Log(LogEntry log)
+//         {
+//             throw new NotImplementedException();
+//         }
+
+//     }
+
+// }

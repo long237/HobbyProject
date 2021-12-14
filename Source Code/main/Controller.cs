@@ -6,8 +6,10 @@ using TeamHobby.HobbyProjectGenerator.Logging;
 using TeamHobby.HobbyProjectGenerator.UserManagement;
 namespace TeamHobby.HobbyProjectGenerator.Main
 {
+
     public class GetCredentials
     {
+
         public string? GetUserName()
         {
             Console.WriteLine("Please enter a username:");
@@ -24,6 +26,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
     }
     public class Controller 
     {
+
         public static void Main(string[] args)
         {
             // Logger log = new Logger();
@@ -31,28 +34,34 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             //GetCredentials credentials = new GetCredentials();
             //string? username = credentials.GetUserName();
             //string? password = credentials.GetPassword();
-
-
+// Console customization
+            // Change the look of the console
+            Console.Title = "HobbyProjectGenerator";
+            // Change console text color
+            Console.ForegroundColor = ConsoleColor.Green;
+            // Change terminal height
+            Console.WindowHeight = 40;
             //Console.WriteLine(value: $"username is {username}\npassword is {password}");
 
             // Creating the Factory class
             // Creating the Factory class
-           
+
             string dbType = "sql";
             RDSFactory factory = new RDSFactory();
 
             // Testing Data Access Layer
             string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +
-              "TCPIP=1;" +
-              "SERVER=localhost;" +
-              "DATABASE=hobby;" +
-              "UID=root;" +
-              "PASSWORD=Teamhobby;" +
-              "PORT=3306;";
-            IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
+                "TCPIP=1;" +
+                "SERVER=localhost;" +
+                "DATABASE=hobby;" +
+                "UID=root;" +
+                "PASSWORD=Teamhobby;" +
+                "PORT=3306;" + 
+                "OPTION=3";
+           // IDataSource<string> datasource = factory.getDataSource(dbType, dbInfo);
 
-              "OPTION=3";
-            IDataSource<string> datasource = factory.getDataSource(dbType, dbInfo);*/
+            
+            IDataSource<string> datasource = factory.getDataSource(dbType, dbInfo);
 
             // Create manager class from UserManagement
             SystemAccountManager manager = new SystemAccountManager();
@@ -190,7 +199,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                             break;
                         // Create a new account
                         case 1:
-                               user.newUser();
+                                user.newUser();
                             break;
                         // Access Admin features
                         case 2:
@@ -232,4 +241,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
         }
     }
+    }
 }
+
+

@@ -10,7 +10,7 @@ namespace TeamHobby.HobbyProjectGenerator.Logging
     {
         bool Log(LogEntry log);
 
-        IList<string> GetAllLogs();
+      //  IList<string> GetAllLogs();
 
     }
 }
