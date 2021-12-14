@@ -200,6 +200,8 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
 
         public void RemoveEntriesTest(IDataSource<string> sqlDAO)
         {
+            Console.WriteLine("TESTING - REMOVE ENTRIES"); 
+
             // Arrange
             ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
             SqlDAO sqlDS = null;
@@ -208,9 +210,9 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
             {
                 sqlDS = (SqlDAO)sqlDAO;
                 sqlDS.GetConnection().Open();
-
+                
                 // Act
-                Console.WriteLine("Inserting into archive...");
+                Console.WriteLine("\nInserting into archive...");
                 sqlDS.WriteData("INSERT into log(LtimeStamp, LvName, catname, userop, logmessage) values " +
                 "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
                 "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
@@ -225,8 +227,7 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
                 while (odbcObj.Read()) { ++count; }
                 Console.WriteLine("Number of entries > 30 days old: " + count);
 
-                Console.WriteLine("");
-                Console.WriteLine("Removing entries from archive...");
+                Console.WriteLine("\nRemoving entries from archive...");
                 sqlDS.RemoveEntries();
 
                 odbcObj = (OdbcDataReader)sqlDS.ReadData("SELECT * FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
@@ -238,16 +239,16 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
                 // Assert
                 bool expectedVal = true;
                 bool actualVal = !Convert.ToBoolean(count);
-
-                if (actualVal)
+                
+                if (expectedVal == actualVal)
                 {
-                    Console.WriteLine("Expected: {0}, Actual: {0}. Entries removed correctly.", expectedVal, actualVal);
+                    Console.WriteLine("\nExpected: {0}, Actual: {0}. Entries removed correctly.", expectedVal, actualVal);
                 }
                 else
                 {
-                    Console.WriteLine("Expected: {0}, Actual: {1}. Entries not removed.", expectedVal, actualVal);
+                    Console.WriteLine("\nExpected: {0}, Actual: {1}. Entries not removed.", expectedVal, actualVal);
                 }
-                
+
                 sqlDS.GetConnection().Close();
             }
 
@@ -256,13 +257,35 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
 
         public void RemoveOutputFileTest(IDataSource<string> sqlDAO)
         {
+            Console.WriteLine("TESTING - REMOVE OUTPUT FILE\n");
+            
             // Arrange
             ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
+            SqlDAO sqlDS = null;
+
+            if (sqlDAO.GetType() == typeof(SqlDAO))
+            {
+                sqlDS = (SqlDAO)sqlDAO;
+            }
 
             // Act
-
-
+            string filepath = archiveManager.CreateOutFileName();
+            Console.WriteLine("\nRemoving file...");
+            sqlDS.RemoveOutputFile(filepath);
+            
             // Assert 
+            bool expectedVal = false;
+            bool actualVal = File.Exists(filepath);
+            Console.WriteLine("Checking if file exists: " + actualVal);
+
+            if (expectedVal == actualVal)
+            {
+                Console.WriteLine("\nExpected: {0}, Actual: {0}. Output file removed correctly.", expectedVal, actualVal);
+            }
+            else 
+            {
+                Console.WriteLine("\nExpected: {0}, Actual: {1}. Output file NOT removed.", expectedVal, actualVal);
+            }
 
             return;
         }

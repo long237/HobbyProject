@@ -94,12 +94,12 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         {
             try
             {
-                _conn.Open();
+                //_conn.Open();
 
                 OdbcCommand command = new OdbcCommand(cmd, _conn);
                 command.ExecuteNonQuery();
 
-                _conn.Close();
+                //_conn.Close();
 
                 return true;
             }
@@ -111,7 +111,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             }
             finally
             {
-                _conn.Close();
+               //_conn.Close();
             }
         }
 
