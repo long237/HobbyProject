@@ -209,7 +209,7 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
             if (sqlDAO.GetType() == typeof(SqlDAO))
             {
                 sqlDS = (SqlDAO)sqlDAO;
-                sqlDS.GetConnection().Open();
+                //sqlDS.GetConnection().Open();
                 
                 // Act
                 Console.WriteLine("\nInserting into archive...");
@@ -249,7 +249,7 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
                     Console.WriteLine("\nExpected: {0}, Actual: {1}. Entries not removed.", expectedVal, actualVal);
                 }
 
-                sqlDS.GetConnection().Close();
+                //sqlDS.GetConnection().Close();
             }
 
             return;
@@ -299,6 +299,7 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
                           "PASSWORD=Teamhobby;" +
                           "OPTION=3";
             SqlDAO sqlDAO = new SqlDAO(dbInfo);
+            sqlDAO.GetConnection().Open();
             //ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
 
             // Testing folder creation
@@ -333,7 +334,7 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
             test.RemoveOutputFileTest(sqlDAO);
             Console.WriteLine("-----------------");
             Console.WriteLine("");
-
+            sqlDAO.GetConnection().Close();
         }
 
     }

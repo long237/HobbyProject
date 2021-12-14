@@ -177,7 +177,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         public bool CopyToFile(string filePath){
             try
             {
-                _conn.Open();
+                //_conn.Open();
                 // Conver backward slash in to forward slash
                 filePath = filePath.Replace("\\", "/");
                 string sqlQuery = "SELECT 'LtimeStamp', 'logID', 'LvName', 'catName', 'userOP', 'logMessage' " +
@@ -200,19 +200,19 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
                 Console.WriteLine("Output to a file completed. ");
 
 
-                _conn.Close();
+                //_conn.Close();
                 return true;
                
             }
             catch (Exception ex)
             {   
-                _conn.Close();
+                //_conn.Close();
                 Console.WriteLine("Error when copying query to a file !!, will be handled higher up the call stack");
                 throw;
             }
             finally
             {
-                _conn.Close();
+                //_conn.Close();
             }
         }
 
