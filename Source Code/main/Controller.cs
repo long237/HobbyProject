@@ -144,7 +144,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             //Console.WriteLine("Writing completed. ");
         }
     }
-    }
 }
+
 
 
