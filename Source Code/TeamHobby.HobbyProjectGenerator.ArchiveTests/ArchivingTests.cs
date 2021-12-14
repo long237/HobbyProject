@@ -19,7 +19,7 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
 
 
         // [TestMethod]
-        public void CreateFolderTest(IDataSource<string> sqlDAO)
+        public void IsArchiveFolderCreated(IDataSource<string> sqlDAO)
         {
             // Arrange 
             //SqlDAO sqlDAO = new SqlDAO(dbInfo);
@@ -51,7 +51,7 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
         }
 
         // [TestMethod]
-        public void CreateFileNameTest(IDataSource<string> sqlDAO)
+        public void IsFileNameCreated(IDataSource<string> sqlDAO)
         {
             // Arrange
             string foldPath = @"C:\HobbyArchive";
@@ -106,12 +106,12 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
 
             // Testing folder creation
             ArchivingTests test = new ArchivingTests();
-            test.CreateFolderTest(sqlDAO);
+            test.IsArchiveFolderCreated(sqlDAO);
             Console.WriteLine("-----------------");
             Console.WriteLine("");
 
             // Testing file creation
-            test.CreateFileNameTest(sqlDAO);
+            test.IsFileNameCreated(sqlDAO);
             Console.WriteLine("-----------------");
             Console.WriteLine("");
 

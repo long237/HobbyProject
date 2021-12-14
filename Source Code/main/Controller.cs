@@ -35,7 +35,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
             // Creating the Factory class
             string dbType = "sql";
-            RelationalDataSourceFactory dbFactory = new RelationalDataSourceFactory();
+            RDSFactory dbFactory = new RDSFactory();
 
             // Testing Data Access Layer
             string dbInfo = "DRIVER={MariaDB ODBC 3.1 Driver};" +

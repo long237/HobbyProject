@@ -7,7 +7,7 @@ using TeamHobby.HobbyProjectGenerator.DataAccess;
 
 namespace TeamHobby.HobbyProjectGenerator.DataAccess
 {
-    public class RelationalDataSourceFactory
+    public class RDSFactory
     {
         // Mehthod to create a specific data source suitable to the need
         public IDataSource<string> getDataSource(string name, string info)
