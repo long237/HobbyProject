@@ -20,6 +20,11 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             string? userPassword = Console.ReadLine();
             return userPassword;
         }
+        /*public string ConfirmPassword()
+        {
+            Console.WriteLine();
+            string confirmPassword = newUser.NewPassword;
+        }*/
         public string GetEmail()
         {
             Console.WriteLine("Please enter an email:");
@@ -36,40 +41,35 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         // Admin Credentials
         private string _userName;
         private string _password;
-        private DateTime _logginTime;
+        private DateTime _Time;
+        // New User Credentials
+        private string _Email;
+        private string _Role;
 
         public UserAccount(string un, string pwd, DateTime TimeStamp)
         {
             _userName = un;
             _password = pwd;
-            _logginTime = TimeStamp;
+            _Time = TimeStamp;
         }
-        public string username { get { return _userName; } } 
-        public string password { get { return _password; } }
-
-        // New User Credentials
-        private string _newUserName;
-        private string _newPassword;
-        private string _newEmail;
-        private string _newRole;
-        private DateTime _newTime;
         public UserAccount(string newUN, string newPWD, string Email, string role, DateTime newTime)
         {
-            _newUserName = newUN;
-            _newPassword = newPWD;
-            _newRole = role;
-            _newEmail = Email;
-            _newTime = newTime;
+            _userName = newUN;
+            _password = newPWD;
+            _Role = role;
+            _Email = Email;
+            _Time = newTime;
         }
         public UserAccount()
         {
-            _newRole = "regular";
-            _newTime= DateTime.Now;
+            _Role = "regular";
+            _Time= DateTime.Now;
         }
-        public string NewUserName { get { return _newUserName; } }
-        public string NewPassword { get { return _newPassword; } }
-        public string NewEmail { get { return _newEmail; } }
-        public string NewRole { get { return _newRole; } }
-        public DateTime NewTime { get { return _newTime; } }
+
+        public string username { get { return _userName; } }
+        public string password { get { return _password; } }
+        public string email { get { return _Email; } }
+        public string role { get { return _Role; } }
+        public DateTime Time { get { return _Time; } }
     }
 }

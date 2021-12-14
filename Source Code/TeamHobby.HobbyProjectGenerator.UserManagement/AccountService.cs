@@ -10,23 +10,39 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
 {
     public class AccountService
     {
-        public bool CreateUserRecord(UserAccount newUser, IDataSource<string> dbSource)
+        public bool CreateUserRecord(UserAccount newUser, string CreatedBy, IDataSource<string> dbSource)
         {
-            // string checkAdmin = $"Select * from users where username = {user.username} and password = {user.password};";
-            // Insert into users table
-            string sqlUser = $"INSERT INTO hobby.users (UserName, Password," +
-                $"CreatedBy, CreatedDate, Email) VALUES ('{newUser.NewUserName}', " +
-                $"'{newUser.NewPassword}','{newUser.username}', NOW(),'{newUser.NewEmail}');";
-               
+            try
+            {
+                // Insert into users table
+                string sqlUser = $"INSERT INTO users (UserName, Password, Role, IsActive," +
+                    $"CreatedBy, CreatedDate, Email) VALUES ('{newUser.username}', " +
+                    $"'{newUser.password}','{newUser.role}', 1," +
+                    $"'{CreatedBy}', NOW(),'{newUser.email}');";
+
+                bool insertNewUser = dbSource.WriteData(sqlUser);
+                return insertNewUser;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool EditUserRecord(UserAccount newUser, string CreatedBy, IDataSource<string> dbSource)
+        {
+/*            // Insert into users table
+            string sqlUser = $"UPDATE hobby.roles r SET r.Role = 'regular',r.CreatedBy = 'colin'WHERE r.RoleID = 5; ";
+
             Object insertNewUser = dbSource.WriteData(sqlUser);
             // Insert into users table
-            string sqlRoles = $"INSERT INTO hobby.roles (Role, CreatedBy, CreatedDate) " +
-                $"VALUES ('{newUser.NewRole}', '{newUser.username}', NOW());";
+            string sqlRoles = $"INSERT INTO roles (Role, CreatedBy, CreatedDate) " +
+                $"VALUES ('{newUser.NewRole}', '{CreatedBy}', NOW());";
             Object insertNewRole = dbSource.WriteData(sqlUser);
             // Create string for confirming user account
             string confirmUser = $"Select * from users where username = {newUser.NewUserName} " +
                 $"and password = {newUser.NewPassword};";
-            Object conUser = dbSource.WriteData(confirmUser);
+            Object conUser = dbSource.ReadData(confirmUser);
 
             //Console.WriteLine("type of Reesult:" + confirmAdmin.GetType());
             OdbcDataReader reader = null;
@@ -35,9 +51,6 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             {
                 reader = (OdbcDataReader)conUser;
             }
-
-            // Create String to hold sql output
-            string checkSql = "";
 
             // Read Sql query results
             while (reader.Read())
@@ -49,11 +62,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             Console.WriteLine("");
 
             // Closing the connection
-            sqlDS.getConnection().Close();
-            return true;
-        }
-        public bool EditUserRecord(UserAccount newUser, IDataSource<string> dbSource)
-        {
+            sqlDS.getConnection().Close();*/
             return true;
         }
         public bool DeleteUserRecord(UserAccount newUser, IDataSource<string> dbSource)

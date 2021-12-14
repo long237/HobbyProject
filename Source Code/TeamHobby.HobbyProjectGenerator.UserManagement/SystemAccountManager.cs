@@ -148,7 +148,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         {
             // string checkAdmin = $"Select * from users where username = {user.username} and password = {user.password};";
             string checkAdmin = $"select r.Role from roles r, users u where " +
-                $"UserName = '{user.username}' and Password = '{user.password}' and r.RoleID = u.RoleID;";
+                $"UserName = '{user.username}' and Password = '{user.password}' and r.Role = u.Role;";
             Object confirmAdmin = dbSource.ReadData(checkAdmin);
             //Console.WriteLine("type of Reesult:" + confirmAdmin.GetType());
             OdbcDataReader reader = null;
@@ -223,14 +223,14 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                         case 1:
                             UserAccount newUser = new UserAccount(newCredentials.GetUserName(),
                             newCredentials.GetPassword(), newCredentials.GetEmail(), 
-                                newCredentials.GetRole(), DateTime.UtcNow);
-                            accountService.CreateUserRecord(newUser, dbSource);
+                                newCredentials.GetRole(), DateTime.UtcNow);           
+                            accountService.CreateUserRecord(newUser,user.username, dbSource);
                             break;
                         // Edit account
                         case 2:
-                            UserAccount newEditUser = new UserAccount(newCredentials.GetUserName(),
+                           /* UserAccount newEditUser = new UserAccount(newCredentials.GetUserName(),
                                 newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.EditUserRecord(newEditUser, dbSource);
+                            accountService.EditUserRecord(newEditUser, dbSource);*/
                             break;
                         // Delete account
                         case 3:
@@ -262,72 +262,9 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                     }
                 }
                 
-                string dbAction = user.NewUserName;
+                string dbAction = user.username;
                 return dbAction;
             }
-        }
-
-
-
-        /*public NewUserName()
-        {
-
-        }
-        public NewPassword()
-        {
-            // Create bool value for password confirm loop
-            bool conPsswrd = true;
-            // Loop until password is confirmed
-            while (conPsswrd == true)
-            {
-                // Confirm Password
-                Console.WriteLine("Please re-enter the password:");
-                string checkPsswd = Console.ReadLine();
-                // Check if passwords match
-                if (userPassword == checkPsswd)
-                {
-                    // Get Security question for password reset
-                    Console.WriteLine("Please enter a security question.\n" +
-                        "(EX: What is your favorite food?");
-                    string SecQuest = Console.ReadLine();
-                    // Get Security question answer
-                    Console.WriteLine("Please enter the answer for your security question:");
-                    String SecAnswer = Console.ReadLine();
-
-                    // Call user manager method to create the new user
-                    //int userCreateConfirm = new CreateUser(userName,userPassword,SecQuest,SecAnswer);
-
-                    // Check if user creation was successful
-                    /*if (userCreateConfirm = 1)
-                    {
-
-                        // Confirm to user that the account has been created
-                        Console.WriteLine("Account created succesfully with the username of" + userName);
-                    }
-                    else
-                    {
-
-                    }*/
-                    /*conPsswrd = false;
-                }
-                else
-                {
-                    Console.WriteLine("Passwords did not match, please try again.");
-                }
-            }
-            return true;
-        }*/
-    
-        public void AccountController()
-        {
-            // Create objects
-            //UserAccount user = new UserAccount();
-            UiPrint ui = new UiPrint();
-            
-            bool foo = true;
-
-            
-        }
-
+        }    
     }
 }
