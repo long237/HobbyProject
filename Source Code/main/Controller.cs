@@ -45,12 +45,21 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             {
                 // Admin Sign in
                 GetCredentials credentials = new GetCredentials();
-                Console.WriteLine("\nPlease Enter Admin Credentials.\n");
+                Console.WriteLine("\nPlease Enter Admin Credentials " +
+                    "or enter 0 to exit the machine\n");
                 string? username = credentials.GetUserName();
+                //int menuExit = Convert.ToInt32(username);
+                // Exit Infinite Menu
+                if (username == "0")
+                {
+                    break;
+                }
                 string? password = credentials.GetPassword();
 
                 // Get time of login attempt
                 DateTime TimeStamp = DateTime.UtcNow;
+                
+                
 
                 // String for checking query return type
                 string dbType = "sql";
@@ -77,7 +86,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
                 if (isLogin != "Access Denied: Unauthorized\n")
                 {
-                    mainMenu = false;
+                    Console.WriteLine("Returning to login...\n");
+                    Console.WriteLine("-------------------------------------\n");
                 }
                 else
                 {

@@ -218,7 +218,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                     {
                         // Exit menu
                         case 0:
-                            return "Exiting UserManagement.\n";
+                            return "Back to Login";
                         // Create account 
                         case 1:
                             UserAccount newUser = new UserAccount(newCredentials.GetUserName(),
@@ -227,7 +227,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             bool accountValid = accountService.CreateUserRecord(newUser,user.username, dbSource);
                             if (accountValid is true)
                             {
-                                Console.WriteLine("Account created Successfully");
+                                Console.WriteLine("\nAccount created Successfully");
                                 break;
                             }
                             else
@@ -270,9 +270,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             break;
                     }
                 }
-                
-                string dbAction = user.username;
-                return dbAction;
+                return "Back to Login";
             }
         }    
     }
