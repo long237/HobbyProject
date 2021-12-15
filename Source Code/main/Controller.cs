@@ -5,8 +5,8 @@ using TeamHobby.HobbyProjectGenerator.DataAccess;
 using TeamHobby.HobbyProjectGenerator.UserManagement;
 
 namespace TeamHobby.HobbyProjectGenerator.Main
-{   
-    public class Controller 
+{
+    public class Controller
     {
 
         public static void Main(string[] args)
@@ -45,8 +45,6 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
                 // Get time of login attempt
                 DateTime TimeStamp = DateTime.UtcNow;
-                
-                
 
                 // String for checking query return type
                 string dbType = "sql";
@@ -96,51 +94,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 {
                     Console.WriteLine("******Access Denied: Unauthorized******");
                 }
-                
+
             }
-
-            //Creating the folder Archive
-            //Console.WriteLine("Creating a new folder ...");
-            //archive.CreateArchiveFolder();
-            //Console.WriteLine("");
-
-            //// Creating a file name:
-            //string filePath = @"C:\HobbyArchive";
-            ////Console.WriteLine("Creating file name ... ");
-            ////string curPath = archive.CreateOutFileName();
-            //string curPath = archive.CreateOutFileName(filePath);
-
-            ////string pathForward = @"C:\Users\Chunchunmaru\Documents\csulbFall2021\HobbyProject\Source Code\main\bin\Debug\net6.0\HobbyArchive";
-            ////string pathTemp = "C:/Temp/oldlogs10.txt";
-            ////string pathTempBack = @"C:\Temp\oldlogs10.txt";
-            //Console.WriteLine("----------------");
-
-            ////Output SQL to a text file
-            //sqlDS.CopyToFile(curPath);
-
-            //// Compress the file
-            //sqlDS.CompressFile(curPath);
-
-            ////Remove output file
-            //sqlDS.RemoveOutputFile(curPath);
-
-            //// Remove entries fromt the database
-            //sqlDS.RemoveEntries();
-
-
-            // 2.Inserting Data into the database:
-            //string sqlWrite = "INSERT into log(lvname, catname, userop, logmessage) values " +
-            //    "('Info', 'View', 'Testing DAL stuffs', 'new DAL method tested');";
-
-            //Console.WriteLine("Writing to the database... ");
-            //datasource.WriteData(sqlWrite);
-            //Console.WriteLine("Writing completed. ");
-
-            // 3. Removing from a database
-            //string sqlRemove = "DELETE from log where logID = 28;";
-            //Console.WriteLine("Writing to the database... ");
-            //datasource.WriteData(sqlRemove);
-            //Console.WriteLine("Writing completed. ");
         }
     }
 }
