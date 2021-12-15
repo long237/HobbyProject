@@ -155,8 +155,10 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
                 // Check to see if the file is hidden or already compressed before compressing the file. 
                 if (atrribute != FileAttributes.Hidden && atrribute != FileAttributes.Compressed)
                 {
-                    using FileStream outputFile = File.Create(fileName + ".gz");
-               
+                    var compFileName = Path.ChangeExtension(fileName, ".gz");
+                    //using FileStream outputFile = File.Create(fileName + ".gz");
+                    using FileStream outputFile = File.Create(compFileName);
+
                     using GZipStream compressor = new GZipStream(outputFile, CompressionMode.Compress);
                     origFile.CopyTo(compressor);
 

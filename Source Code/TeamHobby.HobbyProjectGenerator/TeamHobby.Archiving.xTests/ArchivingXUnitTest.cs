@@ -174,5 +174,29 @@ namespace TeamHobby.Archiving.xTests
             bool actualVal = File.Exists(filepath);
             Assert.Equal(expectedVal, actualVal);
         }
+
+        [Fact]
+        public void IsFileCompressed()
+        {
+            // Arrange
+            SqlDAO sqlDAO = new SqlDAO(dbInfo);
+            ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
+
+            // Create the folder and the csv file to be compressed. 
+            archiveManager.CreateArchiveFolder();
+            string filePath = archiveManager.CreateOutFileName();
+            sqlDAO.CopyToFile(filePath);
+            FileAttributes expectedAttribute = FileAttributes.Archive;
+            string compFilePath = Path.ChangeExtension(filePath, ".gz");
+
+            // Act
+            sqlDAO.CompressFile(filePath);
+
+            // Assert
+            FileAttributes actualAttribute = File.GetAttributes(compFilePath);
+            Assert.Equal(expectedAttribute, actualAttribute);
+
+        }
+
     }
 }
