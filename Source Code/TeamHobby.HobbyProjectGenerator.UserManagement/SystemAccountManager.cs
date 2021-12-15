@@ -171,10 +171,11 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
             Console.WriteLine("");
 
             // Closing the connection
-            sqlDS.getConnection().Close();
+            sqlDS.GetConnection().Close();
 
             if (checkSql == "Admin")
             {
+                Console.WriteLine("-- Logged in successfully.");
                 return true;
             }
             else
@@ -204,12 +205,12 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                 AccountService accountService = new AccountService();
                 // Create credentials object for new inptus
                 GetCredentials newCredentials = new GetCredentials();
-                // Print User Management menu
-                ui.UserManagementMenu(user.username);
                 // Create bool object for menu loop
                 bool menuLoop = true;
                 // Create loop for menu
                 while (menuLoop is true) {
+                    // Print User Management menu
+                    ui.UserManagementMenu(user.username);
                     // Get user choice
                     int menuChoice = Convert.ToInt32(Console.ReadLine());
                     // Complete the appropriate action
@@ -217,38 +218,91 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                     {
                         // Exit menu
                         case 0:
-                            return "Exiting UserManagement.\n";
-                            break;
+                            return "Back to Login";
                         // Create account 
                         case 1:
+                            // Get all credentials and create newUser
                             UserAccount newUser = new UserAccount(newCredentials.GetUserName(),
-                            newCredentials.GetPassword(), newCredentials.GetEmail(), 
+                            newCredentials.ConfirmPassword(), newCredentials.GetEmail(), 
                                 newCredentials.GetRole(), DateTime.UtcNow);           
-                            accountService.CreateUserRecord(newUser,user.username, dbSource);
-                            break;
+                            bool accountValid = accountService.CreateUserRecord(newUser, user.username, dbSource);
+                            if (accountValid is true)
+                            {
+                                Console.WriteLine("\nAccount created Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "Database Timed out";
+                            }
                         // Edit account
                         case 2:
-                           /* UserAccount newEditUser = new UserAccount(newCredentials.GetUserName(),
-                                newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.EditUserRecord(newEditUser, dbSource);*/
+                            // State what account is being edited
+                            string userName = newCredentials.GetUserName();
+                            string userRole = newCredentials.GetRole();
+
+                            // Notify the user of what can be edited
+                            Console.WriteLine($"\n****The following information will be used to update {userName}");
+
+                            // Get updated parameters
+                            UserAccount newEditUser = new UserAccount(userName,
+                                newCredentials.GetPassword(), newCredentials.GetEmail(), 
+                                newCredentials.GetRole(), DateTime.UtcNow);
+                            bool editValid = accountService.EditUserRecord(newEditUser, user.username, dbSource);
+                            if (editValid is true)
+                            {
+                                Console.WriteLine("\nAccount updated Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "Database Timed out";
+                            }
                             break;
                         // Delete account
                         case 3:
                             UserAccount newDeleteUser = new UserAccount(newCredentials.GetUserName(),
                                 newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.DeleteUserRecord(newDeleteUser, dbSource);
+                            bool deleteValid = accountService.DeleteUserRecord(newDeleteUser, user.username , dbSource);
+                            if (deleteValid is true)
+                            {
+                                Console.WriteLine("\nAccount deleted Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "User does not exist";
+                            }
                             break;
                         // Disable account
                         case 4:
                             UserAccount newDisableUser = new UserAccount(newCredentials.GetUserName(),
-                                newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.DisableUser(newDisableUser, dbSource);
+                                newCredentials.GetRole());
+                            bool disableValid = accountService.DisableUser(newDisableUser, user.username , dbSource);
+                            if (disableValid is true)
+                            {
+                                Console.WriteLine("\nAccount disabled Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "User does not exist";
+                            }
                             break;
                         // Enable account
                         case 5:
                             UserAccount newEnableUser = new UserAccount(newCredentials.GetUserName(),
-                                newCredentials.GetPassword(), DateTime.UtcNow);
-                            accountService.EnableUser(newEnableUser, dbSource);
+                                newCredentials.GetRole());
+                            bool enableValid = accountService.EnableUser(newEnableUser, user.username , dbSource);
+                            if (enableValid is true)
+                            {
+                                Console.WriteLine("\nAccount enabled Successfully");
+                                break;
+                            }
+                            else
+                            {
+                                return "User does not exist";
+                            }
                             break;
                         // View logs
                         case 6:
@@ -261,9 +315,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             break;
                     }
                 }
-                
-                string dbAction = user.username;
-                return dbAction;
+                return "Back to Login";
             }
         }    
     }

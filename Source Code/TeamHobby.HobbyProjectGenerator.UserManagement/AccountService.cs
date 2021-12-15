@@ -29,53 +29,74 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                 return false;
             }
         }
-        public bool EditUserRecord(UserAccount newUser, string CreatedBy, IDataSource<string> dbSource)
+        public bool EditUserRecord(UserAccount editUser, string CreatedBy, IDataSource<string> dbSource)
         {
-/*            // Insert into users table
-            string sqlUser = $"UPDATE hobby.roles r SET r.Role = 'regular',r.CreatedBy = 'colin'WHERE r.RoleID = 5; ";
-
-            Object insertNewUser = dbSource.WriteData(sqlUser);
-            // Insert into users table
-            string sqlRoles = $"INSERT INTO roles (Role, CreatedBy, CreatedDate) " +
-                $"VALUES ('{newUser.NewRole}', '{CreatedBy}', NOW());";
-            Object insertNewRole = dbSource.WriteData(sqlUser);
-            // Create string for confirming user account
-            string confirmUser = $"Select * from users where username = {newUser.NewUserName} " +
-                $"and password = {newUser.NewPassword};";
-            Object conUser = dbSource.ReadData(confirmUser);
-
-            //Console.WriteLine("type of Reesult:" + confirmAdmin.GetType());
-            OdbcDataReader reader = null;
-
-            if (conUser.GetType() == typeof(OdbcDataReader))
+            try
             {
-                reader = (OdbcDataReader)conUser;
-            }
+                // Insert into users table
+                string sqlUser = $"UPDATE users t SET t.Password = '{editUser.password}', " +
+                    $"t.Role  = '{editUser.role}',t.Email = '{editUser.email}' " +
+                    $"WHERE t.UserName = '{editUser.username}';";
 
-            // Read Sql query results
-            while (reader.Read())
+                bool updateNewUser = dbSource.UpdateData(sqlUser);
+                return updateNewUser;
+
+            }
+            catch (Exception ex)
             {
-                Console.WriteLine(reader.GetString(0));
+                return false;
             }
+        }
+        public bool DeleteUserRecord(UserAccount deleteUser, string CreatedBy, IDataSource<string> dbSource)
+        {
+            try
+            {
+                // Insert into users table
+                string sqlUser = $"DELETE from users WHERE UserName = '{deleteUser.username}' " +
+                    $"and Password = '{deleteUser.password}';";
 
-            SqlDAO sqlDS = (SqlDAO)dbSource;
-            Console.WriteLine("");
+                bool deleteNewUser = dbSource.DeleteData(sqlUser);
+                return deleteNewUser;
 
-            // Closing the connection
-            sqlDS.getConnection().Close();*/
-            return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
-        public bool DeleteUserRecord(UserAccount newUser, IDataSource<string> dbSource)
+        public bool DisableUser(UserAccount disableUser, string CreatedBy, IDataSource<string> dbSource)
         {
-            return true;
+            try
+            {
+                // Insert into users table
+                string sqlUser = $"UPDATE users u SET u.IsActive = 0 WHERE u.UserName = '{disableUser.username}'" +
+                     $"and u.Role = '{disableUser.role}';";
+
+                bool disableNewUser = dbSource.UpdateData(sqlUser);
+                return disableNewUser;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
-        public bool DisableUser(UserAccount newUser, IDataSource<string> dbSource)
+        public bool EnableUser(UserAccount enableUser, string CreatedBy, IDataSource<string> dbSource)
         {
-            return true;
-        }
-        public bool EnableUser(UserAccount newUser, IDataSource<string> dbSource)
-        {
-            return true;
+            try
+            {
+                // Insert into users table
+                string sqlUser = $"UPDATE users u SET u.IsActive = 1 WHERE u.UserName = '{enableUser.username}'" +
+                    $"and u.Role = '{enableUser.role}';";
+
+                bool disableNewUser = dbSource.UpdateData(sqlUser);
+                return disableNewUser;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

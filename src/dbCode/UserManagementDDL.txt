@@ -1,26 +1,5 @@
-create table users
-(
-    UserName    varchar(50) charset utf8mb3 not null,
-    Password    varchar(50) charset utf8mb3 not null,
-    Role        varchar(50) charset utf8mb3 not null,
-    IsActive    int default 1              not null,
-    CreatedBy   varchar(50) charset utf8mb3 not null,
-    CreatedDate datetime                    not null,
-    constraint userRole_fk foreign key (Role) references roles (Role),
-    constraint user_pk primary key (UserName)
-);
-
-INSERT INTO hobby.users (UserName, Password, Role, IsActive, CreatedBy, CreatedDate, Email) VALUES
-('Colin ', 'Waffle', 'Admin', 1, 'Jacob', '2021-12-13 04:27:42', null),
-('Danny', 'Spartan', 'Admin', 1, 'Jacob', '2021-12-13 04:29:54', null),
-('Jacob', 'Teamhobby1234', 'Admin', 1, 'SystemCreator', '2021-12-13 03:25:14', null),
-('Long', 'Joystick', 'regular', 1, 'Jacob', '2021-12-13 04:29:57', null),
-('Rifat', 'ApproveDar', 'Admin', 1, 'Jacob', '2021-12-13 04:29:55', null);
-
-
 create table roles
 (
-    RoleID      int not null,
     Role        varchar(50) charset utf8mb3  not null,
     CreatedBy   varchar(200) charset utf8mb3 not null,
     CreatedDate datetime                   not null,
@@ -28,6 +7,31 @@ create table roles
         primary key (Role)
 );
 
+create table users
+(
+    UserName    varchar(50) charset utf8mb3 not null
+        primary key,
+    Password    varchar(50) charset utf8mb3 not null,
+    Role        varchar(50) charset utf8mb3 not null,
+    IsActive    int default 1               not null,
+    CreatedBy   varchar(50) charset utf8mb3 not null,
+    CreatedDate datetime                    not null,
+    Email       varchar(50)                 null,
+    constraint users_Email_uindex
+        unique (Email),
+    constraint userRole_fk
+        foreign key (Role) references roles (Role)
+);
+
+
+INSERT INTO hobby.users (UserName, Password, Role, IsActive, CreatedBy, CreatedDate, Email) VALUES
+('Colin ', 'Waffle', 'Admin', 1, 'Jacob', '2021-12-13 04:27:42', null),
+('Danny', 'Spartan', 'Admin', 1, 'Jacob', '2021-12-13 04:29:54', null),
+('Jacob', 'Teamhobby1234', 'Admin', 1, 'SystemCreator', '2021-12-13 03:25:14', null),
+('Long', 'Joystick', 'regular', 1, 'Jacob', '2021-12-13 04:29:57', null),
+('Rifat', '1234', 'Admin', 1, 'Jacob', '2021-12-13 04:29:55', null);
+
+
 INSERT INTO hobby.roles (Role, CreatedBy, CreatedDate) VALUES 
 ('Admin', 'Jacob', '2021-12-13 03:25:14'),
-('regular', 'Colin', '2021-12-13 03:25:14');
+('regular', 'Jacob', '2021-12-13 03:25:14');
