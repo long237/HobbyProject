@@ -1,6 +1,8 @@
 using System;
 using System.Data.Odbc;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using TeamHobby.HobbyProjectGenerator.Archive;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
 using Xunit;
@@ -124,12 +126,12 @@ namespace TeamHobby.Archiving.xTests
             Object resultData = null;
             bool expectedVal = false;
 
-            sqlDAO.WriteData("INSERT into log(LtimeStamp, LvName, catname, userop, logmessage) values " +
-            "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
-            "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
-            "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
-            "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
-            "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return'),");
+            sqlDAO.WriteData("INSERT into log(LtimeStamp, LvName, catname, userop, logmessage) values" +
+                "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
+                "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
+                "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
+                "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
+                "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return');");
 
             // Act
             sqlDAO.RemoveEntries();
@@ -158,6 +160,7 @@ namespace TeamHobby.Archiving.xTests
             SqlDAO sqlDAO = new SqlDAO(dbInfo);
             ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
             bool expectedVal = false;
+            //Thread.Sleep(5000);
 
             // Create the folder and the csv file for compressing
             archiveManager.CreateArchiveFolder();
@@ -196,6 +199,121 @@ namespace TeamHobby.Archiving.xTests
             FileAttributes actualAttribute = File.GetAttributes(compFilePath);
             Assert.Equal(expectedAttribute, actualAttribute);
 
+        }
+
+        [Fact]
+        public void IsArchive_Under_60s_10kRecords()
+        {
+            // Arrange
+            SqlDAO sqlDAO = new SqlDAO(dbInfo);
+            ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
+            var timer = new Stopwatch();
+            double expectedVal = 60;
+            string folderPath = @"C:/HobbyArchive";
+
+            sqlDAO.WriteData("INSERT into log(LtimeStamp, LvName, catname, userop, logmessage) values" +
+                "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
+                "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
+                "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
+                "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
+                "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return');");
+
+            for (int i = 0; i < 11; i++)
+            {
+                sqlDAO.WriteData("INSERT INTO log(LtimeStamp, LvName, catName, userOP, logMessage) " +
+                    "SELECT LtimeStamp, LvName, catName, userOP, logMessage FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
+            }
+
+            // Act
+            timer.Start();
+            archiveManager.Controller();
+            timer.Stop();
+
+            // Arrange
+            double actualVal = timer.ElapsedMilliseconds;
+            Assert.True((actualVal / 1000) < expectedVal);
+
+            // Clean up resources after testing
+            try
+            {
+                Directory.Delete(folderPath, true);
+            }
+            catch
+            {
+                Console.WriteLine("Folder failed to be deleted");
+            }
+        }
+
+        [Fact]
+        public void IsArchive_Under_60s_10mRecords()
+        {
+            // Arrange
+            SqlDAO sqlDAO = new SqlDAO(dbInfo);
+            ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
+            var timer = new Stopwatch();
+            double expectedVal = 60;
+            string folderPath = @"C:/HobbyArchive";
+
+            sqlDAO.WriteData("INSERT into log(LtimeStamp, LvName, catname, userop, logmessage) values" +
+                "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
+                "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
+                "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
+                "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
+                "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return');");
+
+            for (int i = 0; i < 18; i++)
+            {
+                sqlDAO.WriteData("INSERT INTO log(LtimeStamp, LvName, catName, userOP, logMessage) " +
+                    "SELECT LtimeStamp, LvName, catName, userOP, logMessage FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
+            }
+
+            // Act
+            timer.Start();
+            archiveManager.Controller();
+            timer.Stop();
+
+            // Arrange
+            double actualVal = timer.ElapsedMilliseconds;
+            Assert.True((actualVal / 1000) < expectedVal);
+
+            //Clean up resources after testing
+            try
+            {
+                Directory.Delete(folderPath, true);
+            }
+            catch
+            {
+                Console.WriteLine("Folder failed to be deleted");
+            }
+        }
+
+         [Fact]
+         public void IsArchiveOnFirstOfMonth()
+        {
+
+        }
+
+
+        [Fact]
+        public void IsWriteData()
+        {
+            // Arrange
+            SqlDAO sqlDAO = new SqlDAO(dbInfo);
+            ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
+            var timer = new Stopwatch();
+            double expectedVal = 60;
+            string folderPath = @"C:/HobbyArchive";
+
+            // Act
+            sqlDAO.WriteData("INSERT into log(LtimeStamp, LvName, catname, userop, logmessage) values" +
+                "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
+                "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
+                "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
+                "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
+                "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return');");
+
+            // Assert
+            Assert.True(true);
         }
 
     }
