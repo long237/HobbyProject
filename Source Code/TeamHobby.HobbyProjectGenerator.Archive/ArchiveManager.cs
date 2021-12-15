@@ -72,29 +72,6 @@ namespace TeamHobby.HobbyProjectGenerator.Archive
             }
         }
 
-        // Method overload to take in a specific path
-        public string CreateOutFileName(string archivePath)
-        {
-            try
-            {
-                //string path = archivePath + "\\HobbyArchive";
-                Console.WriteLine("The current directory is {0}", archivePath);
-                //string date = DateTime.Now.ToString("M_d_yyyy_H:mm:ss");
-                string date = DateTime.Now.ToString("M_d_yyyy");
-                string fileName = date + "_archive.csv";
-                string filePath = Path.Combine(archivePath, fileName);
-
-                Console.WriteLine("Date: {0}", date);
-                Console.WriteLine("Filepath: {0}", filePath);
-                return filePath;
-            }
-            catch
-            {
-                Console.WriteLine("ArchiveCon: Creating a file name failed. ");
-                return "";
-            }
-        }
-
         // put everything toget here
         public bool Controller(){
 

@@ -68,10 +68,10 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             try
             {
                 _conn.Open();
-
+                
                 OdbcCommand command = new OdbcCommand(cmd, _conn);
                 command.ExecuteNonQuery();
-
+                
                 _conn.Close();
 
                 return true;
@@ -111,7 +111,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             }
             finally
             {
-                _conn.Close();
+               _conn.Close();
             }
         }
 
@@ -155,8 +155,10 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
                 // Check to see if the file is hidden or already compressed before compressing the file. 
                 if (atrribute != FileAttributes.Hidden && atrribute != FileAttributes.Compressed)
                 {
-                    using FileStream outputFile = File.Create(fileName + ".gz");
-               
+                    var compFileName = Path.ChangeExtension(fileName, ".gz");
+                    //using FileStream outputFile = File.Create(fileName + ".gz");
+                    using FileStream outputFile = File.Create(compFileName);
+
                     using GZipStream compressor = new GZipStream(outputFile, CompressionMode.Compress);
                     origFile.CopyTo(compressor);
 
