@@ -11,13 +11,6 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
 {
     public class SystemAccountManager
     {
-        public bool BulkOperation()
-        {
-            // List choices of operations
-            List<string> ops = new List<string> {"Create Account", "Edit Account",
-                "Delete Account", "Disable Account", "Enable Account"};
-            return true;
-        }
         public string IsInputValid(string checkUN, string checkPWD)
         {
             // Create bool variables to check if username and password are valid
@@ -246,7 +239,6 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                         case 2:
                             // State what account is being edited
                             string userName = newCredentials.GetUserName();
-                            string userRole = newCredentials.GetRole();
 
                             // Notify the user of what can be edited
                             Console.WriteLine($"\n****The following information will be used to update {userName}");
@@ -322,9 +314,6 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                                 Console.WriteLine("Please input the name of the file:(Example.txt)");
                                 string filename = $"{path}\\BulkOps\\{Console.ReadLine()}";
 
-                                // Read file
-                                FileInfo fileInfo = new FileInfo(filename);
-
                                 // Get filesize
                                 long fileSize = filename.Length;
                                 long fileSizeGB = fileSize / (1024 * 1024);
@@ -344,10 +333,17 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                                 else
                                 {
                                     // Begin bulk operation
-                                    bulkOP.BulkOperation();
-
-
-                                    break;
+                                    Console.WriteLine("Running bulk operation..."); 
+                                    bool bulkReq = bulkOP.BulkOperation(user.username, dbSource);
+                                    if (bulkReq is true)
+                                    {
+                                        Console.WriteLine("\nBulk operation complete");
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        return "Bulk operation failed";
+                                    }
                                 }
                             }
                              break;

@@ -47,7 +47,25 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         }
         public string GetRole()
         {
-            Console.WriteLine("Please enter the role of the user:");
+            while (true)
+            {
+                // List of possible roles
+                List<string> roles = new List<string> {"Admin", "regular" };
+                // Get role
+                Console.WriteLine("Please enter the role of the user:(Admin or regular)");
+                string? userRole = Console.ReadLine();
+                // Check if passwords match
+                if (roles.Contains(userRole))
+                {
+                    return userRole;
+                }
+                else
+                {
+                    Console.WriteLine("Not an available role.\n");
+                }
+            }
+
+
             return Console.ReadLine();
         }
     }
@@ -65,26 +83,62 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
         {
             _userName = un;
             _password = pwd;
+            _Role = "regular";
+            _Email = "NULL";
             _Time = TimeStamp;
+        }
+        public UserAccount(string un, string pwd, string role)
+        {
+            if (String.IsNullOrEmpty(role))
+            {
+                _Role = "regular";
+            }
+            else { _Role = role; }
+            _userName = un;
+            _password = pwd;
+            _Email = "NULL";
+            _Time = DateTime.UtcNow;
         }
         public UserAccount(string un, string role)
         {
             _userName = un;
             _Role = role;
+            _Email = "NULL";
             _Time = DateTime.UtcNow;
+        }
+        public UserAccount(string un, string pwd, string Email, DateTime TimeStamp)
+        {
+            if (String.IsNullOrEmpty(Email))
+            {
+                _Email = "NULL";
+            }
+            else { _Email = Email; }
+            _userName = un;
+            _password = pwd;
+            _Role = "regular";
+            _Time = TimeStamp;
         }
         public UserAccount(string newUN, string newPWD, string Email, string role, DateTime newTime)
         {
+            if (String.IsNullOrEmpty(role))
+            {
+                _Role = "regular";
+            }
+            else { _Role = role; }
+            if (String.IsNullOrEmpty(Email))
+            {
+                _Email = "NULL";
+            }
+            else { _Email = Email; }
             _userName = newUN;
             _password = newPWD;
-            _Role = role;
-            _Email = Email;
             _Time = newTime;
         }
         public UserAccount()
         {
             _Role = "regular";
-            _Time= DateTime.Now;
+            _Email = "NULL";
+            _Time = DateTime.Now;
         }
 
         public string username { get { return _userName; } }
