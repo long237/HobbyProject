@@ -1,23 +1,22 @@
 ﻿using Microsoft.Data.SqlClient;
+using TeamHobby.HobbyProjectGenerator.Models;
 
-namespace TeamHobby.HobbyProjectGenerator.Main
+namespace TeamHobby.HobbyProjectGenerator.DAL
 {
-    public class ExampleDAO 
+    public class SqlDAO
     {
-      
-        public void UserData(string username)
+        public IList<Credentials> GetUserData(string username)
         {
             // Sql server connection string, needs to be changed accordingly to connect
-            var connString = "server=localhost,3316;user=root;database=users;password=Plop20"; // Using @" " makes the string literal
-
+            var connString = "server=localhost;userid=root;password=Plop20;database=users"; // Using @" " makes the string literal
+            
             // ADO.NET - ODBC
-            using var conn = new SqlConnection(connString);
+            using (var conn = new SqlConnection(connString))
             {
                 // More complex sql commands are done in this method instead
                 var sql = "Select * from roles";
                 using (var command = new SqlCommand(sql, conn))
                 {
-                    conn.Open();
                     // Get the results from the query
                     SqlDataReader r = command.ExecuteReader();
 
@@ -33,18 +32,18 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                     {
                         Console.WriteLine(r.ToString());
                     }
-                    conn.Close();
-
+                    return null;
                 }
-                // Console.Read();
-                /*
-                 * this is meant for specific basic sql commands
-                 using (var adapter = new SqlDataAdapter())
-                 {
-                     adapter.SelectCommand
-                 }
-                */
-                //return null;
+
+                /*// this is meant for specific basic sql commands
+                using (var adapter = new SqlDataAdapter())
+                    {
+                        adapter.UpdateCommand
+                        adapter.DeleteCommand
+                        adapter.InsertCommand
+                        adapter.SelectCommand
+                }*/
+
             }
         }
     }

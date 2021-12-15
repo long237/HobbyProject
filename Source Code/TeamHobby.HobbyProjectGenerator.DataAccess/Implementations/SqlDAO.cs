@@ -17,9 +17,9 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         public SqlDAO(string info)
         {
             try {
-                Console.WriteLine("Establising Connection");
+                Console.WriteLine("Establising Connection...");
                 _conn = new OdbcConnection(info);
-                Console.WriteLine("Connection established");
+                Console.WriteLine("Connection established.");
             }
             catch {
                 //_conn = null;
@@ -42,7 +42,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         {
             try
             {
-                _conn.Open();
+                //_conn.Open();
                 OdbcCommand command = new OdbcCommand(cmd, _conn);
                 OdbcDataReader reader = command.ExecuteReader();
 
@@ -67,12 +67,12 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         {
             try
             {
-                _conn.Open();
-
+                //_conn.Open();
+                
                 OdbcCommand command = new OdbcCommand(cmd, _conn);
                 command.ExecuteNonQuery();
-
-                _conn.Close();
+                
+                //_conn.Close();
 
                 return true;
             }
@@ -84,7 +84,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             }
             finally
             {
-                _conn.Close();
+                //_conn.Close();
             }
         }
 
@@ -94,12 +94,12 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         {
             try
             {
-                _conn.Open();
+                //_conn.Open();
 
                 OdbcCommand command = new OdbcCommand(cmd, _conn);
                 command.ExecuteNonQuery();
 
-                _conn.Close();
+                //_conn.Close();
 
                 return true;
             }
@@ -111,7 +111,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             }
             finally
             {
-                _conn.Close();
+               //_conn.Close();
             }
         }
 
@@ -120,12 +120,12 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         {
             try
             {
-                _conn.Open();
+                //_conn.Open();
 
                 OdbcCommand command = new OdbcCommand(cmd, _conn);
                 command.ExecuteNonQuery();
 
-                _conn.Close();
+                //_conn.Close();
 
                 return true;
             }
@@ -137,7 +137,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             }
             finally
             {
-                _conn.Close();
+                //_conn.Close();
             }
         }
 
@@ -177,7 +177,7 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
         public bool CopyToFile(string filePath){
             try
             {
-                _conn.Open();
+                //_conn.Open();
                 // Conver backward slash in to forward slash
                 filePath = filePath.Replace("\\", "/");
                 string sqlQuery = "SELECT 'LtimeStamp', 'logID', 'LvName', 'catName', 'userOP', 'logMessage' " +
@@ -200,19 +200,19 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
                 Console.WriteLine("Output to a file completed. ");
 
 
-                _conn.Close();
+                //_conn.Close();
                 return true;
                
             }
             catch (Exception ex)
             {   
-                _conn.Close();
+                //_conn.Close();
                 Console.WriteLine("Error when copying query to a file !!, will be handled higher up the call stack");
                 throw;
             }
             finally
             {
-                _conn.Close();
+                //_conn.Close();
             }
         }
 
