@@ -70,7 +70,7 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                 string currentDate = DateTime.Now.ToString("dd");
                 string currentTime = DateTime.Now.ToString("T");
                 //Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
-                if (String.Equals(currentDate, "1") && String.Equals(currentTime, "00:00:00 AM"))
+                if (String.Equals(currentDate, "01") && String.Equals(currentTime, "00:00:00 AM"))
                 {
                     ArchiveManager archive = new ArchiveManager(datasource);
                     archive.Controller();
