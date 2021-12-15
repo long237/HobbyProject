@@ -42,16 +42,12 @@ INSERT INTO hobby.roles (Role, CreatedBy, CreatedDate) VALUES
 
 
 SET Global innodb_file_per_table=ON;
--- SET GLOBAL innodb_file_format='Barracuda';
 
 SET GLOBAL innodb_default_row_format='dynamic';
 
 SET GLOBAL innodb_compression_algorithm='zlib';
 
--- Check for system settings
-SHOW VARIABLES LIKE 'innodb_compression_algorithm';
-SHOW VARIABLES LIKE 'innodb_default_row_format';
-SHOW VARIABLES LIKE '%innodb%';
+
 
 CREATE TABLE Persons (
     PersonID int,
@@ -97,23 +93,6 @@ create table Log
 
 );
 
-create table Archive
-(
-    LtimeStamp datetime                           null,
-    logID      int                                not null,
-    LvName     varchar(50)                        not null,
-    catName    varchar(50)                        not null,
-    userOP     varchar(50)                        not null,
-    logMessage varchar(255)                       not null,
-
-    constraint Archive_pk primary key (logID)
-)
-    ENGINE=InnoDB
-    PAGE_COMPRESSED=1
-    PAGE_COMPRESSION_LEVEL=9;
-
-drop table archive;
-
 -- Dummy data for testing purposes
 -- Log categories data
 INSERT into logcategories(catName, catComment) values
@@ -137,8 +116,6 @@ INSERT into log(lvname, catname, userop, logmessage) values
     ('Info', 'Business', 'log in', 'log in successfully'),
     ('Info', 'View', 'search for projects', 'result return');
 
-select * from logcategories;
-select * from log;
 
 
 
