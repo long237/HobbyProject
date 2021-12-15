@@ -6,6 +6,9 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
     {
         public void UserManagementMenu(string username)
         {
+            // File must be within the main folder path
+            // Get the current directory.
+            string path = Directory.GetCurrentDirectory();
             // Menu for all UserManagement options
             int menu = 0;
             Console.WriteLine("-------------------------------------\n");
@@ -22,6 +25,8 @@ namespace TeamHobby.HobbyProjectGenerator.DataAccess
             Console.WriteLine(menu + ") Disable an account.\n");
             menu += 1;
             Console.WriteLine(menu + ") Enable an account.\n");
+            menu += 1;
+            Console.WriteLine(menu + $") Bulk operation from file within the directory.\n{path}\\BulkOps\n");
             menu += 1;
             Console.WriteLine(menu + ") View log path.\n");
             menu += 1;

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Archive\TeamHobby.HobbyProjectGenerator.Archive.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccess\TeamHobby.HobbyProjectGenerator.DataAccess.csproj" />
+    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Logging\TeamHobby.HobbyProjectGenerator.Logging.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.UserManagement\TeamHobby.HobbyProjectGenerator.UserManagement.csproj" />
   </ItemGroup>
 
