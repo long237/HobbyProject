@@ -98,5 +98,13 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                 return false;
             }
         }
+        public bool BulkOperation()
+        {
+            // List choices of operations
+            List<string> ops = new List<string> {"Create Account", "Edit Account",
+                                "Delete Account", "Disable Account", "Enable Account"};
+            
+            return true;
+        }
     }
 }

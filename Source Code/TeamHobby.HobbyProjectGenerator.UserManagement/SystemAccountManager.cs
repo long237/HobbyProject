@@ -11,6 +11,13 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
 {
     public class SystemAccountManager
     {
+        public bool BulkOperation()
+        {
+            // List choices of operations
+            List<string> ops = new List<string> {"Create Account", "Edit Account",
+                "Delete Account", "Disable Account", "Enable Account"};
+            return true;
+        }
         public string IsInputValid(string checkUN, string checkPWD)
         {
             // Create bool variables to check if username and password are valid
@@ -304,11 +311,51 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                                 return "User does not exist";
                             }
                             break;
-                        // View logs
+                        // Bulk operation through file
                         case 6:
+                            AccountService bulkOP = new AccountService();
+                            // Get path to defualt bin location
+                            string path = Directory.GetCurrentDirectory();
+                            while (true)
+                            {
+                                // Get name of file and update path to correct folder
+                                Console.WriteLine("Please input the name of the file:(Example.txt)");
+                                string filename = $"{path}\\BulkOps\\{Console.ReadLine()}";
+
+                                // Read file
+                                FileInfo fileInfo = new FileInfo(filename);
+
+                                // Get filesize
+                                long fileSize = filename.Length;
+                                long fileSizeGB = fileSize / (1024 * 1024);
+                                //Console.WriteLine($"File size is {fileSize}kb");
+
+                                // Check if input is empty
+                                if (filename == null)
+                                {
+                                    Console.WriteLine("Invalid file name.\n");
+                                }
+                                // Check if file is over 2GB
+                                else if (fileSizeGB > 2)
+                                {
+                                    Console.WriteLine($"File size is {fileSizeGB}GB\n");
+                                    Console.WriteLine("File is too large, please enter a smaller file.\n");
+                                }
+                                else
+                                {
+                                    // Begin bulk operation
+                                    bulkOP.BulkOperation();
+
+
+                                    break;
+                                }
+                            }
+                             break;
+                        // View logs
+                        case 7:
                             break;
                         // View archive
-                        case 7:
+                        case 8:
                             break;
                         default:
                             Console.WriteLine("Invalid input.\nPlease enter a valid option.\n");

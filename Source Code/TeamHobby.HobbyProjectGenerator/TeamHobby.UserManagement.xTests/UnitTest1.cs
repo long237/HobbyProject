@@ -31,7 +31,7 @@ namespace TeamHobby.UserManagement.xTests
                 "SERVER=localhost;" +
                 "DATABASE=hobby;" +
                 "UID=root;" +
-                "PASSWORD=hobby;" +
+                "PASSWORD=Teamhobby;" +
                 "OPTION=3";
             IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
 
@@ -72,7 +72,7 @@ namespace TeamHobby.UserManagement.xTests
                 "SERVER=localhost;" +
                 "DATABASE=hobby;" +
                 "UID=root;" +
-                "PASSWORD=hobby;" +
+                "PASSWORD=Teamhobby;" +
                 "OPTION=3";
             IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
 
@@ -81,7 +81,7 @@ namespace TeamHobby.UserManagement.xTests
             for (int i = 0; i < 10000; i++)
             {
                 var TestAcc = new UserAccount("newUser" + $"{i}", "4567", $"email{i}@a.com", "regular", sTime);
-                serviceTest.CreateUserRecord(TestAcc, "Rifat", datasource);
+                serviceTest.DeleteUserRecord(TestAcc, "Rifat", datasource);
             }
             
             DateTime eTime = DateTime.Now;
