@@ -58,7 +58,7 @@ CREATE TABLE Persons (
     City varchar(255)
 );
 
-CREATE DATABASE testDB;
+-- CREATE DATABASE testDB;
 
 -- Hobby DDL
 -- Log level table
