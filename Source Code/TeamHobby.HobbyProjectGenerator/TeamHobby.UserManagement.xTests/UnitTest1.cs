@@ -4,6 +4,7 @@ using Xunit.Abstractions;
 using System.Threading;
 using TeamHobby.HobbyProjectGenerator.UserManagement;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
+using System.IO;
 
 namespace TeamHobby.UserManagement.xTests
 {
@@ -47,7 +48,7 @@ namespace TeamHobby.UserManagement.xTests
             if (sec > 5)
             {                
                 output.WriteLine("Single Operation was unsuccessful");
-                Assert.False(true);
+                Assert.True(false);
             }
             else 
             {
@@ -73,7 +74,7 @@ namespace TeamHobby.UserManagement.xTests
                 "SERVER=localhost;" +
                 "DATABASE=hobby;" +
                 "UID=root;" +
-                "PASSWORD=hobby;" +
+                "PASSWORD=Teamhobby;" +
                 "OPTION=3";
             IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
 
@@ -89,11 +90,11 @@ namespace TeamHobby.UserManagement.xTests
             if (sec > 5)
             {
                 output.WriteLine("Single Operation was unsuccessful");
-                Assert.False(true);
+                Assert.False(false);
             }
             else
             {
-                Assert.True(true);
+                Assert.True(false);
                 output.WriteLine("Single Operation was successful");
             }
         }
@@ -103,7 +104,7 @@ namespace TeamHobby.UserManagement.xTests
         {
             // Arrange
             DateTime sTime = DateTime.Now;
-            var TestAcc = new UserAccount("newUser", "4567", "email@a.com", "regular", sTime);
+            var TestAcc = new UserAccount("newUserMessage", "4567", "email@a.com", "regular", sTime);
             var serviceTest = new AccountService();
             string dbType = "sql";
             RDSFactory dbFactory = new RDSFactory();
@@ -126,12 +127,14 @@ namespace TeamHobby.UserManagement.xTests
             var sec = timeDiff.TotalSeconds;
 
             // Assert
-            if (sec > 0)
+            if (sec > 5)
             {
                 var message = "Single Operation was unsuccessful";
+                Assert.False(true);
                 output.WriteLine(message);
                 if (checkMess)
                 {
+                    Assert.False(true);
                     throw new Exception("Message was not printed");
                 }
             }
@@ -157,6 +160,7 @@ namespace TeamHobby.UserManagement.xTests
             var serviceTest = new AccountService();
             string dbType = "sql";
             RDSFactory dbFactory = new RDSFactory();
+            string path = Directory.GetCurrentDirectory();
 
 
             // Testing Data Access Layer
@@ -171,11 +175,11 @@ namespace TeamHobby.UserManagement.xTests
 
             // Act
             // Create a file
-            for (int i = 0; i < 10000; i++)
-            {
-                var TestAcc = new UserAccount("newUser" + $"{i}", "4567", $"email{i}@a.com", "regular", sTime);
-                serviceTest.DeleteUserRecord(TestAcc, "Rifat", datasource);
-            }
+            //for (int i = 0; i < 10000; i++)
+            //{
+                //var TestAcc = new UserAccount("newUser" + $"{i}", "4567", $"email{i}@a.com", "regular", sTime);
+            serviceTest.BulkOperation("Rifat", path + "\\BulkOps\\Bulk.txt", datasource);
+            //}
 
             DateTime eTime = DateTime.Now;
             TimeSpan timeDiff = (eTime - sTime);
@@ -186,9 +190,11 @@ namespace TeamHobby.UserManagement.xTests
             if (sec > 60)
             {
                 var message = "Bulk Operation was unsuccessful";
+                Assert.True(false);
                 output.WriteLine(message);
                 if (checkMess)
                 {
+                    Assert.True(false);
                     throw new Exception("Message was not printed");
                 }
             }
@@ -214,6 +220,9 @@ namespace TeamHobby.UserManagement.xTests
             var serviceTest = new AccountService();
             string dbType = "sql";
             RDSFactory dbFactory = new RDSFactory();
+            string dir = Directory.GetCurrentDirectory();
+            string path = dir + "\\BulkOps\\Bulk.txt";
+            output.WriteLine(path);
 
 
             // Testing Data Access Layer
@@ -222,17 +231,17 @@ namespace TeamHobby.UserManagement.xTests
                 "SERVER=localhost;" +
                 "DATABASE=hobby;" +
                 "UID=root;" +
-                "PASSWORD=hobby;" +
+                "PASSWORD=Teamhobby;" +
                 "OPTION=3";
             IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
 
             // Act
             // Create a file
-            for (int i = 0; i < 10000; i++) // Change 10000 to how many accounts you want to test
-            {
-                var TestAcc = new UserAccount("newUser" + $"{i}", "4567", $"email{i}@a.com", "regular", sTime);
-                serviceTest.CreateUserRecord(TestAcc, "Rifat", datasource);
-            }
+            //for (int i = 0; i < 10000; i++)
+            //{
+            //var TestAcc = new UserAccount("newUser" + $"{i}", "4567", $"email{i}@a.com", "regular", sTime);
+            serviceTest.BulkOperation("Rifat", path, datasource);
+            //}
 
             DateTime eTime = DateTime.Now;
             TimeSpan timeDiff = (eTime - sTime);
@@ -243,7 +252,7 @@ namespace TeamHobby.UserManagement.xTests
             if (sec > 60)
             {
                 output.WriteLine("Bulk Operation was unsuccessful");
-                Assert.False(true);
+                Assert.True(false);
             }
             else
             {

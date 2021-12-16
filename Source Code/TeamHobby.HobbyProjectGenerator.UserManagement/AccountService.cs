@@ -121,16 +121,16 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                 return false;
             }
         }
-        public bool BulkOperation(string signedUser, IDataSource<string> dbSource)
+        public bool BulkOperation(string signedUser, string path, IDataSource<string> dbSource)
         {
             try
             {
                 // Get the current directory.
-                string path = Directory.GetCurrentDirectory();
+                //string path = Directory.GetCurrentDirectory();
                 // Open file reader stream
-                using StreamReader fileRead = new(path + "\\BulkOps\\Bulk.txt"); // path + "\\BulkOps\\{input}"
+                using StreamReader fileRead = new(path); // path +  + "\\BulkOps\\Bulk.txt"
                 // Show location of the file being written
-                Console.WriteLine(path + "\\BulkOps\\Bulk.txt");
+                //Console.WriteLine(path);
 
                 // List choices of operations
                 List<string> ops = new List<string> {"Create Account", "Edit Account",
