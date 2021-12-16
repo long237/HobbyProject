@@ -425,3 +425,5 @@ healthchecksdb
 .vscode/tasks.json
 Source Code/.vscode/tasks.json
 Source Code/.vscode/launch.json
+Source Code/TeamHobby.HobbyProjectGenerator/TeamHobby.Archiving.xTests/bin/Debug/net6.0/CoverletSourceRootsMapping
+Source Code/TeamHobby.HobbyProjectGenerator/TeamHobby.UserManagement.xTests/bin/Debug/net6.0/CoverletSourceRootsMapping
