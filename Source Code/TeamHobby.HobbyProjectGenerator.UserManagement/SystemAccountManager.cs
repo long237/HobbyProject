@@ -312,7 +312,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             {
                                 // Get name of file and update path to correct folder
                                 Console.WriteLine("Please input the name of the file:(Example.txt)");
-                                string filename = $"{path}\\BulkOps\\{Console.ReadLine()}";
+                                string filename = $"{path}\\{Console.ReadLine()}";
                                 //Console.WriteLine(filename)
                                 
                                 // Get filesize

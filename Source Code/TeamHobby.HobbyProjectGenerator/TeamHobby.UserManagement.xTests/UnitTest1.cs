@@ -178,7 +178,7 @@ namespace TeamHobby.UserManagement.xTests
             //for (int i = 0; i < 10000; i++)
             //{
                 //var TestAcc = new UserAccount("newUser" + $"{i}", "4567", $"email{i}@a.com", "regular", sTime);
-            serviceTest.BulkOperation("Rifat", path + "\\BulkOps\\Bulk.txt", datasource);
+            serviceTest.BulkOperation("Rifat", path + "\\Bulk.txt", datasource);
             //}
 
             DateTime eTime = DateTime.Now;
@@ -221,7 +221,7 @@ namespace TeamHobby.UserManagement.xTests
             string dbType = "sql";
             RDSFactory dbFactory = new RDSFactory();
             string dir = Directory.GetCurrentDirectory();
-            string path = dir + "\\BulkOps\\Bulk.txt";
+            string path = dir + "\\Bulk.txt";
             output.WriteLine(path);
 
 
