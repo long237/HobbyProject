@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS Hobby;
+
 create database Hobby;
 
 use hobby;
@@ -27,6 +29,10 @@ create table users
         foreign key (Role) references roles (Role)
 );
 
+INSERT INTO hobby.roles (Role, CreatedBy, CreatedDate) VALUES 
+('Admin', 'Jacob', '2021-12-13 03:25:14'),
+('regular', 'Jacob', '2021-12-13 03:25:14');
+
 
 INSERT INTO hobby.users (UserName, Password, Role, IsActive, CreatedBy, CreatedDate, Email) VALUES
 ('Colin ', 'Waffle', 'Admin', 1, 'Jacob', '2021-12-13 04:27:42', null),
@@ -34,11 +40,6 @@ INSERT INTO hobby.users (UserName, Password, Role, IsActive, CreatedBy, CreatedD
 ('Jacob', 'Teamhobby1234', 'Admin', 1, 'SystemCreator', '2021-12-13 03:25:14', null),
 ('Long', 'Joystick', 'regular', 1, 'Jacob', '2021-12-13 04:29:57', null),
 ('Rifat', '1234', 'Admin', 1, 'Jacob', '2021-12-13 04:29:55', null);
-
-
-INSERT INTO hobby.roles (Role, CreatedBy, CreatedDate) VALUES 
-('Admin', 'Jacob', '2021-12-13 03:25:14'),
-('regular', 'Jacob', '2021-12-13 03:25:14');
 
 
 SET Global innodb_file_per_table=ON;
