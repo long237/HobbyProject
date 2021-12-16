@@ -115,6 +115,7 @@ INSERT into log(lvname, catname, userop, logmessage) values
     ('Info', 'View', 'log out', 'log out successful'),
     ('Info', 'Business', 'log in', 'log in successfully'),
     ('Info', 'View', 'search for projects', 'result return');
+show tables;
 
 
 
