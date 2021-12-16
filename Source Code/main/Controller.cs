@@ -63,17 +63,14 @@ namespace TeamHobby.HobbyProjectGenerator.Main
 
                 // While loop to keep this running forever with UserManagement
                 // Testing archive Manager
-                //while (true)
-                //{
+
                 string currentDate = DateTime.Now.ToString("dd");
                 string currentTime = DateTime.Now.ToString("T");
-                //Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
                 if (String.Equals(currentDate, "01") && String.Equals(currentTime, "00:00:00 AM"))
                 {
                     ArchiveManager archive = new ArchiveManager(datasource);
                     archive.Controller();
                 }
-                //}
 
                 // Create manager class from UserManagement
                 SystemAccountManager manager = new SystemAccountManager();
