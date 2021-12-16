@@ -222,19 +222,21 @@ namespace TeamHobby.HobbyProjectGenerator.ArchiveTests
                 "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully');");
 
                 OdbcDataReader odbcObj = (OdbcDataReader)sqlDS.ReadData("SELECT * FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
-
+                
                 int count = 0;
                 while (odbcObj.Read()) { ++count; }
                 Console.WriteLine("Number of entries > 30 days old: " + count);
+                sqlDS.GetConnection().Close();
 
                 Console.WriteLine("\nRemoving entries from archive...");
                 sqlDS.RemoveEntries();
 
-                odbcObj = (OdbcDataReader)sqlDS.ReadData("SELECT * FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
-
+                odbcObj = (OdbcDataReader)sqlDS.ReadData("SELECT * FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;"); 
+                                
                 count = 0;
                 while (odbcObj.Read()) { ++count; }
                 Console.WriteLine("Number of entries > 30 days old: " + count);
+                sqlDS.GetConnection().Close();
 
                 // Assert
                 bool expectedVal = true;
