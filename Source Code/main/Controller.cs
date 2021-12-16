@@ -29,9 +29,14 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             // Loop Admin login
             while (mainMenu is true)
             {
+                // Create credentials object
+                GetCredentials credentials = new GetCredentials();
+
+                // Get DB credentials ***Both values currently hard coded, will update to user input later on.***
+                string dbUserName = "root";
+                string dbPassword = "Teamhobby";
 
                 // Admin Sign in
-                GetCredentials credentials = new GetCredentials();
                 Console.WriteLine("\nPlease Enter Admin Credentials " +
                     "or enter 0 to exit the machine\n");
                 string? username = credentials.GetUserName();
@@ -56,8 +61,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
                     "TCPIP=1;" +
                     "SERVER=localhost;" +
                     "DATABASE=hobby;" +
-                    "UID=root;" +
-                    "PASSWORD=Teamhobby;" +
+                    $"UID={dbUserName};" +
+                    $"PASSWORD={dbPassword};" +
                     "OPTION=3";
                 IDataSource<string> datasource = dbFactory.getDataSource(dbType, dbInfo);
 

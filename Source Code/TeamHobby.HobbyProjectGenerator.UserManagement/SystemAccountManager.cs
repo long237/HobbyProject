@@ -313,7 +313,8 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                                 // Get name of file and update path to correct folder
                                 Console.WriteLine("Please input the name of the file:(Example.txt)");
                                 string filename = $"{path}\\BulkOps\\{Console.ReadLine()}";
-
+                                //Console.WriteLine(filename)
+                                
                                 // Get filesize
                                 long fileSize = filename.Length;
                                 long fileSizeGB = fileSize / (1024 * 1024);
@@ -334,7 +335,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                                 {
                                     // Begin bulk operation
                                     Console.WriteLine("Running bulk operation..."); 
-                                    bool bulkReq = bulkOP.BulkOperation(user.username, dbSource);
+                                    bool bulkReq = bulkOP.BulkOperation(user.username, filename, dbSource);
                                     if (bulkReq is true)
                                     {
                                         Console.WriteLine("\nBulk operation complete");
@@ -352,6 +353,7 @@ namespace TeamHobby.HobbyProjectGenerator.UserManagement
                             break;
                         // View archive
                         case 8:
+                            Console.WriteLine("C:/HobbyArchive");
                             break;
                         default:
                             Console.WriteLine("Invalid input.\nPlease enter a valid option.\n");
