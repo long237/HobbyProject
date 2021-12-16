@@ -6,8 +6,11 @@ using System.Threading;
 using TeamHobby.HobbyProjectGenerator.Archive;
 using TeamHobby.HobbyProjectGenerator.DataAccess;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace TeamHobby.Archiving.xTests
+
+
 {
     public class ArchivingXUnitTest
     {
@@ -17,6 +20,12 @@ namespace TeamHobby.Archiving.xTests
                           "UID=root;" +
                           "PASSWORD=Teamhobby;" +
                           "OPTION=3";
+
+        ITestOutputHelper output;
+        public ArchivingXUnitTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
 
         [Fact]
         public void IsArchiveFolderCreated()
@@ -33,8 +42,10 @@ namespace TeamHobby.Archiving.xTests
 
             // Assert
             bool actualVal = Directory.Exists(folderPath);
+            output.WriteLine("Actual value: {0}, Expected value: {1}", actualVal, expectedVal);
             Assert.Equal(expectedVal, actualVal);
             // Cleaning up directory after test
+            output.WriteLine("Cleaning up Folder and File used for testing... ");
             try
             {
                 Directory.Delete(folderPath, true);
@@ -43,6 +54,7 @@ namespace TeamHobby.Archiving.xTests
             {
                 Console.WriteLine("Folder failed to be deleted");
             }
+            output.WriteLine("Cleaning up completed. ");
         }
 
         [Fact]
@@ -104,8 +116,9 @@ namespace TeamHobby.Archiving.xTests
 
             // Assert       
             bool actualVal = File.Exists(filePath);
+            output.WriteLine("Actual value: {0}, Expected value: {1}", actualVal, expectedVal);
             Assert.Equal(expectedVal, actualVal);
-
+            output.WriteLine("Cleaning up Folder and File used for testing... ");
             try
             {
                 Directory.Delete(folderPath, true);
@@ -114,10 +127,11 @@ namespace TeamHobby.Archiving.xTests
             {
                 Console.WriteLine("Folder failed to be deleted");
             }
+            output.WriteLine("Cleaning up completed. ");
         }
 
         [Fact]
-        public void RemoveEntriesTest()
+        public void IsEntriesRemoved()
         {
             // Arrange
             SqlDAO sqlDAO = new SqlDAO(dbInfo);
@@ -148,13 +162,14 @@ namespace TeamHobby.Archiving.xTests
             actualVal = odbcObj.HasRows;
             conn.Close();
 
+            output.WriteLine("Actual value: {0}, Expected value: {1}", actualVal, expectedVal);
             Assert.Equal(expectedVal, actualVal);
 
         }
 
 
         [Fact]
-        public void RemoveOutputFileTest()
+        public void IsOutputFileRemoved()
         {
             // Arrange
             SqlDAO sqlDAO = new SqlDAO(dbInfo);
@@ -197,6 +212,7 @@ namespace TeamHobby.Archiving.xTests
 
             // Assert
             FileAttributes actualAttribute = File.GetAttributes(compFilePath);
+            output.WriteLine("Actual value: {0}, Expected value: {1}", actualAttribute, expectedAttribute);
             Assert.Equal(expectedAttribute, actualAttribute);
 
         }
@@ -218,7 +234,7 @@ namespace TeamHobby.Archiving.xTests
                 "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
                 "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return');");
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i <= 11; i++)
             {
                 sqlDAO.WriteData("INSERT INTO log(LtimeStamp, LvName, catName, userOP, logMessage) " +
                     "SELECT LtimeStamp, LvName, catName, userOP, logMessage FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
@@ -229,11 +245,13 @@ namespace TeamHobby.Archiving.xTests
             archiveManager.Controller();
             timer.Stop();
 
-            // Arrange
-            double actualVal = timer.ElapsedMilliseconds;
-            Assert.True((actualVal / 1000) < expectedVal);
+            // Assert
+            var actualVal = timer.Elapsed.Seconds;
+            output.WriteLine("Actual value: {0}s, Expected value: {1}s", actualVal, expectedVal);
+            Assert.True(actualVal < expectedVal);
 
             // Clean up resources after testing
+            output.WriteLine("Cleaning up Folder and File used for testing... ");
             try
             {
                 Directory.Delete(folderPath, true);
@@ -242,10 +260,11 @@ namespace TeamHobby.Archiving.xTests
             {
                 Console.WriteLine("Folder failed to be deleted");
             }
+            output.WriteLine("Cleaning up completed... ");
         }
 
         [Fact]
-        public void IsArchive_Under_60s_10mRecords()
+        public void IsArchive_Under_60s_1mRecords()
         {
             // Arrange
             SqlDAO sqlDAO = new SqlDAO(dbInfo);
@@ -255,13 +274,13 @@ namespace TeamHobby.Archiving.xTests
             string folderPath = @"C:/HobbyArchive";
 
             sqlDAO.WriteData("INSERT into log(LtimeStamp, LvName, catname, userop, logmessage) values" +
-                "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
-                "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
-                "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
-                "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
-                "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return');");
+                            "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
+                            "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
+                            "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
+                            "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
+                            "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return');");
 
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i <= 18; i++)
             {
                 sqlDAO.WriteData("INSERT INTO log(LtimeStamp, LvName, catName, userOP, logMessage) " +
                     "SELECT LtimeStamp, LvName, catName, userOP, logMessage FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
@@ -273,9 +292,11 @@ namespace TeamHobby.Archiving.xTests
             timer.Stop();
 
             // Arrange
-            double actualVal = timer.ElapsedMilliseconds;
-            Assert.True((actualVal / 1000) < expectedVal);
+            double actualVal = timer.Elapsed.Seconds;
+            output.WriteLine("Actual value: {0}s, Expected value: {1}s", actualVal, expectedVal);
+            Assert.True(actualVal < expectedVal);
 
+            output.WriteLine("Cleaning up Folder and File used for testing... ");
             //Clean up resources after testing
             try
             {
@@ -285,39 +306,72 @@ namespace TeamHobby.Archiving.xTests
             {
                 Console.WriteLine("Folder failed to be deleted");
             }
+            output.WriteLine("Cleaning up completed... ");
         }
-
-         [Fact]
-         public void IsArchiveOnFirstOfMonth()
-        {
-            // Arrange
-
-            // Act
-
-            //
-        }
-
 
         [Fact]
-        public void IsWriteData()
+        // [Test Method]
+        public void IsProcessFlowCompleted()
         {
-            // Arrange
+            // Arrange 
             SqlDAO sqlDAO = new SqlDAO(dbInfo);
-            ArchiveManager archiveManager = new ArchiveManager(sqlDAO);
-            var timer = new Stopwatch();
-            double expectedVal = 60;
+            ArchiveManager archive = new ArchiveManager(sqlDAO);
+            bool expectedVal = true;
+            bool actualVal = false;
             string folderPath = @"C:/HobbyArchive";
 
-            // Act
+            // Adding 10000 records to database for testing
             sqlDAO.WriteData("INSERT into log(LtimeStamp, LvName, catname, userop, logmessage) values" +
-                "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
-                "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
-                "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
-                "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
-                "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return');");
+                            "('2021-08-07 23:00:00', 'Info', 'View', 'create some projects', 'new account created')," +
+                            "('2021-06-04 23:00:00', 'Info', 'Business', 'create some projects', 'new projects made')," +
+                            "('2021-07-02 23:00:00', 'Info', 'View', 'log out', 'log out successful')," +
+                            "('2021-09-03 23:00:00', 'Info', 'Business', 'log in', 'log in successfully')," +
+                            "('2021-10-20 23:00:00', 'Info', 'View', 'search for projects', 'result return');");
+
+            for (int j = 0; j <= 11; j++)
+            {
+                sqlDAO.WriteData("INSERT INTO log(LtimeStamp, LvName, catName, userOP, logMessage) " +
+                    "SELECT LtimeStamp, LvName, catName, userOP, logMessage FROM log WHERE DATEDIFF(CURRENT_TIMESTAMP, log.LtimeStamp) > 30;");
+            }
+
+            // Act
+            // Testing archive Manager
+            int i = -10;
+            while (i < 20)
+            {
+                DateTime date1 = new DateTime(2021, 12, 1, 0, 0, 0);
+                string currentTime = "00:00:00 AM";
+                string currentDate = i.ToString();
+
+                if (i == 1)
+                {
+                    currentDate = date1.ToString("dd");
+                }
+
+                //Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
+                Console.WriteLine("Current date: {0}, Current Time: {1}", currentDate, currentTime);
+                if (String.Equals(currentDate, "01") && String.Equals(currentTime, "00:00:00 AM"))
+                {
+                    Console.WriteLine("Archiving process Start");
+                    actualVal = archive.Controller();
+                }
+
+                i++;
+            }
 
             // Assert
-            Assert.True(true);
+            output.WriteLine("Actual value: {0}, Expected value: {1}", actualVal, expectedVal);
+            Assert.Equal(expectedVal, actualVal);
+            output.WriteLine("Cleaning up Folder and File used for testing... ");
+            try
+            {
+                Directory.Delete(folderPath, true);
+            }
+            catch
+            {
+                Console.WriteLine("Folder failed to be deleted");
+            }
+            output.WriteLine("Cleaning up completed... ");
         }
 
     }
