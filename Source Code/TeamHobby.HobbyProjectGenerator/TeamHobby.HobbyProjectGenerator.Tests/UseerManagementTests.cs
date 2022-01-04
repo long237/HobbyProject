@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using Xunit.Abstractions;
 using System.Threading;
-using TeamHobby.HobbyProjectGenerator.UserManagement;
+using TeamHobby.HobbyProjectGenerator.ServiceLayer;
 using TeamHobby.HobbyProjectGenerator.DataAccessLayer;
 using System.IO;
 

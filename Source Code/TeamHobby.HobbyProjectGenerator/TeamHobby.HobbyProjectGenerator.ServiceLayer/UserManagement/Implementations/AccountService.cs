@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using System.Data.Odbc;
 using TeamHobby.HobbyProjectGenerator.DataAccessLayer;
 
-namespace TeamHobby.HobbyProjectGenerator.UserManagement
-{
+namespace TeamHobby.HobbyProjectGenerator.ServiceLayer
+{ 
     public class AccountService
     {
         public bool CreateUserRecord(UserAccount newUser, string CreatedBy, IDataSource<string> dbSource)

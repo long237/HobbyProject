@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Odbc;
-using TeamHobby.HobbyProjectGenerator.UserManagement;
 using TeamHobby.HobbyProjectGenerator.DataAccessLayer;
 
-namespace TeamHobby.HobbyProjectGenerator.UserManagement
+namespace TeamHobby.HobbyProjectGenerator.ServiceLayer
 {
     public class SystemAccountManager
     {

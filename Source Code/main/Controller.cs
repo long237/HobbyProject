@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Data.Odbc;
-using TeamHobby.HobbyProjectGenerator.Archive;
+using TeamHobby.HobbyProjectGenerator.ServiceLayer;
 using TeamHobby.HobbyProjectGenerator.DataAccessLayer;
-using TeamHobby.HobbyProjectGenerator.UserManagement;
 
 namespace TeamHobby.HobbyProjectGenerator.Main
 {
