@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccess\TeamHobby.HobbyProjectGenerator.DataAccess.csproj" />
+    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccessLayer\TeamHobby.HobbyProjectGenerator.DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>

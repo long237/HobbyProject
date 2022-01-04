@@ -1,6 +1,6 @@
 ﻿// Print Statements used throughout the program.
 
-namespace TeamHobby.HobbyProjectGenerator.DataAccess
+namespace TeamHobby.HobbyProjectGenerator.DataAccessLayer
 {
     public class UiPrint
     {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.IO.Compression;
 using System.Data.Odbc;
 
-namespace TeamHobby.HobbyProjectGenerator.DataAccess
+namespace TeamHobby.HobbyProjectGenerator.DataAccessLayer
 {
     public class SqlDAO : IDataSource<string>
     {

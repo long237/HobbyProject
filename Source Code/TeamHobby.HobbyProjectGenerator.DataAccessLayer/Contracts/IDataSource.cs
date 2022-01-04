@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace TeamHobby.HobbyProjectGenerator.DataAccess
+namespace TeamHobby.HobbyProjectGenerator.DataAccessLayer
 {
     public interface IDataSource<T>
     {

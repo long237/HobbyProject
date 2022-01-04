@@ -3,7 +3,7 @@ using Xunit;
 using Xunit.Abstractions;
 using System.Threading;
 using TeamHobby.HobbyProjectGenerator.UserManagement;
-using TeamHobby.HobbyProjectGenerator.DataAccess;
+using TeamHobby.HobbyProjectGenerator.DataAccessLayer;
 using System.IO;
 
 namespace TeamHobby.UserManagement.xTests
