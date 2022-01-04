@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data.Odbc;
+using TeamHobby.HobbyProjectGenerator.DataAccessLayer;
+using TeamHobby.HobbyProjectGenerator.Logging.Contracts;
 
 namespace TeamHobby.HobbyProjectGenerator.ServiceLayer
 {
