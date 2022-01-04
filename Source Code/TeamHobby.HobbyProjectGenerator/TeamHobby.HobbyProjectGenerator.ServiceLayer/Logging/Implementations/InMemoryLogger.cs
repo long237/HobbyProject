@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace TeamHobby.HobbyProjectGenerator.Logging
+
+namespace TeamHobby.HobbyProjectGenerator.ServiceLayer
 {
     // implementation of ILogger that stores logs as they initialize
     public class InMemoryLogger : ILogger

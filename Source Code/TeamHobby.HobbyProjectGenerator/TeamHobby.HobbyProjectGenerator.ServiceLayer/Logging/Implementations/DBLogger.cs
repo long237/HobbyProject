@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TeamHobby.HobbyProjectGenerator.Logging
+namespace TeamHobby.HobbyProjectGenerator.ServiceLayer
 {
     public class DBLogger : ILogger
     {

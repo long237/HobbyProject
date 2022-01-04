@@ -14,9 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Archive\TeamHobby.HobbyProjectGenerator.Archive.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccessLayer\TeamHobby.HobbyProjectGenerator.DataAccessLayer.csproj" />
-    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.UserManagement\TeamHobby.HobbyProjectGenerator.UserManagement.csproj" />
+    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator\TeamHobby.HobbyProjectGenerator.ServiceLayer\TeamHobby.HobbyProjectGenerator.ServiceLayer.csproj" />
   </ItemGroup>
 
 </Project>

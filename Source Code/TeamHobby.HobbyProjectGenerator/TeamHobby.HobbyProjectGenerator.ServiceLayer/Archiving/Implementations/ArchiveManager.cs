@@ -1,7 +1,7 @@
 ﻿
 using TeamHobby.HobbyProjectGenerator.DataAccessLayer;
 
-namespace TeamHobby.HobbyProjectGenerator.Archive
+namespace TeamHobby.HobbyProjectGenerator.ServiceLayer
 {
     public class ArchiveManager
     {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeamHobby.HobbyProjectGenerator.DataAccessLayer;
-using TeamHobby.HobbyProjectGenerator.Logging.Contracts;
-using TeamHobby.HobbyProjectGenerator.Logging.Implementations;
+using TeamHobby.HobbyProjectGenerator.ServiceLayer.Contracts;
+using TeamHobby.HobbyProjectGenerator.ServiceLayer.Implementations;
 
 
-namespace TeamHobby.HobbyProjectGenerator.Logging
+namespace TeamHobby.HobbyProjectGenerator.ServiceLayer
 {
     internal class LoggingManager
     {
