@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TeamHobby.HobbyProjectGenerator.DataAccess;
+using TeamHobby.HobbyProjectGenerator.DataAccessLayer;
 
-namespace TeamHobby.HobbyProjectGenerator.DataAccess
+namespace TeamHobby.HobbyProjectGenerator.DataAccessLayer
 {
     public class RDSFactory
     {
