@@ -11,9 +11,10 @@ namespace TeamHobby.HobbyProjectGenerator.ServiceLayer.Implementations
     {
         public DBLoggerFactory()
         {
+            //this._logDatabase = logDatabase;
         }
-        public ILogger CreateLogger()
-        {
+        
+        public ILogger CreateLogger() {
             return new DBLogger();
         }
     }

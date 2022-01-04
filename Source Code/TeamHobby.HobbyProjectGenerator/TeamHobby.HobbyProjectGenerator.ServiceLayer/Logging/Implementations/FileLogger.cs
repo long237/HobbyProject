@@ -1,4 +1,5 @@
 ﻿using System;
+using TeamHobby.HobbyProjectGenerator.Logging.Contracts;
 using TeamHobby.HobbyProjectGenerator.ServiceLayer.Contracts;
 
 namespace TeamHobby.HobbyProjectGenerator.ServiceLayer
