@@ -9,7 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Archive\TeamHobby.HobbyProjectGenerator.Archive.csproj" />
     <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.DataAccessLayer\TeamHobby.HobbyProjectGenerator.DataAccessLayer.csproj" />
-    <ProjectReference Include="..\TeamHobby.HobbyProjectGenerator.Logging\TeamHobby.HobbyProjectGenerator.Logging.csproj" />
   </ItemGroup>
 
 </Project>
