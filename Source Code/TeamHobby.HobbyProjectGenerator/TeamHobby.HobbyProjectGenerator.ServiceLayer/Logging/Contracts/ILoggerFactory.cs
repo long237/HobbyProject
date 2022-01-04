@@ -8,9 +8,9 @@ namespace TeamHobby.HobbyProjectGenerator.ServiceLayer.Contracts
 {
     public interface ILoggerFactory
     {
-        ILogger CreateLogger()
-        {
-            return new DBLogger();
-        }
+
+        ILogger CreateLogger();
     }
 }
+
+
