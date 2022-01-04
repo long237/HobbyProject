@@ -8,11 +8,11 @@ using System.IO;
 
 namespace TeamHobby.UserManagement.xTests
 {
-    public class UnitTest1
+    public class UseerManagementTests
     {
         
         ITestOutputHelper output;
-        public UnitTest1(ITestOutputHelper output)
+        public UseerManagementTests(ITestOutputHelper output)
         {
             this.output = output;  
         }
