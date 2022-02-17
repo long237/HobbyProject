@@ -22,6 +22,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             // Logger log = new Logger();
             //Logger.PrintTest();
 
+            LoggingManager logger = new LoggingManager();
+            logger.CreateLog("Testing logs from main Controller");
             // Loop login terminal
             bool mainMenu = true;
 
@@ -30,6 +32,8 @@ namespace TeamHobby.HobbyProjectGenerator.Main
             {
                 // Create credentials object
                 GetCredentials credentials = new GetCredentials();
+                logger.CreateLog("Testing credentials from main Controller");
+
 
                 // Get DB credentials ***Both values currently hard coded, will update to user input later on.***
                 string dbUserName = "root";
